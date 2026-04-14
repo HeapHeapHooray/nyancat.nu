@@ -57,8 +57,30 @@
 <body>
     <h1>Browser File Converter</h1>
     <div class="container">
-        <p>Convert MP4 to MP3 (Entirely in your browser!)</p>
-        <input type="file" id="fileInput" accept="video/mp4">
+        <p>Convert any media file in your browser!</p>
+        <div style="text-align: left; margin-bottom: 15px;">
+            <label for="fileInput" style="display: block; margin-bottom: 5px;">Source File:</label>
+            <input type="file" id="fileInput">
+        </div>
+        <div style="text-align: left; margin-bottom: 15px;">
+            <label for="formatSelect" style="display: block; margin-bottom: 5px;">Convert to:</label>
+            <select id="formatSelect">
+                <option value="mp3">Audio: MP3</option>
+                <option value="wav">Audio: WAV</option>
+                <option value="aac">Audio: AAC</option>
+                <option value="m4a">Audio: M4A</option>
+                <option value="mp4">Video: MP4</option>
+                <option value="avi">Video: AVI</option>
+                <option value="mkv">Video: MKV</option>
+                <option value="mov">Video: MOV</option>
+                <option value="gif">Image: GIF (animated)</option>
+                <option value="other">Other...</option>
+            </select>
+        </div>
+        <div id="customFormatContainer" style="text-align: left; margin-bottom: 15px; display: none;">
+            <label for="formatInput" style="display: block; margin-bottom: 5px;">Specify extension:</label>
+            <input type="text" id="formatInput" placeholder="e.g. flac">
+        </div>
         <button id="convertBtn" disabled>Loading FFmpeg...</button>
         <div id="status">Initializing...</div>
         <a id="downloadLink" href="#">Download Converted File</a>
@@ -77,19 +99,30 @@
 
         const convertBtn = document.getElementById('convertBtn');
         const fileInput = document.getElementById('fileInput');
+        const formatSelect = document.getElementById('formatSelect');
+        const formatInput = document.getElementById('formatInput');
+        const customFormatContainer = document.getElementById('customFormatContainer');
         const status = document.getElementById('status');
         const downloadLink = document.getElementById('downloadLink');
 
+        formatSelect.addEventListener('change', () => {
+            if (formatSelect.value === 'other') {
+                customFormatContainer.style.display = 'block';
+            } else {
+                customFormatContainer.style.display = 'none';
+            }
+        });
+
         async function load() {
             try {
-                status.innerText = 'Loading FFmpeg core (this may take a moment)...';
+                status.innerText = 'Loading FFmpeg core...';
                 await ffmpeg.load();
                 status.innerText = 'Ready to convert!';
                 convertBtn.disabled = false;
-                convertBtn.innerText = 'Convert to MP3';
+                convertBtn.innerText = 'Convert File';
             } catch (err) {
                 console.error(err);
-                status.innerText = 'Error loading FFmpeg. Note: This requires a modern browser and the security headers I configured.';
+                status.innerText = 'Error loading FFmpeg.';
             }
         }
 
@@ -97,27 +130,44 @@
             const files = fileInput.files;
             if (files.length === 0) return alert('Please select a file first!');
             
+            let targetExt = formatSelect.value;
+            if (targetExt === 'other') {
+                targetExt = formatInput.value.trim().replace('.', '').toLowerCase();
+            }
+            
+            if (!targetExt) return alert('Please select or enter a target format!');
+
             const file = files[0];
+            const inputName = 'input_' + file.name;
+            const outputName = 'output.' + targetExt;
+
             convertBtn.disabled = true;
-            status.innerText = 'Starting conversion...';
+            status.innerText = `Starting conversion to ${targetExt}...`;
             downloadLink.style.display = 'none';
 
             // Load file into memory
-            ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(file));
+            ffmpeg.FS('writeFile', inputName, await fetchFile(file));
             
-            // Run FFmpeg command: -i input -vn (no video) -ab 128k (bitrate) output.mp3
-            await ffmpeg.run('-i', 'input.mp4', '-vn', '-ab', '128k', '-f', 'mp3', 'output.mp3');
+            // Run FFmpeg command
+            try {
+                await ffmpeg.run('-i', inputName, outputName);
+                
+                // Read result
+                const data = ffmpeg.FS('readFile', outputName);
+                const url = URL.createObjectURL(new Blob([data.buffer], { type: 'application/octet-stream' }));
+                
+                downloadLink.href = url;
+                const finalFileName = file.name.replace(/\.[^/.]+$/, "") + '.' + targetExt;
+                downloadLink.download = finalFileName;
+                downloadLink.innerText = 'Download ' + finalFileName;
+                downloadLink.style.display = 'block';
+                
+                status.innerText = 'Conversion complete!';
+            } catch (e) {
+                console.error(e);
+                status.innerText = 'Conversion failed. Check console for FFmpeg logs.';
+            }
             
-            // Read result
-            const data = ffmpeg.FS('readFile', 'output.mp3');
-            const url = URL.createObjectURL(new Blob([data.buffer], { type: 'audio/mp3' }));
-            
-            downloadLink.href = url;
-            downloadLink.download = file.name.replace(/\.[^/.]+$/, "") + '.mp3';
-            downloadLink.innerText = 'Download ' + downloadLink.download;
-            downloadLink.style.display = 'block';
-            
-            status.innerText = 'Conversion complete!';
             convertBtn.disabled = false;
         };
 
