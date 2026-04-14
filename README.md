@@ -25,22 +25,33 @@ A Django-based web application featuring a classic Nyan Cat welcome page and a f
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/HeapHeapHooray/nyancat.nu
+   git clone https://github.com/your-username/nyancat.nu.git
    cd nyancat.nu
    ```
 
-2. **Install Django**:
+2. **Install dependencies**:
    ```bash
-   pip install django
+   pip install -r requirements.txt
    ```
 
-3. **Run the development server**:
+3. **Prepare static files**:
+   ```bash
+   python manage.py collectstatic --noinput
+   ```
+
+4. **Run the development server (Local)**:
    ```bash
    python manage.py runserver
    ```
 
-4. **Access the site**:
-   Open [http://localhost:8000](http://localhost:8000) in your browser.
+5. **Run for Production (Gunicorn)**:
+   To host on all interfaces (`0.0.0.0`):
+   ```bash
+   gunicorn nyancat_site.wsgi:application --bind 0.0.0.0:8000
+   ```
+
+6. **Access the site**:
+   Open [http://localhost:8000](http://localhost:8000) (or your server's IP) in your browser.
 
 ## Browser Security Requirements
 
