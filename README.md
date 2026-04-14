@@ -53,14 +53,62 @@ A Django-based web application featuring a classic Nyan Cat welcome page and a f
 6. **Access the site**:
    Open [http://localhost:8000](http://localhost:8000) (or your server's IP) in your browser.
 
+## VPS Deployment (Nginx + Gunicorn + SSL)
+
+To run the converter on mobile and modern browsers, **HTTPS is mandatory**.
+
+### 1. Install Nginx and Certbot
+```bash
+sudo apt update
+sudo apt install nginx certbot python3-certbot-nginx
+```
+
+### 2. Configure Nginx
+Create a configuration file at `/etc/nginx/sites-available/nyancat.nu`:
+
+```nginx
+server {
+    listen 80;
+    server_name nyancat.nu;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name nyancat.nu;
+
+    # SSL configuration (Certbot will fill this)
+    # ssl_certificate /etc/letsencrypt/live/nyancat.nu/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/nyancat.nu/privkey.pem;
+
+    # CRITICAL: Headers for ffmpeg.wasm
+    add_header Cross-Origin-Opener-Policy "same-origin";
+    add_header Cross-Origin-Embedder-Policy "require-corp";
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /static/ {
+        alias /path/to/your/nyancat.nu/staticfiles/;
+    }
+}
+```
+
+### 3. Enable Site and Get SSL
+```bash
+sudo ln -s /etc/nginx/sites-available/nyancat.nu /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+sudo certbot --nginx -d nyancat.nu
+```
+
 ## Browser Security Requirements
-
-The file converter utilizes `SharedArrayBuffer`, which requires the website to be served in a "cross-origin isolated" state. This project includes custom middleware (`core/middleware.py`) that sends the necessary headers:
-
-- `Cross-Origin-Opener-Policy: same-origin`
-- `Cross-Origin-Embedder-Policy: require-corp`
-
-If you are deploying this to production, ensure your hosting environment or reverse proxy (like Nginx) respects or reproduces these headers.
+... Applied fuzzy match at line 41-52.
 
 ## License
 
