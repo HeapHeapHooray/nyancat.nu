@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Converter - nyancat.nu</title>
+    <style>
+        body {
+            background-color: #003366;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 20px; }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #ff0099;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #ff33bb; }
+        button:disabled { background-color: #666; cursor: not-allowed; }
+        #status { margin-top: 20px; font-style: italic; color: #00ccff; }
+        #downloadLink {
+            display: none;
+            margin-top: 20px;
+            color: #00ff00;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .back-link { margin-top: 30px; color: #ccc; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>Browser File Converter</h1>
+    <div class="container">
+        <p>Convert MP4 to MP3 (Entirely in your browser!)</p>
+        <input type="file" id="fileInput" accept="video/mp4">
+        <button id="convertBtn" disabled>Loading FFmpeg...</button>
+        <div id="status">Initializing...</div>
+        <a id="downloadLink" href="#">Download Converted File</a>
+    </div>
+    <a href="{% url 'index' %}" class="back-link">&larr; Back to Home</a>
+
+    <!-- Load ffmpeg.wasm 0.11.6 from CDN (Classic stable version) -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+    
+    <script>
+        const { createFFmpeg, fetchFile } = FFmpeg;
+        const ffmpeg = createFFmpeg({ 
+            log: true,
+            corePath: 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'
+        });
+
+        const convertBtn = document.getElementById('convertBtn');
+        const fileInput = document.getElementById('fileInput');
+        const status = document.getElementById('status');
+        const downloadLink = document.getElementById('downloadLink');
+
+        async function load() {
+            try {
+                status.innerText = 'Loading FFmpeg core (this may take a moment)...';
+                await ffmpeg.load();
+                status.innerText = 'Ready to convert!';
+                convertBtn.disabled = false;
+                convertBtn.innerText = 'Convert to MP3';
+            } catch (err) {
+                console.error(err);
+                status.innerText = 'Error loading FFmpeg. Note: This requires a modern browser and the security headers I configured.';
+            }
+        }
+
+        const convert = async () => {
+            const files = fileInput.files;
+            if (files.length === 0) return alert('Please select a file first!');
+            
+            const file = files[0];
+            convertBtn.disabled = true;
+            status.innerText = 'Starting conversion...';
+            downloadLink.style.display = 'none';
+
+            // Load file into memory
+            ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(file));
+            
+            // Run FFmpeg command: -i input -vn (no video) -ab 128k (bitrate) output.mp3
+            await ffmpeg.run('-i', 'input.mp4', '-vn', '-ab', '128k', '-f', 'mp3', 'output.mp3');
+            
+            // Read result
+            const data = ffmpeg.FS('readFile', 'output.mp3');
+            const url = URL.createObjectURL(new Blob([data.buffer], { type: 'audio/mp3' }));
+            
+            downloadLink.href = url;
+            downloadLink.download = file.name.replace(/\.[^/.]+$/, "") + '.mp3';
+            downloadLink.innerText = 'Download ' + downloadLink.download;
+            downloadLink.style.display = 'block';
+            
+            status.innerText = 'Conversion complete!';
+            convertBtn.disabled = false;
+        };
+
+        convertBtn.addEventListener('click', convert);
+        load();
+    </script>
+</body>
+</html>
