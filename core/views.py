@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import yt_dlp
+from yt_dlp.networking.impersonate import ImpersonateTarget
 
 def index(request):
     return render(request, 'core/index.html')
@@ -10,7 +11,7 @@ def converter(request):
 def video_downloader(request):
     video_info = None
     error = None
-    
+
     if request.method == 'POST':
         url = request.POST.get('url')
         if url:
@@ -20,12 +21,12 @@ def video_downloader(request):
                 'quiet': True,
                 'js_runtimes': {'node': {}},
                 'remote_components': ['ejs:github'],
-                'impersonate': 'chrome',
+                'impersonate': ImpersonateTarget(client='chrome'),
             }
             try:
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                     info = ydl.extract_info(url, download=False)
-                    
+
                     # Format duration properly
                     duration_seconds = info.get('duration')
                     if duration_seconds:
@@ -48,10 +49,9 @@ def video_downloader(request):
                         'uploader': info.get('uploader'),
                     }
             except Exception as e:
-                error = str(e)
-    
+                error = str(e) if str(e) else repr(e)
+
     return render(request, 'core/video_downloader.html', {
         'video_info': video_info,
         'error': error
     })
-
