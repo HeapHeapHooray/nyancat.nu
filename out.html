@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Downloader - nyancat.nu</title>
+    <style>
+        body {
+            background-color: #003366;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            color: #ffcc00;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input[type="text"] {
+            padding: 12px;
+            border-radius: 5px;
+            border: 2px solid #ff0099;
+            background: #001a33;
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #ff0099;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.1rem;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        button:hover {
+            background-color: #e6008a;
+            transform: scale(1.02);
+        }
+        .result {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #ffcc00;
+        }
+        .thumbnail {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #ffcc00;
+        }
+        .download-btn {
+            display: inline-block;
+            background-color: #00cc66;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0, 204, 102, 0.3);
+        }
+        .download-btn:hover {
+            background-color: #00b359;
+        }
+        .error {
+            color: #ff3333;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .nav-link {
+            margin-top: 30px;
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Video Downloader</h1>
+    
+    <div class="container">
+        <form method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value="WmMDsxHyy3cO4vX6ljz7w6XQEHG6KVS19PVtl9raPNlGU9N2eYjXzNFddjIQ7LuW">
+            <input type="text" name="url" placeholder="Paste the video link here (YouTube, TikTok, Twitter, etc.)..." required>
+            <button type="submit">Extract Video Info</button>
+        </form>
+
+        
+
+        
+            <div class="result">
+                <h2>It’s not BMDoubleU #shorts</h2>
+                
+                    <img src="https://i.ytimg.com/vi/ZoNt2MH0LVU/maxresdefault.jpg" alt="Thumbnail" class="thumbnail">
+                
+                <p><strong>Uploader:</strong> Eine Lotta</p>
+                <p><strong>Duration:</strong> 1:04</p>
+                
+                <a href="https://manifest.googlevideo.com/api/manifest/hls_playlist/expire/1776335485/ei/HWbgadrrE_-aobIPz938uA8/ip/2804:7f0:d809:ec3e:d450:92d8:1e97:2a81/id/66836dd8c1f42d55/itag/301/source/youtube/requiressl/yes/ratebypass/yes/pfa/1/sgoap/clen%3D1034245%3Bdur%3D63.854%3Bgir%3Dyes%3Bitag%3D140%3Blmt%3D1759072106760449/sgovp/clen%3D29523500%3Bdur%3D63.800%3Bgir%3Dyes%3Bitag%3D299%3Blmt%3D1759073594492790/rqh/1/hls_chunk_host/rr5---sn-8p8v-bg06.googlevideo.com/xpc/EgVo2aDSNQ%3D%3D/cps/234/met/1776313885,/mh/c5/mm/31,29/mn/sn-8p8v-bg06,sn-bg0e6nee/ms/au,rdu/mv/m/mvi/5/pcm2cms/yes/pl/50/rms/au,au/initcwndbps/3000000/bui/AUUZDGJKlssHBHFYfuISxuvq1EuJSY7Iz9X4wgT0OrdKJKCapRIqjxQuU3jBDMX1A3Lk8-9V65oYbb0i/spc/jlWavc6sSPtygz71SbgvdMe30DgGuvL0sHdtN4yGLwPwVIUjiVfEZ9acWk8_C1AKqg9XKKPa/vprv/1/ns/PXjlrb9xbuSkgL_3ffF1WwkU/playlist_type/CLEAN/dover/11/txp/540C234/mt/1776313516/fvip/4/keepalive/yes/fexp/51565115,51565681,51869322/n/x2IXzyyjRmQw4A/pot/MlPhELcgMNCgJ-Esl2Sz2O_6JOem6lA9KPdZD2ReTc30LK0a295ldDtQxODIitUJFFZey7jLFTUuHOybqYRtbMd4C1FVsSi7UzXqynYxZ9rxW8tmsw%3D%3D/sparams/expire,ei,ip,id,itag,source,requiressl,ratebypass,pfa,sgoap,sgovp,rqh,xpc,bui,spc,vprv,ns,playlist_type/sig/AHEqNM4wRQIhAJm-f1Lrf3k6T_JUL17pH0I52oj4DN_V4smxcx6n4lfoAiA35NTl3znaKciuLXssxE39aXYOqOiOma0zMcplxuN2sg%3D%3D/lsparams/hls_chunk_host,cps,met,mh,mm,mn,ms,mv,mvi,pcm2cms,pl,rms,initcwndbps/lsig/APaTxxMwRQIhAIZMoPADvec8EIPeJYWjmFUCU8Mt7mA10iEu4F3_EFQRAiBkRgF9dbHV3y3-HlmO7Ul0BelyW3TTOype0xoY9pZG3w%3D%3D/playlist/index.m3u8" class="download-btn" target="_blank" download>
+                    📥 Download Video
+                </a>
+                <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">
+                    Note: Right-click the button and "Save link as..." if the download doesn't start automatically.
+                </p>
+            </div>
+        
+    </div>
+
+    <a href="/" class="nav-link">← Back to Home</a>
+</body>
+</html>
+
+successfully removed temp profile /tmp/uc_yo98xt76
