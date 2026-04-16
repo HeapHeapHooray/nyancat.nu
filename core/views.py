@@ -20,6 +20,7 @@ def video_downloader(request):
                 'quiet': True,
                 'js_runtimes': {'node': {}},
                 'remote_components': ['ejs:github'],
+                'impersonate': 'chrome',
             }
             try:
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
