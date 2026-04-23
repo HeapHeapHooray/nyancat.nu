@@ -94,10 +94,20 @@
         <div id="status">Initializing...</div>
         <a id="downloadLink" href="#">Download Converted File</a>
     </div>
+
+    <div class="container" id="historyContainer" style="margin-top: 20px; display: none;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 15px;">Conversion History</h2>
+        <div id="historyList" style="text-align: left; max-height: 300px; overflow-y: auto; padding-right: 5px;">
+            <!-- History items will be added here -->
+        </div>
+        <button id="clearHistoryBtn" style="background-color: #444; margin-top: 15px; font-size: 0.8rem; padding: 5px 10px; width: auto;">Clear History</button>
+    </div>
+
     <a href="{% url 'index' %}" class="back-link">&larr; Back to Home</a>
 
     <!-- Load ffmpeg.wasm 0.11.6 from CDN (Classic stable version) -->
     <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/idb-keyval@6/dist/umd.js"></script>
     
     <script>
         const { createFFmpeg, fetchFile } = FFmpeg;
@@ -115,6 +125,143 @@
         const downloadLink = document.getElementById('downloadLink');
         const previewContainer = document.getElementById('previewContainer');
         const previewBox = document.getElementById('previewBox');
+        const historyContainer = document.getElementById('historyContainer');
+        const historyList = document.getElementById('historyList');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
+        const getMimeType = (ext) => {
+            const types = {
+                mp3: 'audio/mpeg', wav: 'audio/wav', aac: 'audio/aac', m4a: 'audio/mp4',
+                mp4: 'video/mp4', avi: 'video/x-msvideo', mkv: 'video/x-matroska', mov: 'video/quicktime',
+                gif: 'image/gif', png: 'image/png', jpg: 'image/jpeg', webp: 'image/webp', bmp: 'image/bmp', tiff: 'image/tiff'
+            };
+            return types[ext] || 'application/octet-stream';
+        };
+
+        const loadHistory = async () => {
+            const history = JSON.parse(localStorage.getItem('conversionHistory') || '[]');
+            if (history.length === 0) {
+                historyContainer.style.display = 'none';
+                return;
+            }
+            historyContainer.style.display = 'block';
+            historyList.innerHTML = '';
+            
+            // Show latest first
+            for (const item of [...history].reverse()) {
+                const div = document.createElement('div');
+                div.style.padding = '10px';
+                div.style.borderBottom = '1px solid rgba(255,255,255,0.1)';
+                div.style.fontSize = '0.9rem';
+                div.style.display = 'flex';
+                div.style.alignItems = 'center';
+                div.style.gap = '15px';
+                
+                const date = new Date(item.timestamp).toLocaleString();
+                
+                const previewDiv = document.createElement('div');
+                previewDiv.style.width = '100px';
+                previewDiv.style.height = '60px';
+                previewDiv.style.display = 'flex';
+                previewDiv.style.alignItems = 'center';
+                previewDiv.style.justifyContent = 'center';
+                previewDiv.style.backgroundColor = 'rgba(0,0,0,0.2)';
+                previewDiv.style.borderRadius = '5px';
+                previewDiv.style.overflow = 'hidden';
+
+                try {
+                    const blob = await idbKeyval.get(item.id);
+                    if (blob) {
+                        const url = URL.createObjectURL(blob);
+                        const mime = getMimeType(item.targetExt);
+                        
+                        if (mime.startsWith('image/')) {
+                            previewDiv.innerHTML = `<img src="${url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+                        } else if (mime.startsWith('video/')) {
+                            previewDiv.innerHTML = `<video src="${url}" style="max-width: 100%; max-height: 100%; object-fit: contain;" controls preload="metadata"></video>`;
+                        } else if (mime.startsWith('audio/')) {
+                            previewDiv.innerHTML = `<audio src="${url}" style="width: 100%;" controls></audio>`;
+                        } else {
+                            previewDiv.innerHTML = `<span style="color: #999; font-size: 0.7rem;">No preview</span>`;
+                        }
+                    } else {
+                        previewDiv.innerHTML = `<span style="color: #999; font-size: 0.7rem;">Expired</span>`;
+                    }
+                } catch (e) {
+                    console.error("Preview load error", e);
+                    previewDiv.innerHTML = `<span style="color: #999; font-size: 0.7rem;">Error</span>`;
+                }
+
+                const infoDiv = document.createElement('div');
+                infoDiv.style.flex = '1';
+                infoDiv.innerHTML = `
+                    <div style="font-weight: bold; color: #ff0099;">${item.finalFileName}</div>
+                    <div style="color: #ccc; font-size: 0.8rem;">From: ${item.originalName}</div>
+                    <div style="color: #666; font-size: 0.7rem;">${date}</div>
+                `;
+                
+                div.appendChild(previewDiv);
+                div.appendChild(infoDiv);
+
+                // Download button from history
+                const dlBtn = document.createElement('a');
+                dlBtn.href = '#';
+                dlBtn.innerHTML = '&#11015;';
+                dlBtn.style.textDecoration = 'none';
+                dlBtn.style.fontSize = '1.5rem';
+                dlBtn.style.color = '#00ff00';
+                dlBtn.title = 'Download';
+                dlBtn.onclick = async (e) => {
+                    e.preventDefault();
+                    const b = await idbKeyval.get(item.id);
+                    if (b) {
+                        const dlUrl = URL.createObjectURL(b);
+                        const a = document.createElement('a');
+                        a.href = dlUrl;
+                        a.download = item.finalFileName;
+                        a.click();
+                        URL.revokeObjectURL(dlUrl);
+                    } else {
+                        alert('File data is no longer available locally.');
+                    }
+                };
+                div.appendChild(dlBtn);
+
+                historyList.appendChild(div);
+            }
+        };
+
+        const addToHistory = async (originalName, targetExt, finalFileName, blob) => {
+            const history = JSON.parse(localStorage.getItem('conversionHistory') || '[]');
+            const id = Date.now().toString() + Math.random().toString(36).substr(2, 5);
+            
+            history.push({
+                id,
+                originalName,
+                targetExt,
+                finalFileName,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Keep only last 50 conversions
+            if (history.length > 50) {
+                const removed = history.shift();
+                try { await idbKeyval.del(removed.id); } catch(e) {}
+            }
+            
+            localStorage.setItem('conversionHistory', JSON.stringify(history));
+            try { await idbKeyval.set(id, blob); } catch(e) { console.error('Failed to save to IDB', e); }
+            
+            loadHistory();
+        };
+
+        clearHistoryBtn.addEventListener('click', async () => {
+            if (confirm('Clear all conversion history?')) {
+                localStorage.removeItem('conversionHistory');
+                try { await idbKeyval.clear(); } catch(e) {}
+                loadHistory();
+            }
+        });
 
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -200,7 +347,8 @@
                 
                 // Read result
                 const data = ffmpeg.FS('readFile', outputName);
-                const url = URL.createObjectURL(new Blob([data.buffer], { type: 'application/octet-stream' }));
+                const blob = new Blob([data.buffer], { type: getMimeType(targetExt) });
+                const url = URL.createObjectURL(blob);
                 
                 downloadLink.href = url;
                 const finalFileName = file.name.replace(/\.[^/.]+$/, "") + '.' + targetExt;
@@ -209,6 +357,7 @@
                 downloadLink.style.display = 'block';
                 
                 status.innerText = 'Conversion complete!';
+                addToHistory(file.name, targetExt, finalFileName, blob);
             } catch (e) {
                 console.error(e);
                 status.innerText = 'Conversion failed. Check console for FFmpeg logs.';
@@ -218,6 +367,7 @@
         };
 
         convertBtn.addEventListener('click', convert);
+        loadHistory();
         load();
     </script>
 </body>
