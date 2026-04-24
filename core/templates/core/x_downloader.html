@@ -102,6 +102,49 @@
         .nav-link:hover {
             text-decoration: underline;
         }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            h1 { font-size: clamp(1.5rem, 6vw, 2.5rem); margin-bottom: 15px; }
+            .container {
+                padding: 20px;
+                width: 100%;
+            }
+            input[type="text"] { 
+                padding: 10px; 
+                font-size: 0.9rem;
+            }
+            button { 
+                padding: 10px; 
+                font-size: 1rem;
+            }
+            .download-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            .thumbnail { max-width: 100%; }
+        }
+        
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.5rem; }
+            .container { padding: 15px; }
+            input[type="text"] { 
+                padding: 8px; 
+                font-size: 0.85rem;
+            }
+            button { 
+                padding: 8px; 
+                font-size: 0.9rem;
+            }
+            .download-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            .result h2 { font-size: 1.2rem; }
+            .nav-link { font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
