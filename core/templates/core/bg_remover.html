@@ -85,7 +85,7 @@
     <h1>Local Background Remover</h1>
     <div class="container">
         <p>Remove backgrounds from images locally in your browser using AI!</p>
-        <p style="font-size: 0.8rem; color: #ccc;">Note: The first run will download the MODNET model (~25MB), which may take a moment. All processing is done locally in your browser.</p>
+        <p style="font-size: 0.8rem; color: #ccc;">Note: The first run will download the RMBG-1.4 model (~176MB), which may take a few minutes. All processing is done locally in your browser.</p>
         
         <div style="text-align: left; margin-bottom: 15px;">
             <label for="imageInput" style="display: block; margin-bottom: 5px;">Select an Image:</label>
@@ -139,8 +139,8 @@
             try {
                 status.innerText = 'Loading background removal model...';
                 
-                // Using MODNET - a model specifically designed for background removal
-                const modelId = 'Xenova/modnet';
+                // Using RMBG-1.4 - High quality background removal model from BRIA AI
+                const modelId = 'briaai/RMBG-1.4';
                 
                 const progressCallback = (progress) => {
                     if (progress.status === 'progress' && progress.progress) {
@@ -207,17 +207,20 @@
                 status.innerText = 'Running AI model...';
                 
                 // Preprocess image
-                const { pixel_values } = await processor(image);
+                const inputs = await processor(image);
                 
-                // Run model inference
-                const { output } = await model({ input: pixel_values });
+                // RMBG-1.4 expects 'input' not 'pixel_values'
+                const modelInputs = {
+                    input: inputs.pixel_values || inputs.input
+                };
+                
+                // Run model inference - RMBG-1.4 is a SegFormer model
+                const { output } = await model(modelInputs);
                 
                 status.innerText = 'Creating transparent background...';
                 
-                // Get dimensions
+                // Get mask dimensions
                 const [batch, channels, height, width] = output.dims;
-                
-                // Create mask from output
                 const maskData = output.data;
                 
                 // Setup canvas
