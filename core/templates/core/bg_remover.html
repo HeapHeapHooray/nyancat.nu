@@ -101,6 +101,10 @@
                 <img id="originalImg" src="" alt="Original Image">
             </div>
             <div class="image-box">
+                <p>Mask</p>
+                <canvas id="maskCanvas"></canvas>
+            </div>
+            <div class="image-box">
                 <p>Result</p>
                 <canvas id="resultCanvas"></canvas>
             </div>
@@ -127,6 +131,7 @@
         const imageInput = document.getElementById('imageInput');
         const status = document.getElementById('status');
         const originalImg = document.getElementById('originalImg');
+        const maskCanvas = document.getElementById('maskCanvas');
         const resultCanvas = document.getElementById('resultCanvas');
         const downloadBtn = document.getElementById('downloadBtn');
         const resultsContainer = document.getElementById('resultsContainer');
@@ -180,9 +185,11 @@
                 resultsContainer.style.display = 'flex';
                 downloadBtn.style.display = 'none';
                 
-                // Clear canvas
+                // Clear canvases
                 const ctx = resultCanvas.getContext('2d');
                 ctx.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
+                const maskCtx = maskCanvas.getContext('2d');
+                maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
                 
                 if (model && processor) {
                     processBtn.disabled = false;
@@ -237,12 +244,12 @@
                 // Get image data
                 const imageData = ctx.getImageData(0, 0, resultCanvas.width, resultCanvas.height);
                 
-                // Create temporary canvas for mask
-                const maskCanvas = document.createElement('canvas');
-                maskCanvas.width = width;
-                maskCanvas.height = height;
-                const maskCtx = maskCanvas.getContext('2d');
-                const tempMaskData = maskCtx.createImageData(width, height);
+                // Create temporary canvas for raw mask
+                const tempMaskCanvas = document.createElement('canvas');
+                tempMaskCanvas.width = width;
+                tempMaskCanvas.height = height;
+                const tempMaskCtx = tempMaskCanvas.getContext('2d');
+                const tempMaskData = tempMaskCtx.createImageData(width, height);
                 
                 // Convert mask data to ImageData
                 for (let i = 0; i < maskData.length; i++) {
@@ -253,14 +260,20 @@
                     tempMaskData.data[i * 4 + 3] = 255;
                 }
                 
-                maskCtx.putImageData(tempMaskData, 0, 0);
+                tempMaskCtx.putImageData(tempMaskData, 0, 0);
                 
-                // Scale mask to match original image size
+                // Display the mask in the mask canvas
+                maskCanvas.width = resultCanvas.width;
+                maskCanvas.height = resultCanvas.height;
+                const maskDisplayCtx = maskCanvas.getContext('2d');
+                maskDisplayCtx.drawImage(tempMaskCanvas, 0, 0, maskCanvas.width, maskCanvas.height);
+                
+                // Scale mask to match original image size for applying to result
                 const scaledMaskCanvas = document.createElement('canvas');
                 scaledMaskCanvas.width = resultCanvas.width;
                 scaledMaskCanvas.height = resultCanvas.height;
                 const scaledMaskCtx = scaledMaskCanvas.getContext('2d');
-                scaledMaskCtx.drawImage(maskCanvas, 0, 0, resultCanvas.width, resultCanvas.height);
+                scaledMaskCtx.drawImage(tempMaskCanvas, 0, 0, resultCanvas.width, resultCanvas.height);
                 
                 const scaledMaskData = scaledMaskCtx.getImageData(0, 0, resultCanvas.width, resultCanvas.height);
                 
