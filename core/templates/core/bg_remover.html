@@ -79,6 +79,75 @@
             background-color: #ff33bb;
         }
         .back-link { margin-top: 30px; color: #ccc; text-decoration: none; display: inline-block; }
+        
+        /* History Styles */
+        .history-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 90%;
+            margin-top: 30px;
+        }
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .history-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .clear-history-btn {
+            background-color: #ff3366;
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            width: auto;
+            margin: 0;
+        }
+        .clear-history-btn:hover {
+            background-color: #ff5588;
+        }
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .history-item {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .history-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,255,204,0.3);
+        }
+        .history-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            background-image: linear-gradient(45deg, #444 25%, transparent 25%), linear-gradient(-45deg, #444 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #444 75%), linear-gradient(-45deg, transparent 75%, #444 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        .history-item-info {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+        .history-empty {
+            text-align: center;
+            color: #888;
+            padding: 40px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -113,6 +182,16 @@
         <button id="downloadBtn">Download Image (Transparent PNG)</button>
     </div>
 
+    <div class="history-section" id="historySection">
+        <div class="history-header">
+            <h2>Processing History</h2>
+            <button class="clear-history-btn" id="clearHistoryBtn">Clear History</button>
+        </div>
+        <div class="history-grid" id="historyGrid">
+            <div class="history-empty">No images processed yet. Upload and process an image to start building your history!</div>
+        </div>
+    </div>
+
     <a href="{% url 'index' %}" class="back-link">&larr; Back to Home</a>
 
     <script type="module">
@@ -135,9 +214,162 @@
         const resultCanvas = document.getElementById('resultCanvas');
         const downloadBtn = document.getElementById('downloadBtn');
         const resultsContainer = document.getElementById('resultsContainer');
+        const historyGrid = document.getElementById('historyGrid');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
 
         let model = null;
         let processor = null;
+
+        // History management using IndexedDB for large image storage
+        const DB_NAME = 'bgRemoverHistory';
+        const DB_VERSION = 1;
+        const STORE_NAME = 'processedImages';
+        let db = null;
+
+        // Initialize IndexedDB
+        async function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+                
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                        objectStore.createIndex('timestamp', 'timestamp', { unique: false });
+                    }
+                };
+            });
+        }
+
+        // Save processed image to history
+        async function saveToHistory(originalDataURL, resultDataURL, maskDataURL) {
+            if (!db) await initDB();
+            
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const objectStore = transaction.objectStore(STORE_NAME);
+                
+                const item = {
+                    timestamp: Date.now(),
+                    original: originalDataURL,
+                    result: resultDataURL,
+                    mask: maskDataURL
+                };
+                
+                const request = objectStore.add(item);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        // Load all history items
+        async function loadHistory() {
+            if (!db) await initDB();
+            
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const objectStore = transaction.objectStore(STORE_NAME);
+                const request = objectStore.getAll();
+                
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        // Clear all history
+        async function clearHistory() {
+            if (!db) await initDB();
+            
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const objectStore = transaction.objectStore(STORE_NAME);
+                const request = objectStore.clear();
+                
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        // Display history in the grid
+        async function displayHistory() {
+            const items = await loadHistory();
+            
+            if (items.length === 0) {
+                historyGrid.innerHTML = '<div class="history-empty">No images processed yet. Upload and process an image to start building your history!</div>';
+                return;
+            }
+            
+            // Sort by timestamp (newest first)
+            items.sort((a, b) => b.timestamp - a.timestamp);
+            
+            historyGrid.innerHTML = '';
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                
+                const img = document.createElement('img');
+                img.src = item.result;
+                img.alt = 'Processed image';
+                
+                const info = document.createElement('div');
+                info.className = 'history-item-info';
+                const date = new Date(item.timestamp);
+                info.textContent = date.toLocaleString();
+                
+                div.appendChild(img);
+                div.appendChild(info);
+                
+                // Click to restore
+                div.onclick = () => {
+                    originalImg.src = item.original;
+                    
+                    // Restore mask
+                    const maskImg = new Image();
+                    maskImg.src = item.mask;
+                    maskImg.onload = () => {
+                        maskCanvas.width = maskImg.width;
+                        maskCanvas.height = maskImg.height;
+                        const ctx = maskCanvas.getContext('2d');
+                        ctx.drawImage(maskImg, 0, 0);
+                    };
+                    
+                    // Restore result
+                    const resultImg = new Image();
+                    resultImg.src = item.result;
+                    resultImg.onload = () => {
+                        resultCanvas.width = resultImg.width;
+                        resultCanvas.height = resultImg.height;
+                        const ctx = resultCanvas.getContext('2d');
+                        ctx.drawImage(resultImg, 0, 0);
+                    };
+                    
+                    resultsContainer.style.display = 'flex';
+                    downloadBtn.style.display = 'block';
+                    
+                    // Scroll to results
+                    resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                };
+                
+                historyGrid.appendChild(div);
+            });
+        }
+
+        // Clear history button handler
+        clearHistoryBtn.addEventListener('click', async () => {
+            if (confirm('Are you sure you want to clear all processing history? This cannot be undone.')) {
+                await clearHistory();
+                await displayHistory();
+            }
+        });
+
+        // Initialize database and display history on load
+        initDB().then(() => displayHistory());
 
         // Load the model
         async function loadModel() {
@@ -283,6 +515,20 @@
                 }
                 
                 ctx.putImageData(imageData, 0, 0);
+                
+                status.innerText = 'Saving to history...';
+                
+                // Save to history
+                try {
+                    const originalDataURL = originalImg.src;
+                    const resultDataURL = resultCanvas.toDataURL('image/png');
+                    const maskDataURL = maskCanvas.toDataURL('image/png');
+                    
+                    await saveToHistory(originalDataURL, resultDataURL, maskDataURL);
+                    await displayHistory();
+                } catch (err) {
+                    console.error('Failed to save to history:', err);
+                }
                 
                 status.innerText = 'Background removed successfully!';
                 status.style.color = '#00ccff';
