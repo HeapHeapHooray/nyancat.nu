@@ -148,6 +148,122 @@
             padding: 40px;
             font-style: italic;
         }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            h1 { 
+                font-size: 1.8rem; 
+                margin-bottom: 15px;
+                padding: 0 10px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+                width: 95%;
+                margin: 0 10px;
+            }
+            
+            .container p {
+                font-size: 0.9rem;
+            }
+            
+            .container p[style*="0.8rem"] {
+                font-size: 0.75rem !important;
+            }
+            
+            .image-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .image-box {
+                min-width: 100%;
+                width: 100%;
+            }
+            
+            .image-box img, .image-box canvas {
+                max-height: 300px;
+            }
+            
+            .history-section {
+                padding: 20px 15px;
+                width: 95%;
+                margin: 20px 10px;
+            }
+            
+            .history-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+            }
+            
+            .history-header h2 {
+                font-size: 1.3rem;
+                text-align: center;
+            }
+            
+            .clear-history-btn {
+                width: 100%;
+            }
+            
+            .history-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
+            }
+            
+            .history-item img {
+                height: 120px;
+            }
+            
+            .history-empty {
+                padding: 30px 15px;
+                font-size: 0.9rem;
+            }
+            
+            button {
+                padding: 12px;
+                font-size: 1rem;
+            }
+            
+            input[type="file"] {
+                font-size: 0.9rem;
+            }
+            
+            .back-link {
+                margin: 30px 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { 
+                font-size: 1.5rem; 
+            }
+            
+            .container {
+                padding: 15px 10px;
+            }
+            
+            .container p {
+                font-size: 0.85rem;
+            }
+            
+            .image-box img, .image-box canvas {
+                max-height: 250px;
+            }
+            
+            .history-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .history-item img {
+                height: 100px;
+            }
+            
+            .history-header h2 {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
