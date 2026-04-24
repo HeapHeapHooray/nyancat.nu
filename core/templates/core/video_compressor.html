@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Compressor - nyancat.nu</title>
+    <style>
+        body {
+            background-color: #003366;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 20px; }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 90%;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #ff0099;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #ff33bb; }
+        button:disabled { background-color: #666; cursor: not-allowed; }
+        #status { margin-top: 20px; font-style: italic; color: #00ccff; }
+        #downloadLink {
+            display: none;
+            margin-top: 20px;
+            color: #00ff00;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .back-link { margin-top: 30px; color: #ccc; text-decoration: none; }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .option-group {
+            text-align: left;
+        }
+        .option-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        .preset-btn {
+            background-color: #0066cc;
+            padding: 8px 15px;
+            margin: 5px;
+            width: auto;
+            display: inline-block;
+            font-size: 0.85rem;
+        }
+        .preset-btn:hover {
+            background-color: #0088ee;
+        }
+        #videoPreview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .info-text {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 5px;
+        }
+        .size-comparison {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Video Compressor & Resizer</h1>
+    <div class="container">
+        <p>Compress and resize videos locally in your browser!</p>
+        
+        <div style="text-align: left; margin-bottom: 15px;">
+            <label for="videoInput" style="display: block; margin-bottom: 5px;">Select Video File:</label>
+            <input type="file" id="videoInput" accept="video/*">
+        </div>
+
+        <div id="previewContainer" style="margin-bottom: 20px; display: none;">
+            <p style="font-size: 0.9rem; color: #ccc;">Video Preview:</p>
+            <video id="videoPreview" controls></video>
+            <div id="videoInfo" class="info-text"></div>
+        </div>
+
+        <div style="margin: 20px 0;">
+            <p style="font-size: 1rem; font-weight: bold; margin-bottom: 10px;">Quick Presets:</p>
+            <button class="preset-btn" onclick="applyPreset('high')">High Quality</button>
+            <button class="preset-btn" onclick="applyPreset('medium')">Medium Quality</button>
+            <button class="preset-btn" onclick="applyPreset('low')">Low Quality</button>
+            <button class="preset-btn" onclick="applyPreset('social')">Social Media</button>
+        </div>
+
+        <div class="options-grid">
+            <div class="option-group">
+                <label for="resolutionSelect">Resolution:</label>
+                <select id="resolutionSelect">
+                    <option value="original">Original</option>
+                    <option value="3840x2160">4K (3840x2160)</option>
+                    <option value="2560x1440">1440p (2560x1440)</option>
+                    <option value="1920x1080" selected>1080p (1920x1080)</option>
+                    <option value="1280x720">720p (1280x720)</option>
+                    <option value="854x480">480p (854x480)</option>
+                    <option value="640x360">360p (640x360)</option>
+                    <option value="custom">Custom...</option>
+                </select>
+            </div>
+
+            <div class="option-group">
+                <label for="bitrateSelect">Video Bitrate:</label>
+                <select id="bitrateSelect">
+                    <option value="original">Original</option>
+                    <option value="8000k">8 Mbps (High)</option>
+                    <option value="4000k">4 Mbps (Medium)</option>
+                    <option value="2000k" selected>2 Mbps (Good)</option>
+                    <option value="1000k">1 Mbps (Low)</option>
+                    <option value="500k">500 Kbps (Very Low)</option>
+                </select>
+            </div>
+
+            <div class="option-group">
+                <label for="fpsSelect">Frame Rate (FPS):</label>
+                <select id="fpsSelect">
+                    <option value="original">Original</option>
+                    <option value="60">60 FPS</option>
+                    <option value="30" selected>30 FPS</option>
+                    <option value="24">24 FPS</option>
+                    <option value="15">15 FPS</option>
+                </select>
+            </div>
+
+            <div class="option-group">
+                <label for="codecSelect">Video Codec:</label>
+                <select id="codecSelect">
+                    <option value="libx264" selected>H.264 (MP4)</option>
+                    <option value="libx265">H.265 (HEVC)</option>
+                    <option value="libvpx-vp9">VP9 (WebM)</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="customResContainer" style="text-align: left; margin: 15px 0; display: none;">
+            <label for="customResInput" style="display: block; margin-bottom: 5px;">Custom Resolution (WxH):</label>
+            <input type="text" id="customResInput" placeholder="e.g. 1024x576">
+        </div>
+
+        <div style="text-align: left; margin: 15px 0;">
+            <label for="audioSelect" style="display: block; margin-bottom: 5px;">Audio:</label>
+            <select id="audioSelect">
+                <option value="copy">Keep Original</option>
+                <option value="192k">192 Kbps</option>
+                <option value="128k" selected>128 Kbps</option>
+                <option value="96k">96 Kbps</option>
+                <option value="64k">64 Kbps</option>
+                <option value="none">Remove Audio</option>
+            </select>
+        </div>
+
+        <button id="processBtn" disabled>Loading FFmpeg...</button>
+        <div id="status">Initializing...</div>
+        
+        <div id="resultContainer" style="margin-top: 20px; display: none;">
+            <p style="font-size: 0.9rem; color: #ccc;">Processed Video Preview:</p>
+            <video id="resultPreview" controls style="max-width: 100%; max-height: 300px; border-radius: 5px; margin-top: 10px;"></video>
+        </div>
+        
+        <div id="sizeComparison" class="size-comparison" style="display: none;">
+            <div><strong>Original:</strong> <span id="originalSize">-</span></div>
+            <div><strong>Processed:</strong> <span id="compressedSize">-</span></div>
+            <div style="color: #00ff00; margin-top: 5px;"><strong>Saved:</strong> <span id="savedSize">-</span></div>
+        </div>
+
+        <a id="downloadLink" href="#">Download Processed Video</a>
+    </div>
+
+    <div class="container" id="historyContainer" style="margin-top: 20px; display: none;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 15px;">Compression History</h2>
+        <div id="historyList" style="text-align: left; max-height: 300px; overflow-y: auto; padding-right: 5px;">
+            <!-- History items will be added here -->
+        </div>
+        <button id="clearHistoryBtn" style="background-color: #444; margin-top: 15px; font-size: 0.8rem; padding: 5px 10px; width: auto;">Clear History</button>
+    </div>
+
+    <a href="{% url 'index' %}" class="back-link">&larr; Back to Home</a>
+
+    <!-- Load ffmpeg.wasm 0.11.6 from CDN (Classic stable version) -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/idb-keyval@6/dist/umd.js"></script>
+    
+    <script>
+        const { createFFmpeg, fetchFile } = FFmpeg;
+        const ffmpeg = createFFmpeg({ 
+            log: true,
+            corePath: 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'
+        });
+
+        const processBtn = document.getElementById('processBtn');
+        const videoInput = document.getElementById('videoInput');
+        const resolutionSelect = document.getElementById('resolutionSelect');
+        const bitrateSelect = document.getElementById('bitrateSelect');
+        const fpsSelect = document.getElementById('fpsSelect');
+        const codecSelect = document.getElementById('codecSelect');
+        const audioSelect = document.getElementById('audioSelect');
+        const customResContainer = document.getElementById('customResContainer');
+        const customResInput = document.getElementById('customResInput');
+        const status = document.getElementById('status');
+        const downloadLink = document.getElementById('downloadLink');
+        const previewContainer = document.getElementById('previewContainer');
+        const videoPreview = document.getElementById('videoPreview');
+        const videoInfo = document.getElementById('videoInfo');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultPreview = document.getElementById('resultPreview');
+        const historyContainer = document.getElementById('historyContainer');
+        const historyList = document.getElementById('historyList');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        const sizeComparison = document.getElementById('sizeComparison');
+        const originalSizeEl = document.getElementById('originalSize');
+        const compressedSizeEl = document.getElementById('compressedSize');
+        const savedSizeEl = document.getElementById('savedSize');
+
+        let currentFile = null;
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        function applyPreset(preset) {
+            switch(preset) {
+                case 'high':
+                    resolutionSelect.value = '1920x1080';
+                    bitrateSelect.value = '4000k';
+                    fpsSelect.value = '30';
+                    audioSelect.value = '192k';
+                    codecSelect.value = 'libx264';
+                    break;
+                case 'medium':
+                    resolutionSelect.value = '1280x720';
+                    bitrateSelect.value = '2000k';
+                    fpsSelect.value = '30';
+                    audioSelect.value = '128k';
+                    codecSelect.value = 'libx264';
+                    break;
+                case 'low':
+                    resolutionSelect.value = '854x480';
+                    bitrateSelect.value = '1000k';
+                    fpsSelect.value = '24';
+                    audioSelect.value = '96k';
+                    codecSelect.value = 'libx264';
+                    break;
+                case 'social':
+                    resolutionSelect.value = '1280x720';
+                    bitrateSelect.value = '2000k';
+                    fpsSelect.value = '30';
+                    audioSelect.value = '128k';
+                    codecSelect.value = 'libx264';
+                    break;
+            }
+        }
+
+        const loadHistory = async () => {
+            const history = JSON.parse(localStorage.getItem('videoCompressionHistory') || '[]');
+            if (history.length === 0) {
+                historyContainer.style.display = 'none';
+                return;
+            }
+            historyContainer.style.display = 'block';
+            historyList.innerHTML = '';
+            
+            for (const item of [...history].reverse()) {
+                const div = document.createElement('div');
+                div.style.padding = '10px';
+                div.style.borderBottom = '1px solid rgba(255,255,255,0.1)';
+                div.style.fontSize = '0.9rem';
+                div.style.display = 'flex';
+                div.style.alignItems = 'center';
+                div.style.gap = '15px';
+                
+                const date = new Date(item.timestamp).toLocaleString();
+                
+                const previewDiv = document.createElement('div');
+                previewDiv.style.width = '100px';
+                previewDiv.style.height = '60px';
+                previewDiv.style.display = 'flex';
+                previewDiv.style.alignItems = 'center';
+                previewDiv.style.justifyContent = 'center';
+                previewDiv.style.backgroundColor = 'rgba(0,0,0,0.2)';
+                previewDiv.style.borderRadius = '5px';
+                previewDiv.style.overflow = 'hidden';
+
+                try {
+                    const blob = await idbKeyval.get(item.id);
+                    if (blob) {
+                        const url = URL.createObjectURL(blob);
+                        previewDiv.innerHTML = `<video src="${url}" style="max-width: 100%; max-height: 100%; object-fit: contain;" controls preload="metadata"></video>`;
+                    } else {
+                        previewDiv.innerHTML = `<span style="color: #999; font-size: 0.7rem;">Expired</span>`;
+                    }
+                } catch (e) {
+                    previewDiv.innerHTML = `<span style="color: #999; font-size: 0.7rem;">Error</span>`;
+                }
+
+                const infoDiv = document.createElement('div');
+                infoDiv.style.flex = '1';
+                infoDiv.innerHTML = `
+                    <div style="font-weight: bold; color: #ff0099;">${item.finalFileName}</div>
+                    <div style="color: #ccc; font-size: 0.8rem;">From: ${item.originalName}</div>
+                    <div style="color: #00ff00; font-size: 0.8rem;">Saved: ${item.savedSize}</div>
+                    <div style="color: #666; font-size: 0.7rem;">${date}</div>
+                `;
+                
+                div.appendChild(previewDiv);
+                div.appendChild(infoDiv);
+
+                const dlBtn = document.createElement('a');
+                dlBtn.href = '#';
+                dlBtn.innerHTML = '&#11015;';
+                dlBtn.style.textDecoration = 'none';
+                dlBtn.style.fontSize = '1.5rem';
+                dlBtn.style.color = '#00ff00';
+                dlBtn.title = 'Download';
+                dlBtn.onclick = async (e) => {
+                    e.preventDefault();
+                    const b = await idbKeyval.get(item.id);
+                    if (b) {
+                        const dlUrl = URL.createObjectURL(b);
+                        const a = document.createElement('a');
+                        a.href = dlUrl;
+                        a.download = item.finalFileName;
+                        a.click();
+                        URL.revokeObjectURL(dlUrl);
+                    } else {
+                        alert('File data is no longer available locally.');
+                    }
+                };
+                div.appendChild(dlBtn);
+
+                historyList.appendChild(div);
+            }
+        };
+
+        const addToHistory = async (originalName, finalFileName, originalSize, compressedSize, savedSize, blob) => {
+            const history = JSON.parse(localStorage.getItem('videoCompressionHistory') || '[]');
+            const id = Date.now().toString() + Math.random().toString(36).substr(2, 5);
+            
+            history.push({
+                id,
+                originalName,
+                finalFileName,
+                originalSize,
+                compressedSize,
+                savedSize,
+                timestamp: new Date().toISOString()
+            });
+            
+            if (history.length > 50) {
+                const removed = history.shift();
+                try { await idbKeyval.del(removed.id); } catch(e) {}
+            }
+            
+            localStorage.setItem('videoCompressionHistory', JSON.stringify(history));
+            try { await idbKeyval.set(id, blob); } catch(e) { console.error('Failed to save to IDB', e); }
+            
+            loadHistory();
+        };
+
+        clearHistoryBtn.addEventListener('click', async () => {
+            if (confirm('Clear all compression history?')) {
+                localStorage.removeItem('videoCompressionHistory');
+                try { await idbKeyval.clear(); } catch(e) {}
+                loadHistory();
+            }
+        });
+
+        videoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) {
+                previewContainer.style.display = 'none';
+                return;
+            }
+
+            currentFile = file;
+            const url = URL.createObjectURL(file);
+            previewContainer.style.display = 'block';
+            videoPreview.src = url;
+            
+            videoPreview.onloadedmetadata = () => {
+                const duration = Math.floor(videoPreview.duration);
+                const minutes = Math.floor(duration / 60);
+                const seconds = duration % 60;
+                videoInfo.innerHTML = `
+                    <strong>Size:</strong> ${formatBytes(file.size)} | 
+                    <strong>Duration:</strong> ${minutes}:${seconds.toString().padStart(2, '0')} | 
+                    <strong>Resolution:</strong> ${videoPreview.videoWidth}x${videoPreview.videoHeight}
+                `;
+            };
+        });
+
+        resolutionSelect.addEventListener('change', () => {
+            if (resolutionSelect.value === 'custom') {
+                customResContainer.style.display = 'block';
+            } else {
+                customResContainer.style.display = 'none';
+            }
+        });
+
+        async function load() {
+            try {
+                status.innerText = 'Loading FFmpeg core...';
+                await ffmpeg.load();
+                status.innerText = 'Ready to process!';
+                processBtn.disabled = false;
+                processBtn.innerText = 'Process Video';
+            } catch (err) {
+                console.error(err);
+                status.innerText = 'Error loading FFmpeg.';
+            }
+        }
+
+        const compress = async () => {
+            if (!currentFile) return alert('Please select a video file first!');
+            
+            let resolution = resolutionSelect.value;
+            if (resolution === 'custom') {
+                resolution = customResInput.value.trim();
+                if (!resolution || !resolution.match(/^\d+x\d+$/)) {
+                    return alert('Please enter a valid resolution (e.g., 1024x576)');
+                }
+            }
+            
+            const bitrate = bitrateSelect.value;
+            const fps = fpsSelect.value;
+            const codec = codecSelect.value;
+            const audio = audioSelect.value;
+
+            const inputName = 'input_' + currentFile.name;
+            const extension = codec === 'libvpx-vp9' ? 'webm' : 'mp4';
+            const outputName = 'output.' + extension;
+
+            processBtn.disabled = true;
+            status.innerText = 'Starting processing...';
+            downloadLink.style.display = 'none';
+            sizeComparison.style.display = 'none';
+            resultContainer.style.display = 'none';
+
+            try {
+                ffmpeg.FS('writeFile', inputName, await fetchFile(currentFile));
+                
+                const args = ['-i', inputName];
+                
+                // Video codec
+                args.push('-c:v', codec);
+                
+                // Resolution
+                if (resolution !== 'original') {
+                    args.push('-s', resolution);
+                }
+                
+                // Bitrate
+                if (bitrate !== 'original') {
+                    args.push('-b:v', bitrate);
+                }
+                
+                // FPS
+                if (fps !== 'original') {
+                    args.push('-r', fps);
+                }
+                
+                // Audio
+                if (audio === 'none') {
+                    args.push('-an');
+                } else if (audio === 'copy') {
+                    args.push('-c:a', 'copy');
+                } else {
+                    args.push('-c:a', 'aac', '-b:a', audio);
+                }
+                
+                // Output
+                args.push(outputName);
+                
+                status.innerText = 'Processing... This may take a while.';
+                await ffmpeg.run(...args);
+                
+                const data = ffmpeg.FS('readFile', outputName);
+                const blob = new Blob([data.buffer], { type: 'video/' + extension });
+                const url = URL.createObjectURL(blob);
+                
+                const finalFileName = currentFile.name.replace(/\.[^/.]+$/, "") + '_compressed.' + extension;
+                downloadLink.href = url;
+                downloadLink.download = finalFileName;
+                downloadLink.innerText = 'Download ' + finalFileName;
+                downloadLink.style.display = 'block';
+                
+                // Show result preview
+                resultPreview.src = url;
+                resultContainer.style.display = 'block';
+                
+                // Show size comparison
+                const originalSize = currentFile.size;
+                const compressedSize = blob.size;
+                const saved = originalSize - compressedSize;
+                const savedPercent = Math.round((saved / originalSize) * 100);
+                
+                originalSizeEl.innerText = formatBytes(originalSize);
+                compressedSizeEl.innerText = formatBytes(compressedSize);
+                savedSizeEl.innerText = `${formatBytes(saved)} (${savedPercent}%)`;
+                sizeComparison.style.display = 'block';
+                
+                status.innerText = 'Processing complete!';
+                addToHistory(
+                    currentFile.name, 
+                    finalFileName, 
+                    formatBytes(originalSize),
+                    formatBytes(compressedSize),
+                    `${formatBytes(saved)} (${savedPercent}%)`,
+                    blob
+                );
+            } catch (e) {
+                console.error(e);
+                status.innerText = 'Processing failed. Check console for FFmpeg logs.';
+            }
+            
+            processBtn.disabled = false;
+        };
+
+        processBtn.addEventListener('click', compress);
+        loadHistory();
+        load();
+    </script>
+</body>
+</html>
