@@ -19,6 +19,10 @@ def bg_remover(request):
     return render(request, "core/bg_remover.html")
 
 
+def notepad(request):
+    return render(request, "core/notepad.html")
+
+
 def x_downloader(request):
     video_info = None
     error = None

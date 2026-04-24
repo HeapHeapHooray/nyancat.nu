@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad - nyancat.nu</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #003366;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        h1 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin: 0;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .home-link {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        
+        .home-link:hover {
+            color: #ffdd33;
+        }
+        
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-new {
+            background-color: #00ffcc;
+            color: #003366;
+        }
+        
+        .btn-upload {
+            background-color: #ff0099;
+            color: white;
+        }
+        
+        .btn-download {
+            background-color: #9933ff;
+            color: white;
+        }
+        
+        .btn-clear {
+            background-color: #ff6600;
+            color: white;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .filename-display {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .filename-display label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            white-space: nowrap;
+        }
+        
+        .filename-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            outline: none;
+            padding: 4px 8px;
+            width: 200px;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        
+        .filename-input:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: #00ffcc;
+        }
+        
+        .filename-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .editor-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        #textEditor {
+            flex: 1;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            resize: none;
+            outline: none;
+            min-height: 400px;
+        }
+        
+        #textEditor:focus {
+            border-color: #00ffcc;
+        }
+        
+        .status-bar {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .save-indicator {
+            color: #00ffcc;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .toolbar {
+                width: 100%;
+            }
+            
+            .btn {
+                flex: 1;
+                min-width: 120px;
+            }
+            
+            .filename-display {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            
+            .filename-input {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .btn {
+                padding: 8px 15px;
+                font-size: 0.85rem;
+            }
+            
+            #textEditor {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Notepad</h1>
+        <a href="{% url 'index' %}" class="home-link">← Back to Home</a>
+    </div>
+    
+    <div class="toolbar">
+        <button class="btn btn-new" onclick="createNewFile()">New File</button>
+        <div class="file-input-wrapper">
+            <button class="btn btn-upload" onclick="document.getElementById('fileUpload').click()">Upload File</button>
+            <input type="file" id="fileUpload" accept=".txt,.md,.json,.js,.css,.html,.xml,.csv,.log" onchange="uploadFile(event)">
+        </div>
+        <button class="btn btn-download" onclick="downloadFile()">Download</button>
+        <button class="btn btn-clear" onclick="clearEditor()">Clear</button>
+    </div>
+    
+    <div class="filename-display">
+        <label for="filename">Filename:</label>
+        <input type="text" id="filename" class="filename-input" placeholder="untitled.txt" value="untitled.txt">
+    </div>
+    
+    <div class="editor-container">
+        <textarea id="textEditor" placeholder="Start typing your text here..."></textarea>
+        <div class="status-bar">
+            <span id="charCount">Characters: 0 | Lines: 0</span>
+            <span class="save-indicator" id="saveStatus">Auto-saved</span>
+        </div>
+    </div>
+
+    <script>
+        const editor = document.getElementById('textEditor');
+        const filenameInput = document.getElementById('filename');
+        const charCount = document.getElementById('charCount');
+        const saveStatus = document.getElementById('saveStatus');
+        
+        // Load saved content and filename from localStorage on page load
+        window.addEventListener('load', function() {
+            const savedContent = localStorage.getItem('notepad_content');
+            const savedFilename = localStorage.getItem('notepad_filename');
+            
+            if (savedContent !== null) {
+                editor.value = savedContent;
+            }
+            
+            if (savedFilename) {
+                filenameInput.value = savedFilename;
+            }
+            
+            updateCharCount();
+        });
+        
+        // Auto-save content to localStorage
+        let saveTimeout;
+        editor.addEventListener('input', function() {
+            updateCharCount();
+            
+            // Clear previous timeout
+            clearTimeout(saveTimeout);
+            saveStatus.textContent = 'Saving...';
+            
+            // Save after 500ms of inactivity
+            saveTimeout = setTimeout(function() {
+                localStorage.setItem('notepad_content', editor.value);
+                saveStatus.textContent = 'Auto-saved';
+            }, 500);
+        });
+        
+        // Save filename to localStorage
+        filenameInput.addEventListener('input', function() {
+            localStorage.setItem('notepad_filename', filenameInput.value);
+        });
+        
+        // Update character and line count
+        function updateCharCount() {
+            const text = editor.value;
+            const chars = text.length;
+            const lines = text.split('\n').length;
+            charCount.textContent = `Characters: ${chars} | Lines: ${lines}`;
+        }
+        
+        // Create new file
+        function createNewFile() {
+            if (editor.value.trim() !== '') {
+                if (!confirm('This will clear the current content. Continue?')) {
+                    return;
+                }
+            }
+            
+            editor.value = '';
+            filenameInput.value = 'untitled.txt';
+            localStorage.setItem('notepad_content', '');
+            localStorage.setItem('notepad_filename', 'untitled.txt');
+            updateCharCount();
+            saveStatus.textContent = 'New file created';
+        }
+        
+        // Upload file
+        function uploadFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                editor.value = e.target.result;
+                filenameInput.value = file.name;
+                localStorage.setItem('notepad_content', e.target.result);
+                localStorage.setItem('notepad_filename', file.name);
+                updateCharCount();
+                saveStatus.textContent = 'File uploaded';
+                
+                // Reset file input
+                event.target.value = '';
+            };
+            
+            reader.onerror = function() {
+                alert('Error reading file. Please try again.');
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        // Download file
+        function downloadFile() {
+            const content = editor.value;
+            const filename = filenameInput.value || 'untitled.txt';
+            
+            // Create blob and download link
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            saveStatus.textContent = 'File downloaded';
+        }
+        
+        // Clear editor
+        function clearEditor() {
+            if (editor.value.trim() === '') return;
+            
+            if (confirm('Are you sure you want to clear all content?')) {
+                editor.value = '';
+                localStorage.setItem('notepad_content', '');
+                updateCharCount();
+                saveStatus.textContent = 'Content cleared';
+            }
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + S to download
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                downloadFile();
+            }
+            
+            // Ctrl/Cmd + N to create new file
+            if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                e.preventDefault();
+                createNewFile();
+            }
+        });
+    </script>
+</body>
+</html>

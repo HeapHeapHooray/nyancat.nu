@@ -106,6 +106,15 @@
             background-color: #aa55ff;
         }
         
+        .link-notepad {
+            background-color: #00cc66;
+            border: 2px solid #00cc66;
+        }
+        
+        .link-notepad:hover {
+            background-color: #00dd77;
+        }
+        
         /* Mobile optimizations */
         @media (max-width: 768px) {
             body {
@@ -151,6 +160,7 @@
         <a href="{% url 'video_compressor' %}" class="link-button link-video-compressor">Video Compressor</a>
         <a href="{% url 'x_downloader' %}" class="link-button link-x-downloader">X Video Downloader</a>
         <a href="{% url 'bg_remover' %}" class="link-button link-bg-remover">Background Remover</a>
+        <a href="{% url 'notepad' %}" class="link-button link-notepad">Notepad</a>
     </div>
 </body>
 </html>
