@@ -1,6 +1,6 @@
 # nyancat.nu
 
-A Django-based web application featuring a classic Nyan Cat welcome page, a fully client-side media converter, and an AI-powered background remover.
+A Django-based web application featuring a classic Nyan Cat welcome page, a fully client-side media converter, an AI-powered background remover, and a persistent notepad editor.
 
 ## Features
 
@@ -16,6 +16,14 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - Automatic processing history stored locally in your browser
   - Export transparent PNG images
   - ~176MB model download (one-time, cached in browser)
+- **Notepad Editor**: Full-featured text editor with persistence.
+  - Create, edit, and save text files
+  - Upload and download text files
+  - Auto-save to browser localStorage
+  - Line numbers with synchronized scrolling
+  - Character and line count
+  - Persistent across browser sessions
+  - Keyboard shortcuts (Ctrl/Cmd+S to save, Ctrl/Cmd+N for new file)
 
 ## Tech Stack
 
@@ -79,6 +87,16 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - Download results as transparent PNG files
 - Works best with images containing people, products, or clear subjects
 
+### 3. Notepad (`/notepad/`)
+- Browser-based text editor with line numbers
+- Auto-save functionality with localStorage persistence
+- Create new files, upload existing files, and download edited files
+- Custom filename support
+- Real-time character and line count
+- Keyboard shortcuts for common actions
+- Supports multiple text file formats (.txt, .md, .json, .js, .css, .html, .xml, .csv, .log)
+- Content persists across browser sessions
+
 ## VPS Deployment (Nginx + Gunicorn + SSL)
 
 To run the converter on mobile and modern browsers, **HTTPS is mandatory**.
@@ -140,9 +158,9 @@ sudo certbot --nginx -d nyancat.nu
 
 ## Privacy & Security
 
-- **100% Client-Side Processing**: Both the file converter and background remover process everything locally in your browser
-- **No Server Uploads**: Your files never leave your device
-- **Local Storage Only**: Processing history is stored in your browser's IndexedDB
+- **100% Client-Side Processing**: File converter, background remover, and notepad all process everything locally in your browser
+- **No Server Uploads**: Your files and text never leave your device
+- **Local Storage Only**: Processing history and notepad content are stored in your browser's localStorage/IndexedDB
 - **Open Source**: All code is available for inspection
 
 ## Browser Requirements
