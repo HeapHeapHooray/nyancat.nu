@@ -1,6 +1,6 @@
 # nyancat.nu
 
-A Django-based web application featuring a classic Nyan Cat welcome page and a fully client-side media converter.
+A Django-based web application featuring a classic Nyan Cat welcome page, a fully client-side media converter, and an AI-powered background remover.
 
 ## Features
 
@@ -9,12 +9,22 @@ A Django-based web application featuring a classic Nyan Cat welcome page and a f
   - No files are uploaded to any server; all processing happens locally.
   - Supports MP4, MP3, WAV, GIF, PNG, JPG, WEBP, and more.
   - Custom extension support for advanced users.
+- **AI Background Remover**: Professional-grade background removal powered by RMBG-1.4 AI model.
+  - 100% client-side processing using Transformers.js
+  - High-quality results for people, products, and objects
+  - View original, mask, and result side-by-side
+  - Automatic processing history stored locally in your browser
+  - Export transparent PNG images
+  - ~176MB model download (one-time, cached in browser)
 
 ## Tech Stack
 
 - **Backend**: Django (Python)
 - **Frontend**: HTML5, CSS3, JavaScript
-- **Processing**: [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) (FFmpeg ported to WebAssembly)
+- **Media Processing**: [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) (FFmpeg ported to WebAssembly)
+- **AI Processing**: [Transformers.js](https://huggingface.co/docs/transformers.js) (@xenova/transformers)
+- **AI Model**: [RMBG-1.4](https://huggingface.co/briaai/RMBG-1.4) by BRIA AI
+- **Storage**: IndexedDB (for local history)
 
 ## Prerequisites
 
@@ -52,6 +62,22 @@ A Django-based web application featuring a classic Nyan Cat welcome page and a f
 
 6. **Access the site**:
    Open [http://localhost:8000](http://localhost:8000) (or your server's IP) in your browser.
+
+## Available Tools
+
+### 1. File Converter (`/converter/`)
+- Convert between various media formats
+- Supports video (MP4, AVI, MOV), audio (MP3, WAV, AAC), and images (PNG, JPG, GIF, WEBP)
+- All processing happens in your browser using WebAssembly
+- Requires HTTPS and `SharedArrayBuffer` support
+
+### 2. Background Remover (`/bg-remover/`)
+- Remove backgrounds from images using AI
+- Powered by RMBG-1.4 model from BRIA AI
+- View the generated mask and final result
+- Processing history stored locally in IndexedDB
+- Download results as transparent PNG files
+- Works best with images containing people, products, or clear subjects
 
 ## VPS Deployment (Nginx + Gunicorn + SSL)
 
@@ -112,8 +138,43 @@ sudo systemctl restart nginx
 sudo certbot --nginx -d nyancat.nu
 ```
 
-## Browser Security Requirements
-... Applied fuzzy match at line 41-52.
+## Privacy & Security
+
+- **100% Client-Side Processing**: Both the file converter and background remover process everything locally in your browser
+- **No Server Uploads**: Your files never leave your device
+- **Local Storage Only**: Processing history is stored in your browser's IndexedDB
+- **Open Source**: All code is available for inspection
+
+## Browser Requirements
+
+### For File Converter:
+- **HTTPS Required**: The converter requires secure context (HTTPS) to work on production
+- **SharedArrayBuffer Support**: Modern browsers (Chrome 92+, Firefox 89+, Safari 15.2+)
+- **COOP/COEP Headers**: Required for ffmpeg.wasm (configured in Nginx setup above)
+
+### For Background Remover:
+- **Modern Browser**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+- **IndexedDB Support**: For storing processing history
+- **WebAssembly Support**: For running the AI model
+- **~176MB Initial Download**: Model is cached for future use
+
+## Troubleshooting
+
+### File Converter Not Working
+- Ensure you're using HTTPS (required for `SharedArrayBuffer`)
+- Check that COOP/COEP headers are set correctly in Nginx
+- Verify your browser supports WebAssembly and SharedArrayBuffer
+- Try disabling browser extensions that might interfere
+
+### Background Remover Issues
+- Clear browser cache if model fails to load
+- Ensure you have stable internet for initial model download
+- Check browser console for detailed error messages
+- Works best with clear, well-lit images
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
