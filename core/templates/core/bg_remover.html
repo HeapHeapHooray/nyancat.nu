@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Remover - nyancat.nu</title>
+    <style>
+        body {
+            background-color: #003366;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 20px; }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 90%;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+        }
+        input[type="file"] { width: 100%; box-sizing: border-box; }
+        button {
+            background-color: #00ffcc;
+            color: #003366;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            width: 100%;
+        }
+        button:hover { background-color: #33ffdd; }
+        button:disabled { background-color: #666; color: #ccc; cursor: not-allowed; }
+        #status { margin-top: 20px; font-style: italic; color: #00ccff; }
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .image-box {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .image-box img, .image-box canvas {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 5px;
+            background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        #downloadBtn {
+            display: none;
+            background-color: #ff0099;
+            color: white;
+            margin-top: 20px;
+        }
+        #downloadBtn:hover {
+            background-color: #ff33bb;
+        }
+        .back-link { margin-top: 30px; color: #ccc; text-decoration: none; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1>Local Background Remover</h1>
+    <div class="container">
+        <p>Remove backgrounds from images locally in your browser using AI!</p>
+        <p style="font-size: 0.8rem; color: #ccc;">Note: The first run will download the MODNET model (~25MB), which may take a moment. All processing is done locally in your browser.</p>
+        
+        <div style="text-align: left; margin-bottom: 15px;">
+            <label for="imageInput" style="display: block; margin-bottom: 5px;">Select an Image:</label>
+            <input type="file" id="imageInput" accept="image/*">
+        </div>
+
+        <button id="processBtn" disabled>Loading AI Model...</button>
+        <div id="status">Initializing Transformers.js...</div>
+
+        <div class="image-container" id="resultsContainer" style="display: none;">
+            <div class="image-box">
+                <p>Original</p>
+                <img id="originalImg" src="" alt="Original Image">
+            </div>
+            <div class="image-box">
+                <p>Result</p>
+                <canvas id="resultCanvas"></canvas>
+            </div>
+        </div>
+
+        <button id="downloadBtn">Download Image (Transparent PNG)</button>
+    </div>
+
+    <a href="{% url 'index' %}" class="back-link">&larr; Back to Home</a>
+
+    <script type="module">
+        import { 
+            AutoModel, 
+            AutoProcessor, 
+            RawImage,
+            env 
+        } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
+
+        // Configure environment
+        env.allowLocalModels = false;
+        env.useBrowserCache = true;
+
+        const processBtn = document.getElementById('processBtn');
+        const imageInput = document.getElementById('imageInput');
+        const status = document.getElementById('status');
+        const originalImg = document.getElementById('originalImg');
+        const resultCanvas = document.getElementById('resultCanvas');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+
+        let model = null;
+        let processor = null;
+
+        // Load the model
+        async function loadModel() {
+            try {
+                status.innerText = 'Loading background removal model...';
+                
+                // Using MODNET - a model specifically designed for background removal
+                const modelId = 'Xenova/modnet';
+                
+                const progressCallback = (progress) => {
+                    if (progress.status === 'progress' && progress.progress) {
+                        status.innerText = `Downloading: ${Math.round(progress.progress)}%`;
+                    } else if (progress.status === 'downloading') {
+                        status.innerText = 'Downloading model files...';
+                    } else if (progress.status === 'done') {
+                        status.innerText = 'Processing...';
+                    }
+                };
+
+                processor = await AutoProcessor.from_pretrained(modelId, {
+                    progress_callback: progressCallback
+                });
+                
+                model = await AutoModel.from_pretrained(modelId, {
+                    progress_callback: progressCallback
+                });
+
+                status.innerText = 'Model loaded and ready!';
+                processBtn.innerText = 'Remove Background';
+                if (imageInput.files.length > 0) {
+                    processBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error("Error loading model:", error);
+                status.innerText = 'Failed to load model. Error: ' + error.message;
+                status.style.color = '#ff3333';
+            }
+        }
+
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                originalImg.src = url;
+                resultsContainer.style.display = 'flex';
+                downloadBtn.style.display = 'none';
+                
+                // Clear canvas
+                const ctx = resultCanvas.getContext('2d');
+                ctx.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
+                
+                if (model && processor) {
+                    processBtn.disabled = false;
+                }
+            }
+        });
+
+        processBtn.addEventListener('click', async () => {
+            if (!model || !processor || !imageInput.files[0]) return;
+
+            processBtn.disabled = true;
+            status.innerText = 'Processing image...';
+            
+            try {
+                // Read image
+                const file = imageInput.files[0];
+                const imageURL = URL.createObjectURL(file);
+                
+                // Load image with RawImage
+                const image = await RawImage.fromURL(imageURL);
+
+                status.innerText = 'Running AI model...';
+                
+                // Preprocess image
+                const { pixel_values } = await processor(image);
+                
+                // Run model inference
+                const { output } = await model({ input: pixel_values });
+                
+                status.innerText = 'Creating transparent background...';
+                
+                // Get dimensions
+                const [batch, channels, height, width] = output.dims;
+                
+                // Create mask from output
+                const maskData = output.data;
+                
+                // Setup canvas
+                resultCanvas.width = image.width;
+                resultCanvas.height = image.height;
+                const ctx = resultCanvas.getContext('2d');
+                
+                // Load and draw original image
+                const imgEl = new Image();
+                imgEl.src = imageURL;
+                await new Promise(resolve => imgEl.onload = resolve);
+                ctx.drawImage(imgEl, 0, 0);
+                
+                // Get image data
+                const imageData = ctx.getImageData(0, 0, resultCanvas.width, resultCanvas.height);
+                
+                // Create temporary canvas for mask
+                const maskCanvas = document.createElement('canvas');
+                maskCanvas.width = width;
+                maskCanvas.height = height;
+                const maskCtx = maskCanvas.getContext('2d');
+                const tempMaskData = maskCtx.createImageData(width, height);
+                
+                // Convert mask data to ImageData
+                for (let i = 0; i < maskData.length; i++) {
+                    const val = Math.round(maskData[i] * 255);
+                    tempMaskData.data[i * 4] = val;
+                    tempMaskData.data[i * 4 + 1] = val;
+                    tempMaskData.data[i * 4 + 2] = val;
+                    tempMaskData.data[i * 4 + 3] = 255;
+                }
+                
+                maskCtx.putImageData(tempMaskData, 0, 0);
+                
+                // Scale mask to match original image size
+                const scaledMaskCanvas = document.createElement('canvas');
+                scaledMaskCanvas.width = resultCanvas.width;
+                scaledMaskCanvas.height = resultCanvas.height;
+                const scaledMaskCtx = scaledMaskCanvas.getContext('2d');
+                scaledMaskCtx.drawImage(maskCanvas, 0, 0, resultCanvas.width, resultCanvas.height);
+                
+                const scaledMaskData = scaledMaskCtx.getImageData(0, 0, resultCanvas.width, resultCanvas.height);
+                
+                // Apply mask as alpha channel
+                for (let i = 0; i < imageData.data.length; i += 4) {
+                    imageData.data[i + 3] = scaledMaskData.data[i];
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+                
+                status.innerText = 'Background removed successfully!';
+                status.style.color = '#00ccff';
+                
+                // Setup download button
+                downloadBtn.style.display = 'block';
+                downloadBtn.onclick = () => {
+                    const a = document.createElement('a');
+                    a.href = resultCanvas.toDataURL('image/png');
+                    a.download = file.name.replace(/\.[^/.]+$/, "") + '_nobg.png';
+                    a.click();
+                };
+
+            } catch (error) {
+                console.error("Error processing image:", error);
+                status.innerText = 'Error: ' + error.message;
+                status.style.color = '#ff3333';
+            } finally {
+                processBtn.disabled = false;
+            }
+        });
+
+        // Start loading the model immediately
+        loadModel();
+    </script>
+</body>
+</html>

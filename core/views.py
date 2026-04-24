@@ -8,6 +8,9 @@ def index(request):
 def converter(request):
     return render(request, 'core/converter.html')
 
+def bg_remover(request):
+    return render(request, 'core/bg_remover.html')
+
 def x_downloader(request):
     video_info = None
     error = None
