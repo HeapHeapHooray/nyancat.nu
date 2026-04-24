@@ -152,23 +152,48 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
         
-        #textEditor {
+        .editor-wrapper {
             flex: 1;
-            width: 100%;
+            display: flex;
+            gap: 0;
             background-color: rgba(255, 255, 255, 0.05);
-            color: white;
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1rem;
-            resize: none;
-            outline: none;
+            overflow: hidden;
             min-height: 400px;
         }
         
-        #textEditor:focus {
+        .editor-wrapper:focus-within {
             border-color: #00ffcc;
+        }
+        
+        .line-numbers {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: rgba(255, 255, 255, 0.4);
+            padding: 15px 10px;
+            text-align: right;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            line-height: 1.5;
+            user-select: none;
+            overflow: hidden;
+            min-width: 50px;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            white-space: pre;
+        }
+        
+        #textEditor {
+            flex: 1;
+            background-color: transparent;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            line-height: 1.5;
+            resize: none;
+            outline: none;
+            overflow-y: auto;
         }
         
         .status-bar {
@@ -226,6 +251,12 @@
                 font-size: 0.9rem;
                 padding: 10px;
             }
+            
+            .line-numbers {
+                font-size: 0.9rem;
+                padding: 10px 5px;
+                min-width: 40px;
+            }
         }
     </style>
 </head>
@@ -251,7 +282,10 @@
     </div>
     
     <div class="editor-container">
-        <textarea id="textEditor" placeholder="Start typing your text here..."></textarea>
+        <div class="editor-wrapper">
+            <div class="line-numbers" id="lineNumbers">1</div>
+            <textarea id="textEditor" placeholder="Start typing your text here..."></textarea>
+        </div>
         <div class="status-bar">
             <span id="charCount">Characters: 0 | Lines: 0</span>
             <span class="save-indicator" id="saveStatus">Auto-saved</span>
@@ -260,9 +294,23 @@
 
     <script>
         const editor = document.getElementById('textEditor');
+        const lineNumbers = document.getElementById('lineNumbers');
         const filenameInput = document.getElementById('filename');
         const charCount = document.getElementById('charCount');
         const saveStatus = document.getElementById('saveStatus');
+        
+        // Update line numbers
+        function updateLineNumbers() {
+            const text = editor.value;
+            const lines = text.split('\n').length;
+            const lineNumbersText = Array.from({length: lines}, (_, i) => i + 1).join('\n');
+            lineNumbers.textContent = lineNumbersText;
+        }
+        
+        // Sync scrolling between textarea and line numbers
+        editor.addEventListener('scroll', function() {
+            lineNumbers.scrollTop = editor.scrollTop;
+        });
         
         // Load saved content and filename from localStorage on page load
         window.addEventListener('load', function() {
@@ -278,12 +326,14 @@
             }
             
             updateCharCount();
+            updateLineNumbers();
         });
         
         // Auto-save content to localStorage
         let saveTimeout;
         editor.addEventListener('input', function() {
             updateCharCount();
+            updateLineNumbers();
             
             // Clear previous timeout
             clearTimeout(saveTimeout);
@@ -322,6 +372,7 @@
             localStorage.setItem('notepad_content', '');
             localStorage.setItem('notepad_filename', 'untitled.txt');
             updateCharCount();
+            updateLineNumbers();
             saveStatus.textContent = 'New file created';
         }
         
@@ -337,6 +388,7 @@
                 localStorage.setItem('notepad_content', e.target.result);
                 localStorage.setItem('notepad_filename', file.name);
                 updateCharCount();
+                updateLineNumbers();
                 saveStatus.textContent = 'File uploaded';
                 
                 // Reset file input
@@ -377,6 +429,7 @@
                 editor.value = '';
                 localStorage.setItem('notepad_content', '');
                 updateCharCount();
+                updateLineNumbers();
                 saveStatus.textContent = 'Content cleared';
             }
         }
