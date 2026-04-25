@@ -1,6 +1,6 @@
 # nyancat.nu
 
-A Django-based web application featuring a classic Nyan Cat welcome page, a fully client-side media converter, an AI-powered background remover, and a persistent notepad editor.
+A Django-based web application featuring a classic Nyan Cat welcome page, a fully client-side media converter, video compressor, audio/video slicer, an AI-powered background remover, and a persistent notepad editor.
 
 ## Features
 
@@ -9,6 +9,20 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - No files are uploaded to any server; all processing happens locally.
   - Supports MP4, MP3, WAV, GIF, PNG, JPG, WEBP, and more.
   - Custom extension support for advanced users.
+  - Conversion history stored locally in your browser
+- **Video Compressor/Resizer**: Compress and resize videos with customizable settings.
+  - Adjust resolution, bitrate, frame rate, and codec
+  - Multiple codec support (H.264, H.265, VP9)
+  - Quick presets for common use cases
+  - Before/after comparison and size savings display
+  - All processing happens in your browser
+- **Audio/Video Slicer**: Precisely slice audio and video files.
+  - Manual time input or pick from current playback position
+  - High-resolution timestamps (milliseconds precision)
+  - Preview sliced results before downloading
+  - Automatic re-encoding for accurate cuts
+  - Processing history with time ranges
+  - Mobile-friendly interface
 - **AI Background Remover**: Professional-grade background removal powered by RMBG-1.4 AI model.
   - 100% client-side processing using Transformers.js
   - High-quality results for people, products, and objects
@@ -77,9 +91,33 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - Convert between various media formats
 - Supports video (MP4, AVI, MOV), audio (MP3, WAV, AAC), and images (PNG, JPG, GIF, WEBP)
 - All processing happens in your browser using WebAssembly
+- Conversion history with preview and re-download capability
 - Requires HTTPS and `SharedArrayBuffer` support
 
-### 2. Background Remover (`/bg-remover/`)
+### 2. Video Compressor/Resizer (`/video-compressor/`)
+- Compress and resize video files with advanced options
+- Customizable resolution (4K, 1440p, 1080p, 720p, 480p, 360p, or custom)
+- Adjustable bitrate (500k to 8000k)
+- Frame rate control (15, 24, 30, 60 fps)
+- Multiple codec options (H.264, H.265/HEVC, VP9)
+- Audio settings (copy, re-encode, or remove)
+- Quick presets: High Quality, Medium, Low, Social Media
+- Before/after preview with size comparison
+- All processing happens client-side
+
+### 3. Audio/Video Slicer (`/video-slicer/`)
+- Slice audio and video files with precision
+- Manual time input (HH:MM:SS.mmm format) or set from current playback
+- High-resolution timestamps with millisecond precision
+- Visual media preview with standard playback controls
+- Automatic time range validation and clamping
+- Re-encodes for accurate cuts (H.264 for video, AAC for audio)
+- Preview sliced results before downloading
+- Processing history with time ranges and previews
+- Fully responsive mobile-friendly design
+- Stores last 50 slices locally in browser
+
+### 4. Background Remover (`/bg-remover/`)
 - Remove backgrounds from images using AI
 - Powered by RMBG-1.4 model from BRIA AI
 - View the generated mask and final result
@@ -87,7 +125,7 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - Download results as transparent PNG files
 - Works best with images containing people, products, or clear subjects
 
-### 3. Notepad (`/notepad/`)
+### 5. Notepad (`/notepad/`)
 - Browser-based text editor with line numbers
 - Auto-save functionality with localStorage persistence
 - Create new files, upload existing files, and download edited files
@@ -158,17 +196,18 @@ sudo certbot --nginx -d nyancat.nu
 
 ## Privacy & Security
 
-- **100% Client-Side Processing**: File converter, background remover, and notepad all process everything locally in your browser
+- **100% Client-Side Processing**: File converter, video compressor, audio/video slicer, background remover, and notepad all process everything locally in your browser
 - **No Server Uploads**: Your files and text never leave your device
 - **Local Storage Only**: Processing history and notepad content are stored in your browser's localStorage/IndexedDB
 - **Open Source**: All code is available for inspection
 
 ## Browser Requirements
 
-### For File Converter:
-- **HTTPS Required**: The converter requires secure context (HTTPS) to work on production
+### For Media Tools (Converter, Compressor, Slicer):
+- **HTTPS Required**: Media tools require secure context (HTTPS) to work on production
 - **SharedArrayBuffer Support**: Modern browsers (Chrome 92+, Firefox 89+, Safari 15.2+)
 - **COOP/COEP Headers**: Required for ffmpeg.wasm (configured in Nginx setup above)
+- **IndexedDB Support**: For storing processing history
 
 ### For Background Remover:
 - **Modern Browser**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
@@ -178,11 +217,12 @@ sudo certbot --nginx -d nyancat.nu
 
 ## Troubleshooting
 
-### File Converter Not Working
+### Media Tools Not Working (Converter, Compressor, Slicer)
 - Ensure you're using HTTPS (required for `SharedArrayBuffer`)
 - Check that COOP/COEP headers are set correctly in Nginx
 - Verify your browser supports WebAssembly and SharedArrayBuffer
 - Try disabling browser extensions that might interfere
+- For slicer: Ensure time values are in valid format (HH:MM:SS.mmm, MM:SS.mmm, or seconds)
 
 ### Background Remover Issues
 - Clear browser cache if model fails to load
