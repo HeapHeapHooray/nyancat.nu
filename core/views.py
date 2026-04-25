@@ -27,6 +27,10 @@ def video_slicer(request):
     return render(request, "core/video_slicer.html")
 
 
+def audio_to_video(request):
+    return render(request, "core/audio_to_video.html")
+
+
 def x_downloader(request):
     video_info = None
     error = None

@@ -124,39 +124,13 @@
             background-color: #ff7722;
         }
         
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
-            
-            h1 {
-                margin-bottom: 15px;
-            }
-            
-            .links-container {
-                gap: 12px;
-                margin-top: 20px;
-            }
-            
-            .link-button {
-                flex: 1 1 100%;
-                padding: 15px 20px;
-            }
+        .link-audio-to-video {
+            background-color: #9933ff;
+            border: 2px solid #9933ff;
         }
         
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            .banner {
-                border-radius: 5px;
-            }
-            
-            p {
-                margin-top: 15px;
-            }
+        .link-audio-to-video:hover {
+            background-color: #aa55ff;
         }
         
         .github-link {
@@ -209,6 +183,7 @@
         <a href="{% url 'converter' %}" class="link-button link-converter">File Converter</a>
         <a href="{% url 'video_compressor' %}" class="link-button link-video-compressor">Video Compressor/Resizer</a>
         <a href="{% url 'video_slicer' %}" class="link-button link-video-slicer">Audio/Video Slicer</a>
+        <a href="{% url 'audio_to_video' %}" class="link-button link-audio-to-video">Audio to Video</a>
         <a href="{% url 'x_downloader' %}" class="link-button link-x-downloader">X Video Downloader</a>
         <a href="{% url 'bg_remover' %}" class="link-button link-bg-remover">Background Remover</a>
         <a href="{% url 'notepad' %}" class="link-button link-notepad">Notepad</a>
