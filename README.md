@@ -207,7 +207,22 @@ server {
 }
 ```
 
-### 3. Enable Site and Get SSL
+### 3. Fix Static Files Permissions
+Nginx needs read access to your static files. Run these commands:
+```bash
+cd /path/to/your/nyancat.nu
+
+# Allow Nginx to traverse your project directories
+sudo chmod o+x /path/to/your
+sudo chmod o+x /path/to/your/nyancat.nu
+
+# Fix staticfiles permissions (assuming Nginx runs as www-data)
+sudo chown -R $USER:www-data staticfiles/
+sudo chmod -R 755 staticfiles/
+sudo find staticfiles/ -type f -exec chmod 644 {} \;
+```
+
+### 4. Enable Site and Get SSL
 ```bash
 sudo ln -s /etc/nginx/sites-available/nyancat.nu /etc/nginx/sites-enabled/
 sudo nginx -t
