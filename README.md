@@ -1,6 +1,6 @@
 # nyancat.nu
 
-A Django-based web application featuring a classic Nyan Cat welcome page, a fully client-side media converter, video compressor, audio/video slicer, an AI-powered background remover, and a persistent notepad editor.
+A Django-based web application featuring a classic Nyan Cat welcome page, a fully client-side media converter, video compressor, audio/video slicer, audio to video creator, an AI-powered background remover, and a persistent notepad editor.
 
 ## Features
 
@@ -23,6 +23,14 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - Automatic re-encoding for accurate cuts
   - Processing history with time ranges
   - Mobile-friendly interface
+- **Audio to Video**: Create videos from static images and audio files.
+  - Upload an image and audio file to create an MP4 video
+  - Image displays for the duration of the audio
+  - Automatic dimension adjustment for compatibility
+  - Preview both inputs and final result
+  - Processing history with video previews
+  - Perfect for creating audio visualizers or lyric videos with album art
+  - Mobile-friendly responsive design
 - **AI Background Remover**: Professional-grade background removal powered by RMBG-1.4 AI model.
   - 100% client-side processing using Transformers.js
   - High-quality results for people, products, and objects
@@ -117,7 +125,20 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - Fully responsive mobile-friendly design
 - Stores last 50 slices locally in browser
 
-### 4. Background Remover (`/bg-remover/`)
+### 4. Audio to Video (`/audio-to-video/`)
+- Create MP4 videos from static images and audio files
+- Upload any image format (PNG, JPG, GIF, etc.) and audio format (MP3, WAV, AAC, etc.)
+- Video duration matches the audio length automatically
+- Optimized encoding for still images with H.264 video codec
+- Automatic dimension adjustment for maximum compatibility
+- Preview both inputs (image and audio) before processing
+- Preview final video before downloading
+- Processing history with video previews stored in IndexedDB
+- Stores last 50 creations locally in browser
+- Perfect for creating audio visualizers, lyric videos, or podcasts with cover art
+- Mobile-friendly responsive interface
+
+### 5. Background Remover (`/bg-remover/`)
 - Remove backgrounds from images using AI
 - Powered by RMBG-1.4 model from BRIA AI
 - View the generated mask and final result
@@ -125,7 +146,7 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - Download results as transparent PNG files
 - Works best with images containing people, products, or clear subjects
 
-### 5. Notepad (`/notepad/`)
+### 6. Notepad (`/notepad/`)
 - Browser-based text editor with line numbers
 - Auto-save functionality with localStorage persistence
 - Create new files, upload existing files, and download edited files
@@ -196,14 +217,14 @@ sudo certbot --nginx -d nyancat.nu
 
 ## Privacy & Security
 
-- **100% Client-Side Processing**: File converter, video compressor, audio/video slicer, background remover, and notepad all process everything locally in your browser
+- **100% Client-Side Processing**: File converter, video compressor, audio/video slicer, audio to video, background remover, and notepad all process everything locally in your browser
 - **No Server Uploads**: Your files and text never leave your device
 - **Local Storage Only**: Processing history and notepad content are stored in your browser's localStorage/IndexedDB
 - **Open Source**: All code is available for inspection
 
 ## Browser Requirements
 
-### For Media Tools (Converter, Compressor, Slicer):
+### For Media Tools (Converter, Compressor, Slicer, Audio to Video):
 - **HTTPS Required**: Media tools require secure context (HTTPS) to work on production
 - **SharedArrayBuffer Support**: Modern browsers (Chrome 92+, Firefox 89+, Safari 15.2+)
 - **COOP/COEP Headers**: Required for ffmpeg.wasm (configured in Nginx setup above)
@@ -217,12 +238,13 @@ sudo certbot --nginx -d nyancat.nu
 
 ## Troubleshooting
 
-### Media Tools Not Working (Converter, Compressor, Slicer)
+### Media Tools Not Working (Converter, Compressor, Slicer, Audio to Video)
 - Ensure you're using HTTPS (required for `SharedArrayBuffer`)
 - Check that COOP/COEP headers are set correctly in Nginx
 - Verify your browser supports WebAssembly and SharedArrayBuffer
 - Try disabling browser extensions that might interfere
 - For slicer: Ensure time values are in valid format (HH:MM:SS.mmm, MM:SS.mmm, or seconds)
+- For audio to video: Ensure image dimensions are reasonable (very large images may take longer to process)
 
 ### Background Remover Issues
 - Clear browser cache if model fails to load
