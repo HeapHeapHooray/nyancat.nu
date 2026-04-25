@@ -578,11 +578,17 @@
                 // Build FFmpeg command for slicing
                 const duration = end - start;
                 const args = [
-                    '-i', inputName,
                     '-ss', start.toString(),
-                    '-t', duration.toString(),
-                    outputName
+                    '-i', inputName,
+                    '-t', duration.toString()
                 ];
+                
+                // Explicitly encode video and audio
+                if (!isAudio) {
+                    args.push('-c:v', 'libx264', '-c:a', 'aac');
+                }
+                
+                args.push(outputName);
 
                 // Run FFmpeg
                 await ffmpeg.run(...args);
