@@ -549,16 +549,19 @@
                 return;
             }
 
-            const start = parseTime(startTime.value);
-            const end = endTime.value.trim() ? parseTime(endTime.value) : mediaDuration;
+            let start = parseTime(startTime.value);
+            let end = endTime.value.trim() ? parseTime(endTime.value) : mediaDuration;
+
+            // Clamp start to valid range
+            if (start < 0) start = 0;
+            if (start > mediaDuration) start = mediaDuration;
+
+            // Clamp end to valid range
+            if (end > mediaDuration) end = mediaDuration;
+            if (end < 0) end = mediaDuration;
 
             if (start >= end) {
                 alert('Start time must be before end time.');
-                return;
-            }
-
-            if (start < 0 || end > mediaDuration) {
-                alert('Time values are out of range.');
                 return;
             }
 
