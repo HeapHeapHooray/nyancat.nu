@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio/Video Slicer - nyancat.nu</title>
+    <style>
+        body {
+            background-color: #003366;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 20px; }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            max-width: 700px;
+            width: 90%;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #ff0099;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            width: 100%;
+        }
+        button:hover { background-color: #ff33bb; }
+        button:disabled { background-color: #666; cursor: not-allowed; }
+        #status { margin-top: 20px; font-style: italic; color: #00ccff; }
+        #downloadLink {
+            display: none;
+            margin-top: 20px;
+            color: #00ff00;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .back-link { margin-top: 30px; color: #ccc; text-decoration: none; }
+        #mediaPreview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        #audioPreview {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .info-text {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 5px;
+        }
+        .time-controls {
+            margin: 20px 0;
+            text-align: left;
+        }
+        .time-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .time-row label {
+            min-width: 80px;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        .time-row input {
+            flex: 1;
+            margin: 0;
+        }
+        .time-row button {
+            flex-shrink: 0;
+            width: auto;
+            padding: 8px 15px;
+            margin: 0;
+            font-size: 0.85rem;
+            background-color: #0066cc;
+        }
+        .time-row button:hover {
+            background-color: #0088ee;
+        }
+        .time-format {
+            font-size: 0.75rem;
+            color: #999;
+            margin-left: 90px;
+            margin-top: -5px;
+        }
+        .preview-box {
+            margin: 15px 0;
+            min-height: 50px;
+        }
+        #resultPreview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        #resultAudioPreview {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            color: #00ccff;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .duration-info {
+            font-size: 0.9rem;
+            color: #00ff00;
+            margin: 5px 0;
+        }
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .history-preview {
+            width: 100px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .history-preview img, .history-preview video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .history-preview audio {
+            width: 100%;
+        }
+        .history-info {
+            flex: 1;
+        }
+        .history-download {
+            text-decoration: none;
+            font-size: 1.5rem;
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <h1>Audio/Video Slicer</h1>
+    <div class="container">
+        <input type="file" id="fileInput" accept="video/*,audio/*">
+        <div class="preview-box" id="previewBox"></div>
+        <div id="mediaInfo" class="info-text"></div>
+        <div id="durationInfo" class="duration-info"></div>
+
+        <div class="time-controls" id="timeControls" style="display: none;">
+            <div class="section-title">Slice Settings</div>
+            <div class="time-row">
+                <label>Start Time:</label>
+                <input type="text" id="startTime" placeholder="00:00:00" value="00:00:00">
+                <button id="setStartBtn">Set to Current</button>
+            </div>
+            <div class="time-format">Format: HH:MM:SS or MM:SS or seconds (e.g., 01:30:00, 90, or 1:30)</div>
+            
+            <div class="time-row">
+                <label>End Time:</label>
+                <input type="text" id="endTime" placeholder="00:00:00">
+                <button id="setEndBtn">Set to Current</button>
+            </div>
+            <div class="time-format">Format: HH:MM:SS or MM:SS or seconds (leave empty for end of file)</div>
+        </div>
+
+        <button id="sliceBtn" disabled>Slice Media</button>
+        <div id="status">Loading FFmpeg core...</div>
+        <a id="downloadLink" href="#" download>Download Sliced File</a>
+
+        <div class="preview-box" id="resultBox" style="display: none;">
+            <div class="section-title">Result Preview</div>
+        </div>
+    </div>
+
+    <div class="container" id="historyContainer" style="margin-top: 20px; display: none;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 15px;">Slice History</h2>
+        <div id="historyList" style="text-align: left; max-height: 300px; overflow-y: auto; padding-right: 5px;">
+            <!-- History items will be added here -->
+        </div>
+        <button id="clearHistoryBtn" style="background-color: #444; margin-top: 15px; font-size: 0.8rem; padding: 5px 10px; width: auto;">Clear History</button>
+    </div>
+
+    <a href="{% url 'index' %}" class="back-link">&larr; Back to Home</a>
+
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/idb-keyval@6/dist/umd.js"></script>
+    <script>
+        const { createFFmpeg, fetchFile } = FFmpeg;
+        const ffmpeg = createFFmpeg({ 
+            log: true,
+            corePath: 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'
+        });
+
+        const fileInput = document.getElementById('fileInput');
+        const previewBox = document.getElementById('previewBox');
+        const mediaInfo = document.getElementById('mediaInfo');
+        const durationInfo = document.getElementById('durationInfo');
+        const timeControls = document.getElementById('timeControls');
+        const startTime = document.getElementById('startTime');
+        const endTime = document.getElementById('endTime');
+        const setStartBtn = document.getElementById('setStartBtn');
+        const setEndBtn = document.getElementById('setEndBtn');
+        const sliceBtn = document.getElementById('sliceBtn');
+        const status = document.getElementById('status');
+        const downloadLink = document.getElementById('downloadLink');
+        const resultBox = document.getElementById('resultBox');
+        const historyContainer = document.getElementById('historyContainer');
+        const historyList = document.getElementById('historyList');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
+        let currentFile = null;
+        let currentMediaElement = null;
+        let mediaDuration = 0;
+        let isAudio = false;
+
+        async function load() {
+            try {
+                status.innerText = 'Loading FFmpeg core...';
+                await ffmpeg.load();
+                status.innerText = 'Ready! Please select a video or audio file.';
+                fileInput.disabled = false;
+            } catch (error) {
+                status.innerText = 'Error loading FFmpeg: ' + error.message;
+                console.error(error);
+            }
+        }
+
+        load();
+
+        const loadHistory = async () => {
+            const history = JSON.parse(localStorage.getItem('slicerHistory') || '[]');
+            if (history.length === 0) {
+                historyContainer.style.display = 'none';
+                return;
+            }
+            historyContainer.style.display = 'block';
+            historyList.innerHTML = '';
+            
+            // Show latest first
+            for (const item of [...history].reverse()) {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                
+                const date = new Date(item.timestamp).toLocaleString();
+                
+                const previewDiv = document.createElement('div');
+                previewDiv.className = 'history-preview';
+
+                try {
+                    const blob = await idbKeyval.get(item.id);
+                    if (blob) {
+                        const url = URL.createObjectURL(blob);
+                        
+                        if (item.isAudio) {
+                            previewDiv.innerHTML = `<audio src="${url}" style="width: 100%;" controls></audio>`;
+                        } else {
+                            previewDiv.innerHTML = `<video src="${url}" style="max-width: 100%; max-height: 100%; object-fit: contain;" controls preload="metadata"></video>`;
+                        }
+                    } else {
+                        previewDiv.innerHTML = `<span style="color: #999; font-size: 0.7rem;">Expired</span>`;
+                    }
+                } catch (e) {
+                    console.error("Preview load error", e);
+                    previewDiv.innerHTML = `<span style="color: #999; font-size: 0.7rem;">Error</span>`;
+                }
+
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'history-info';
+                infoDiv.innerHTML = `
+                    <div style="font-weight: bold; color: #ff6600;">${item.fileName}</div>
+                    <div style="color: #ccc; font-size: 0.8rem;">From: ${item.originalName}</div>
+                    <div style="color: #ccc; font-size: 0.8rem;">Range: ${item.startTime} - ${item.endTime}</div>
+                    <div style="color: #666; font-size: 0.7rem;">${date}</div>
+                `;
+                
+                div.appendChild(previewDiv);
+                div.appendChild(infoDiv);
+
+                // Download button from history
+                const dlBtn = document.createElement('a');
+                dlBtn.href = '#';
+                dlBtn.innerHTML = '&#11015;';
+                dlBtn.className = 'history-download';
+                dlBtn.title = 'Download';
+                dlBtn.onclick = async (e) => {
+                    e.preventDefault();
+                    const b = await idbKeyval.get(item.id);
+                    if (b) {
+                        const dlUrl = URL.createObjectURL(b);
+                        const a = document.createElement('a');
+                        a.href = dlUrl;
+                        a.download = item.fileName;
+                        a.click();
+                        URL.revokeObjectURL(dlUrl);
+                    } else {
+                        alert('File data is no longer available locally.');
+                    }
+                };
+                div.appendChild(dlBtn);
+
+                historyList.appendChild(div);
+            }
+        };
+
+        const addToHistory = async (originalName, fileName, startTime, endTime, isAudio, blob) => {
+            const history = JSON.parse(localStorage.getItem('slicerHistory') || '[]');
+            const id = Date.now().toString() + Math.random().toString(36).substr(2, 5);
+            
+            history.push({
+                id,
+                originalName,
+                fileName,
+                startTime,
+                endTime,
+                isAudio,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Keep only last 50 slices
+            if (history.length > 50) {
+                const removed = history.shift();
+                try { await idbKeyval.del(removed.id); } catch(e) {}
+            }
+            
+            localStorage.setItem('slicerHistory', JSON.stringify(history));
+            try { await idbKeyval.set(id, blob); } catch(e) { console.error('Failed to save to IDB', e); }
+            
+            loadHistory();
+        };
+
+        clearHistoryBtn.addEventListener('click', async () => {
+            if (confirm('Clear all slice history?')) {
+                localStorage.removeItem('slicerHistory');
+                try { await idbKeyval.clear(); } catch(e) {}
+                loadHistory();
+            }
+        });
+
+        // Load history on page load
+        loadHistory();
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            currentFile = file;
+            const url = URL.createObjectURL(file);
+            
+            downloadLink.style.display = 'none';
+            resultBox.style.display = 'none';
+            timeControls.style.display = 'none';
+
+            if (file.type.startsWith('video/')) {
+                isAudio = false;
+                const video = document.createElement('video');
+                video.id = 'mediaPreview';
+                video.src = url;
+                video.controls = true;
+                video.preload = 'metadata';
+                
+                video.onloadedmetadata = () => {
+                    mediaDuration = video.duration;
+                    const minutes = Math.floor(mediaDuration / 60);
+                    const seconds = Math.floor(mediaDuration % 60);
+                    mediaInfo.innerHTML = `<strong>File:</strong> ${file.name}<br>
+                                          <strong>Size:</strong> ${formatBytes(file.size)}<br>
+                                          <strong>Resolution:</strong> ${video.videoWidth}x${video.videoHeight}`;
+                    durationInfo.innerText = `Duration: ${formatTime(mediaDuration)}`;
+                    
+                    // Set default end time to full duration
+                    endTime.value = formatTime(mediaDuration);
+                    timeControls.style.display = 'block';
+                    sliceBtn.disabled = false;
+                };
+                
+                previewBox.innerHTML = '';
+                previewBox.appendChild(video);
+                currentMediaElement = video;
+            } else if (file.type.startsWith('audio/')) {
+                isAudio = true;
+                const audio = document.createElement('audio');
+                audio.id = 'audioPreview';
+                audio.src = url;
+                audio.controls = true;
+                audio.preload = 'metadata';
+                
+                audio.onloadedmetadata = () => {
+                    mediaDuration = audio.duration;
+                    const minutes = Math.floor(mediaDuration / 60);
+                    const seconds = Math.floor(mediaDuration % 60);
+                    mediaInfo.innerHTML = `<strong>File:</strong> ${file.name}<br>
+                                          <strong>Size:</strong> ${formatBytes(file.size)}`;
+                    durationInfo.innerText = `Duration: ${formatTime(mediaDuration)}`;
+                    
+                    // Set default end time to full duration
+                    endTime.value = formatTime(mediaDuration);
+                    timeControls.style.display = 'block';
+                    sliceBtn.disabled = false;
+                };
+                
+                previewBox.innerHTML = '';
+                previewBox.appendChild(audio);
+                currentMediaElement = audio;
+            }
+        });
+
+        setStartBtn.addEventListener('click', () => {
+            if (currentMediaElement) {
+                startTime.value = formatTime(currentMediaElement.currentTime);
+            }
+        });
+
+        setEndBtn.addEventListener('click', () => {
+            if (currentMediaElement) {
+                endTime.value = formatTime(currentMediaElement.currentTime);
+            }
+        });
+
+        sliceBtn.addEventListener('click', async () => {
+            if (!currentFile) {
+                alert('Please select a file first.');
+                return;
+            }
+
+            const start = parseTime(startTime.value);
+            const end = endTime.value.trim() ? parseTime(endTime.value) : mediaDuration;
+
+            if (start >= end) {
+                alert('Start time must be before end time.');
+                return;
+            }
+
+            if (start < 0 || end > mediaDuration) {
+                alert('Time values are out of range.');
+                return;
+            }
+
+            try {
+                sliceBtn.disabled = true;
+                status.innerText = 'Processing... This may take a while.';
+                downloadLink.style.display = 'none';
+                resultBox.style.display = 'none';
+
+                const inputName = 'input_' + currentFile.name;
+                const extension = currentFile.name.split('.').pop();
+                const outputName = 'output.' + extension;
+
+                // Write file to FFmpeg virtual filesystem
+                ffmpeg.FS('writeFile', inputName, await fetchFile(currentFile));
+
+                // Build FFmpeg command for slicing
+                const duration = end - start;
+                const args = [
+                    '-i', inputName,
+                    '-ss', start.toString(),
+                    '-t', duration.toString(),
+                    '-c', 'copy',  // Copy codec for fast processing
+                    outputName
+                ];
+
+                // Run FFmpeg
+                await ffmpeg.run(...args);
+
+                // Read output file
+                const data = ffmpeg.FS('readFile', outputName);
+                
+                // Determine MIME type
+                let mimeType = currentFile.type;
+                if (!mimeType) {
+                    mimeType = isAudio ? 'audio/mpeg' : 'video/mp4';
+                }
+
+                const blob = new Blob([data.buffer], { type: mimeType });
+                const url = URL.createObjectURL(blob);
+
+                // Update download link
+                const originalBaseName = currentFile.name.substring(0, currentFile.name.lastIndexOf('.'));
+                const finalFileName = `${originalBaseName}_sliced.${extension}`;
+                downloadLink.href = url;
+                downloadLink.download = finalFileName;
+                downloadLink.innerText = 'Download ' + finalFileName;
+                downloadLink.style.display = 'block';
+
+                // Show result preview
+                resultBox.style.display = 'block';
+                if (isAudio) {
+                    const resultAudio = document.createElement('audio');
+                    resultAudio.id = 'resultAudioPreview';
+                    resultAudio.src = url;
+                    resultAudio.controls = true;
+                    resultBox.innerHTML = '<div class="section-title">Result Preview</div>';
+                    resultBox.appendChild(resultAudio);
+                } else {
+                    const resultVideo = document.createElement('video');
+                    resultVideo.id = 'resultPreview';
+                    resultVideo.src = url;
+                    resultVideo.controls = true;
+                    resultBox.innerHTML = '<div class="section-title">Result Preview</div>';
+                    resultBox.appendChild(resultVideo);
+                }
+
+                status.innerText = 'Slicing complete!';
+                
+                // Add to history
+                await addToHistory(
+                    currentFile.name,
+                    finalFileName,
+                    startTime.value,
+                    endTime.value,
+                    isAudio,
+                    blob
+                );
+                
+                // Clean up FFmpeg virtual filesystem
+                try {
+                    ffmpeg.FS('unlink', inputName);
+                    ffmpeg.FS('unlink', outputName);
+                } catch (e) {
+                    console.log('Cleanup error (non-critical):', e);
+                }
+
+            } catch (error) {
+                status.innerText = 'Error: ' + error.message;
+                console.error(error);
+            } finally {
+                sliceBtn.disabled = false;
+            }
+        });
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            const wholeSecs = Math.floor(secs);
+            const milliseconds = Math.round((secs - wholeSecs) * 1000);
+            
+            if (hours > 0) {
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${wholeSecs.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
+            } else {
+                return `${minutes.toString().padStart(2, '0')}:${wholeSecs.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
+            }
+        }
+
+        function parseTime(timeStr) {
+            timeStr = timeStr.trim();
+            
+            // If it's just a number, treat it as seconds
+            if (/^\d+(\.\d+)?$/.test(timeStr)) {
+                return parseFloat(timeStr);
+            }
+            
+            // Parse HH:MM:SS.mmm or MM:SS.mmm format
+            const parts = timeStr.split(':');
+            
+            if (parts.length === 3) {
+                // HH:MM:SS.mmm
+                const hours = parseFloat(parts[0]);
+                const minutes = parseFloat(parts[1]);
+                const seconds = parseFloat(parts[2]);
+                return hours * 3600 + minutes * 60 + seconds;
+            } else if (parts.length === 2) {
+                // MM:SS.mmm
+                const minutes = parseFloat(parts[0]);
+                const seconds = parseFloat(parts[1]);
+                return minutes * 60 + seconds;
+            } else if (parts.length === 1) {
+                // Just seconds
+                return parseFloat(parts[0]);
+            }
+            
+            return 0;
+        }
+    </script>
+</body>
+</html>

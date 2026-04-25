@@ -115,6 +115,15 @@
             background-color: #00dd77;
         }
         
+        .link-video-slicer {
+            background-color: #ff6600;
+            border: 2px solid #ff6600;
+        }
+        
+        .link-video-slicer:hover {
+            background-color: #ff7722;
+        }
+        
         /* Mobile optimizations */
         @media (max-width: 768px) {
             body {
@@ -199,6 +208,7 @@
     <div class="links-container">
         <a href="{% url 'converter' %}" class="link-button link-converter">File Converter</a>
         <a href="{% url 'video_compressor' %}" class="link-button link-video-compressor">Video Compressor/Resizer</a>
+        <a href="{% url 'video_slicer' %}" class="link-button link-video-slicer">Audio/Video Slicer</a>
         <a href="{% url 'x_downloader' %}" class="link-button link-x-downloader">X Video Downloader</a>
         <a href="{% url 'bg_remover' %}" class="link-button link-bg-remover">Background Remover</a>
         <a href="{% url 'notepad' %}" class="link-button link-notepad">Notepad</a>

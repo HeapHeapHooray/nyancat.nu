@@ -23,6 +23,10 @@ def notepad(request):
     return render(request, "core/notepad.html")
 
 
+def video_slicer(request):
+    return render(request, "core/video_slicer.html")
+
+
 def x_downloader(request):
     video_info = None
     error = None
