@@ -281,7 +281,7 @@
     <h1>Local Background Remover</h1>
     <div class="container">
         <p>Remove backgrounds from images locally in your browser using AI!</p>
-        <p style="font-size: 0.8rem; color: #ccc;">Note: The first run will download the RMBG-1.4 model (~176MB), which may take a few minutes. All processing is done locally in your browser.</p>
+        <p style="font-size: 0.8rem; color: #ccc;">Note: The first run will download the InSPyReNet model (~395MB), which may take a few minutes. All processing is done locally in your browser.</p>
         
         <div style="text-align: left; margin-bottom: 15px;">
             <label for="imageInput" style="display: block; margin-bottom: 5px;">Select an Image:</label>
@@ -289,7 +289,7 @@
         </div>
 
         <button id="processBtn" disabled>Loading AI Model...</button>
-        <div id="status">Initializing Transformers.js...</div>
+        <div id="status">Initializing ONNX Runtime...</div>
 
         <div class="image-container" id="resultsContainer" style="display: none;">
             <div class="image-box">
@@ -321,18 +321,8 @@
 
     <a href="{% url 'index' %}" class="back-link">&larr; Back to Home</a>
 
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
     <script type="module">
-        import { 
-            AutoModel, 
-            AutoProcessor, 
-            RawImage,
-            env 
-        } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
-
-        // Configure environment
-        env.allowLocalModels = false;
-        env.useBrowserCache = true;
-
         const processBtn = document.getElementById('processBtn');
         const imageInput = document.getElementById('imageInput');
         const status = document.getElementById('status');
@@ -344,13 +334,16 @@
         const historyGrid = document.getElementById('historyGrid');
         const clearHistoryBtn = document.getElementById('clearHistoryBtn');
 
-        let model = null;
-        let processor = null;
+        let session = null;
+        // Use full precision model (FP16 produces NaN values in some browsers)
+        const MODEL_URL = 'https://huggingface.co/OS-Software/InSPyReNet-SwinB-Plus-Ultra-ONNX/resolve/main/onnx/model.onnx';
+        const INPUT_SIZE = 1024;
 
         // History management using IndexedDB for large image storage
         const DB_NAME = 'bgRemoverHistory';
-        const DB_VERSION = 1;
+        const DB_VERSION = 2;
         const STORE_NAME = 'processedImages';
+        const MODEL_STORE_NAME = 'modelCache';
         let db = null;
 
         // Initialize IndexedDB
@@ -366,11 +359,58 @@
                 
                 request.onupgradeneeded = (event) => {
                     const db = event.target.result;
+                    
+                    // Create processed images store
                     if (!db.objectStoreNames.contains(STORE_NAME)) {
                         const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
                         objectStore.createIndex('timestamp', 'timestamp', { unique: false });
                     }
+                    
+                    // Create model cache store
+                    if (!db.objectStoreNames.contains(MODEL_STORE_NAME)) {
+                        db.createObjectStore(MODEL_STORE_NAME, { keyPath: 'url' });
+                    }
                 };
+            });
+        }
+        
+        // Save model to cache
+        async function saveModelToCache(url, arrayBuffer) {
+            if (!db) await initDB();
+            
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([MODEL_STORE_NAME], 'readwrite');
+                const objectStore = transaction.objectStore(MODEL_STORE_NAME);
+                
+                const item = {
+                    url: url,
+                    data: arrayBuffer,
+                    timestamp: Date.now()
+                };
+                
+                const request = objectStore.put(item);
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+        
+        // Load model from cache
+        async function loadModelFromCache(url) {
+            if (!db) await initDB();
+            
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([MODEL_STORE_NAME], 'readonly');
+                const objectStore = transaction.objectStore(MODEL_STORE_NAME);
+                const request = objectStore.get(url);
+                
+                request.onsuccess = () => {
+                    if (request.result) {
+                        resolve(request.result.data);
+                    } else {
+                        resolve(null);
+                    }
+                };
+                request.onerror = () => reject(request.error);
             });
         }
 
@@ -498,42 +538,245 @@
         // Initialize database and display history on load
         initDB().then(() => displayHistory());
 
-        // Load the model
+        // Download model with progress tracking
+        async function downloadModelWithProgress(url) {
+            const response = await fetch(url);
+            const contentLength = response.headers.get('content-length');
+            const total = parseInt(contentLength, 10);
+            
+            let loaded = 0;
+            const reader = response.body.getReader();
+            const chunks = [];
+            
+            while (true) {
+                const { done, value } = await reader.read();
+                
+                if (done) break;
+                
+                chunks.push(value);
+                loaded += value.length;
+                
+                const progress = (loaded / total * 100).toFixed(1);
+                const loadedMB = (loaded / 1024 / 1024).toFixed(1);
+                const totalMB = (total / 1024 / 1024).toFixed(1);
+                status.innerText = `Downloading model: ${loadedMB}MB / ${totalMB}MB (${progress}%)`;
+            }
+            
+            // Combine chunks into single array buffer
+            const blob = new Blob(chunks);
+            return await blob.arrayBuffer();
+        }
+        
+        // Load the ONNX model
         async function loadModel() {
             try {
-                status.innerText = 'Loading background removal model...';
+                status.innerText = 'Initializing...';
                 
-                // Using RMBG-1.4 - High quality background removal model from BRIA AI
-                const modelId = 'briaai/RMBG-1.4';
+                // Configure ONNX Runtime
+                ort.env.wasm.numThreads = navigator.hardwareConcurrency || 4;
+                ort.env.wasm.simd = true;
                 
-                const progressCallback = (progress) => {
-                    if (progress.status === 'progress' && progress.progress) {
-                        status.innerText = `Downloading: ${Math.round(progress.progress)}%`;
-                    } else if (progress.status === 'downloading') {
-                        status.innerText = 'Downloading model files...';
-                    } else if (progress.status === 'done') {
-                        status.innerText = 'Processing...';
+                let modelBuffer;
+                
+                // Try to load from cache first
+                status.innerText = 'Checking cache...';
+                const cachedModel = await loadModelFromCache(MODEL_URL);
+                
+                if (cachedModel) {
+                    status.innerText = 'Loading model from cache...';
+                    console.log('Using cached model, size:', cachedModel.byteLength, 'bytes');
+                    
+                    // Ensure it's a proper ArrayBuffer
+                    if (cachedModel instanceof ArrayBuffer) {
+                        modelBuffer = cachedModel;
+                    } else {
+                        // Convert to ArrayBuffer if needed
+                        modelBuffer = cachedModel.buffer || cachedModel;
                     }
-                };
-
-                processor = await AutoProcessor.from_pretrained(modelId, {
-                    progress_callback: progressCallback
-                });
+                } else {
+                    status.innerText = 'Downloading model...';
+                    console.log('Downloading model from:', MODEL_URL);
+                    
+                    // Download model with progress
+                    modelBuffer = await downloadModelWithProgress(MODEL_URL);
+                    
+                    // Save to cache
+                    status.innerText = 'Saving model to cache...';
+                    try {
+                        await saveModelToCache(MODEL_URL, modelBuffer);
+                        console.log('Model saved to cache, size:', modelBuffer.byteLength, 'bytes');
+                    } catch (cacheError) {
+                        console.warn('Failed to cache model:', cacheError);
+                        // Continue anyway, caching is not critical
+                    }
+                }
                 
-                model = await AutoModel.from_pretrained(modelId, {
-                    progress_callback: progressCallback
+                status.innerText = 'Loading model into memory...';
+                console.log('Creating inference session with buffer size:', modelBuffer.byteLength);
+                
+                session = await ort.InferenceSession.create(modelBuffer, {
+                    executionProviders: ['wasm'],
+                    graphOptimizationLevel: 'all'
                 });
 
                 status.innerText = 'Model loaded and ready!';
+                status.style.color = '#00ccff';
                 processBtn.innerText = 'Remove Background';
                 if (imageInput.files.length > 0) {
                     processBtn.disabled = false;
                 }
             } catch (error) {
                 console.error("Error loading model:", error);
-                status.innerText = 'Failed to load model. Error: ' + error.message;
+                console.error("Error stack:", error.stack);
+                status.innerText = 'Failed to load model. Error: ' + (error.message || 'Unknown error');
                 status.style.color = '#ff3333';
             }
+        }
+
+        // Preprocess image for InSPyReNet
+        function preprocessImage(img) {
+            const canvas = document.createElement('canvas');
+            canvas.width = INPUT_SIZE;
+            canvas.height = INPUT_SIZE;
+            const ctx = canvas.getContext('2d');
+            
+            // Draw and resize image
+            ctx.drawImage(img, 0, 0, INPUT_SIZE, INPUT_SIZE);
+            
+            const imageData = ctx.getImageData(0, 0, INPUT_SIZE, INPUT_SIZE);
+            const pixels = imageData.data;
+            
+            // ImageNet normalization parameters
+            const mean = [0.485, 0.456, 0.406];
+            const std = [0.229, 0.224, 0.225];
+            
+            // Prepare data in CHW format (channels, height, width)
+            const float32Data = new Float32Array(3 * INPUT_SIZE * INPUT_SIZE);
+            
+            for (let i = 0; i < INPUT_SIZE * INPUT_SIZE; i++) {
+                const pixelIndex = i * 4;
+                
+                // Extract RGB values and convert to [0, 1]
+                const r = pixels[pixelIndex] / 255.0;
+                const g = pixels[pixelIndex + 1] / 255.0;
+                const b = pixels[pixelIndex + 2] / 255.0;
+                
+                // Apply normalization: (value - mean) / std
+                float32Data[i] = (r - mean[0]) / std[0];
+                float32Data[INPUT_SIZE * INPUT_SIZE + i] = (g - mean[1]) / std[1];
+                float32Data[2 * INPUT_SIZE * INPUT_SIZE + i] = (b - mean[2]) / std[2];
+            }
+            
+            // Calculate min/max without spreading the array
+            let min = float32Data[0], max = float32Data[0];
+            for (let i = 1; i < float32Data.length; i++) {
+                if (float32Data[i] < min) min = float32Data[i];
+                if (float32Data[i] > max) max = float32Data[i];
+            }
+            
+            console.log('Input tensor sample:', Array.from(float32Data.slice(0, 10)));
+            console.log('Input tensor stats - min:', min, 'max:', max);
+            
+            return new ort.Tensor('float32', float32Data, [1, 3, INPUT_SIZE, INPUT_SIZE]);
+        }
+
+        // Sigmoid activation function
+        function sigmoid(x) {
+            return 1 / (1 + Math.exp(-x));
+        }
+        
+        // Post-process output to create mask
+        function postprocessOutput(output, originalWidth, originalHeight) {
+            const data = output.data;
+            const dims = output.dims;
+            
+            // Output is typically [1, 1, H, W] or [1, H, W]
+            let height, width, offset = 0;
+            if (dims.length === 4) {
+                // [batch, channels, height, width]
+                height = dims[2];
+                width = dims[3];
+            } else if (dims.length === 3) {
+                // [batch, height, width]
+                height = dims[1];
+                width = dims[2];
+            } else {
+                height = INPUT_SIZE;
+                width = INPUT_SIZE;
+            }
+            
+            console.log('Mask dimensions:', width, 'x', height);
+            
+            // Create mask canvas
+            const maskCanvasTemp = document.createElement('canvas');
+            maskCanvasTemp.width = width;
+            maskCanvasTemp.height = height;
+            const maskCtx = maskCanvasTemp.getContext('2d');
+            const maskImageData = maskCtx.createImageData(width, height);
+            
+            // Find min and max for normalization (only check valid finite values)
+            let min = Infinity, max = -Infinity;
+            let validCount = 0;
+            for (let i = 0; i < data.length; i++) {
+                if (isFinite(data[i])) {
+                    if (data[i] < min) min = data[i];
+                    if (data[i] > max) max = data[i];
+                    validCount++;
+                }
+            }
+            console.log('Output range:', min, 'to', max, 'valid values:', validCount);
+            
+            // Determine if we need sigmoid (if values are outside 0-1 range, they're likely logits)
+            const needsSigmoid = min < -0.1 || max > 1.1;
+            console.log('Needs sigmoid:', needsSigmoid);
+            
+            // Process mask values
+            const processedValues = new Float32Array(width * height);
+            for (let i = 0; i < width * height; i++) {
+                if (!isFinite(data[i])) {
+                    processedValues[i] = 0;
+                } else if (needsSigmoid) {
+                    processedValues[i] = sigmoid(data[i]);
+                } else {
+                    processedValues[i] = data[i];
+                }
+            }
+            
+            // Find min/max of processed values for normalization
+            let procMin = Infinity, procMax = -Infinity;
+            for (let i = 0; i < processedValues.length; i++) {
+                if (processedValues[i] < procMin) procMin = processedValues[i];
+                if (processedValues[i] > procMax) procMax = processedValues[i];
+            }
+            console.log('Processed range:', procMin, 'to', procMax);
+            
+            // Normalize and convert to 0-255
+            const range = procMax - procMin;
+            for (let i = 0; i < width * height; i++) {
+                let normalized;
+                if (range > 0) {
+                    normalized = (processedValues[i] - procMin) / range;
+                } else {
+                    normalized = processedValues[i];
+                }
+                
+                const value = Math.max(0, Math.min(255, normalized * 255));
+                maskImageData.data[i * 4] = value;
+                maskImageData.data[i * 4 + 1] = value;
+                maskImageData.data[i * 4 + 2] = value;
+                maskImageData.data[i * 4 + 3] = 255;
+            }
+            
+            maskCtx.putImageData(maskImageData, 0, 0);
+            
+            // Resize mask to original dimensions
+            const resizedMaskCanvas = document.createElement('canvas');
+            resizedMaskCanvas.width = originalWidth;
+            resizedMaskCanvas.height = originalHeight;
+            const resizedMaskCtx = resizedMaskCanvas.getContext('2d');
+            resizedMaskCtx.drawImage(maskCanvasTemp, 0, 0, originalWidth, originalHeight);
+            
+            return resizedMaskCanvas;
         }
 
         imageInput.addEventListener('change', (e) => {
@@ -550,98 +793,110 @@
                 const maskCtx = maskCanvas.getContext('2d');
                 maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
                 
-                if (model && processor) {
+                if (session) {
                     processBtn.disabled = false;
                 }
             }
         });
 
         processBtn.addEventListener('click', async () => {
-            if (!model || !processor || !imageInput.files[0]) return;
+            if (!session || !imageInput.files[0]) return;
 
             processBtn.disabled = true;
             status.innerText = 'Processing image...';
             
             try {
-                // Read image
                 const file = imageInput.files[0];
-                const imageURL = URL.createObjectURL(file);
                 
-                // Load image with RawImage
-                const image = await RawImage.fromURL(imageURL);
-
-                status.innerText = 'Running AI model...';
+                // Load image
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+                await new Promise(resolve => img.onload = resolve);
+                
+                status.innerText = 'Preprocessing image...';
                 
                 // Preprocess image
-                const inputs = await processor(image);
+                const inputTensor = preprocessImage(img);
                 
-                // RMBG-1.4 expects 'input' not 'pixel_values'
-                const modelInputs = {
-                    input: inputs.pixel_values || inputs.input
-                };
+                status.innerText = 'Running AI model...';
                 
-                // Run model inference - RMBG-1.4 is a SegFormer model
-                const { output } = await model(modelInputs);
+                // Run inference
+                const feeds = { input: inputTensor };
+                const results = await session.run(feeds);
+                
+                // InSPyReNet may have multiple outputs, find the right one
+                console.log('Available outputs:', session.outputNames);
+                console.log('Number of outputs:', session.outputNames.length);
+                
+                // Try to find the output with the right shape (usually the last one for InSPyReNet)
+                let output = null;
+                let validDataCount = 0;
+                
+                for (let i = session.outputNames.length - 1; i >= 0; i--) {
+                    const name = session.outputNames[i];
+                    const tensor = results[name];
+                    
+                    // Count valid values
+                    let validCount = 0;
+                    let sampleValues = [];
+                    for (let j = 0; j < Math.min(1000, tensor.data.length); j++) {
+                        if (j < 10) sampleValues.push(tensor.data[j]);
+                        if (!isNaN(tensor.data[j]) && isFinite(tensor.data[j])) {
+                            validCount++;
+                        }
+                    }
+                    
+                    console.log(`Output ${i} (${name}):`, {
+                        dims: tensor.dims,
+                        sample: sampleValues,
+                        validCount: validCount,
+                        totalChecked: Math.min(1000, tensor.data.length)
+                    });
+                    
+                    // Use the output with the most valid data
+                    if (validCount > validDataCount && tensor.dims.length >= 3) {
+                        output = tensor;
+                        validDataCount = validCount;
+                        console.log('Selected output:', name, 'with', validCount, 'valid values');
+                    }
+                }
+                
+                if (!output) {
+                    // Fallback to first output if no valid output found
+                    const name = session.outputNames[0];
+                    output = results[name];
+                    console.warn('No fully valid output found, using first output:', name);
+                }
                 
                 status.innerText = 'Creating transparent background...';
                 
-                // Get mask dimensions
-                const [batch, channels, height, width] = output.dims;
-                const maskData = output.data;
+                // Post-process to get mask
+                const maskCanvasTemp = postprocessOutput(output, img.width, img.height);
                 
-                // Setup canvas
-                resultCanvas.width = image.width;
-                resultCanvas.height = image.height;
-                const ctx = resultCanvas.getContext('2d');
+                // Display mask
+                maskCanvas.width = img.width;
+                maskCanvas.height = img.height;
+                const maskCtx = maskCanvas.getContext('2d');
+                maskCtx.drawImage(maskCanvasTemp, 0, 0);
                 
-                // Load and draw original image
-                const imgEl = new Image();
-                imgEl.src = imageURL;
-                await new Promise(resolve => imgEl.onload = resolve);
-                ctx.drawImage(imgEl, 0, 0);
+                // Create result with transparent background
+                resultCanvas.width = img.width;
+                resultCanvas.height = img.height;
+                const resultCtx = resultCanvas.getContext('2d');
                 
-                // Get image data
-                const imageData = ctx.getImageData(0, 0, resultCanvas.width, resultCanvas.height);
+                // Draw original image
+                resultCtx.drawImage(img, 0, 0);
                 
-                // Create temporary canvas for raw mask
-                const tempMaskCanvas = document.createElement('canvas');
-                tempMaskCanvas.width = width;
-                tempMaskCanvas.height = height;
-                const tempMaskCtx = tempMaskCanvas.getContext('2d');
-                const tempMaskData = tempMaskCtx.createImageData(width, height);
-                
-                // Convert mask data to ImageData
-                for (let i = 0; i < maskData.length; i++) {
-                    const val = Math.round(maskData[i] * 255);
-                    tempMaskData.data[i * 4] = val;
-                    tempMaskData.data[i * 4 + 1] = val;
-                    tempMaskData.data[i * 4 + 2] = val;
-                    tempMaskData.data[i * 4 + 3] = 255;
-                }
-                
-                tempMaskCtx.putImageData(tempMaskData, 0, 0);
-                
-                // Display the mask in the mask canvas
-                maskCanvas.width = resultCanvas.width;
-                maskCanvas.height = resultCanvas.height;
-                const maskDisplayCtx = maskCanvas.getContext('2d');
-                maskDisplayCtx.drawImage(tempMaskCanvas, 0, 0, maskCanvas.width, maskCanvas.height);
-                
-                // Scale mask to match original image size for applying to result
-                const scaledMaskCanvas = document.createElement('canvas');
-                scaledMaskCanvas.width = resultCanvas.width;
-                scaledMaskCanvas.height = resultCanvas.height;
-                const scaledMaskCtx = scaledMaskCanvas.getContext('2d');
-                scaledMaskCtx.drawImage(tempMaskCanvas, 0, 0, resultCanvas.width, resultCanvas.height);
-                
-                const scaledMaskData = scaledMaskCtx.getImageData(0, 0, resultCanvas.width, resultCanvas.height);
+                // Get image data and apply mask
+                const imageData = resultCtx.getImageData(0, 0, img.width, img.height);
+                const maskData = maskCtx.getImageData(0, 0, img.width, img.height);
                 
                 // Apply mask as alpha channel
                 for (let i = 0; i < imageData.data.length; i += 4) {
-                    imageData.data[i + 3] = scaledMaskData.data[i];
+                    imageData.data[i + 3] = maskData.data[i];
                 }
                 
-                ctx.putImageData(imageData, 0, 0);
+                resultCtx.putImageData(imageData, 0, 0);
                 
                 status.innerText = 'Saving to history...';
                 

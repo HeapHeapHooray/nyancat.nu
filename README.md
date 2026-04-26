@@ -31,13 +31,13 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - Processing history with video previews
   - Perfect for creating audio visualizers or lyric videos with album art
   - Mobile-friendly responsive design
-- **AI Background Remover**: Professional-grade background removal powered by RMBG-1.4 AI model.
-  - 100% client-side processing using Transformers.js
+- **AI Background Remover**: Professional-grade background removal powered by InSPyReNet AI model.
+  - 100% client-side processing using ONNX Runtime Web
   - High-quality results for people, products, and objects
   - View original, mask, and result side-by-side
   - Automatic processing history stored locally in your browser
   - Export transparent PNG images
-  - ~176MB model download (one-time, cached in browser)
+  - ~395MB model download (one-time, cached in browser)
 - **Notepad Editor**: Full-featured text editor with persistence.
   - Create, edit, and save text files
   - Upload and download text files
