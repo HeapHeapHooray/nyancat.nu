@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Databases Collection - nyancat.nu</title>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'core/images/favicon.ico' %}">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #003366;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .collection-desc {
+            text-align: center;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            margin-top: -10px;
+            margin-bottom: 30px;
+            color: #ddd;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        .home-link {
+            align-self: flex-start;
+            color: #00ffcc;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .home-link:hover {
+            text-decoration: underline;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 2px solid #00ffcc;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            justify-content: center;
+        }
+
+        .tag {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 5px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .tag.active {
+            background-color: #ff0099;
+            border-color: #ff0099;
+            color: white;
+        }
+
+        .databases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .database-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .database-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffcc;
+        }
+
+        .database-card h3 {
+            margin-top: 0;
+            color: #ffcc00;
+            word-break: break-all;
+        }
+
+        .database-card p {
+            font-size: 0.9rem;
+            flex-grow: 1;
+            line-height: 1.4;
+        }
+
+        .database-card .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 15px;
+        }
+
+        .card-tag {
+            font-size: 0.7rem;
+            background-color: rgba(0, 255, 204, 0.1);
+            color: #00ffcc;
+            padding: 2px 6px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .card-tag:hover {
+            background-color: rgba(0, 255, 204, 0.2);
+        }
+
+        .visit-link {
+            margin-top: 15px;
+            display: inline-block;
+            color: #ff0099;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .visit-link:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .databases-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'index' %}" class="home-link">&lt; Back to Home</a>
+    <h1>Databases Collection</h1>
+    <p class="collection-desc">A collection of databases I've collected for around 2 years, before the big AI boom.</p>
+    
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search databases by name, description or tags...">
+    </div>
+
+    <div class="tags-container" id="tags-filter">
+        <span class="tag active" data-tag="all">All</span>
+        {% for tag in tags %}
+            <span class="tag" data-tag="{{ tag }}">{{ tag }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="databases-grid" id="databases-grid">
+        {% for db in databases %}
+            <div class="database-card" data-tags="{{ db.tags|join:',' }}" data-search="{{ db.url }} {{ db.description }} {{ db.tags|join:' ' }}">
+                <h3>{{ db.url|truncatechars:50 }}</h3>
+                <p>{{ db.description }}</p>
+                <div class="card-tags">
+                    {% for tag in db.tags %}
+                        <span class="card-tag" onclick="filterByTag('{{ tag }}')">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                <a href="{{ db.url }}" target="_blank" rel="noopener noreferrer" class="visit-link">Visit Site &rarr;</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const tagsFilter = document.getElementById('tags-filter');
+        const dbCards = document.querySelectorAll('.database-card');
+        const tagElements = document.querySelectorAll('.tag');
+        
+        let activeTag = 'all';
+        let searchQuery = '';
+
+        function filterDatabases() {
+            dbCards.forEach(card => {
+                const cardTags = card.getAttribute('data-tags').split(',');
+                const searchContent = card.getAttribute('data-search').toLowerCase();
+                
+                const matchesTag = activeTag === 'all' || cardTags.includes(activeTag);
+                const matchesSearch = searchContent.includes(searchQuery.toLowerCase());
+                
+                if (matchesTag && matchesSearch) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            filterDatabases();
+        });
+
+        tagElements.forEach(tagEl => {
+            tagEl.addEventListener('click', () => {
+                const tag = tagEl.getAttribute('data-tag');
+                setActiveTag(tag);
+            });
+        });
+
+        function setActiveTag(tag) {
+            activeTag = tag;
+            tagElements.forEach(el => {
+                if (el.getAttribute('data-tag') === tag) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+            filterDatabases();
+        }
+
+        function filterByTag(tag) {
+            setActiveTag(tag);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,3202 @@
+[
+  {
+    "url": "https://bigdata-madesimple.com/70-websites-to-get-large-data-repositories-for-free/",
+    "tags": ["datasets", "open-data", "resource-directory", "blog-post"],
+    "description": "An article listing 70 different websites and repositories where users can find large datasets for free."
+  },
+  {
+    "url": "https://careerfoundry.com/en/blog/data-analytics/where-to-find-free-datasets/",
+    "tags": ["datasets", "open-data", "resource-directory", "blog-post"],
+    "description": "A guide for data analysts highlighting 10 major sources for finding free, open datasets for projects."
+  },
+  {
+    "url": "https://www.interviewqs.com/blog/free-online-data-sets",
+    "tags": ["datasets", "open-data", "resource-directory", "blog-post"],
+    "description": "A curated list of 11 websites providing free datasets for data science and analysis practice."
+  },
+  {
+    "url": "https://images.cv/",
+    "tags": ["datasets", "image-data", "ai-ml", "open-data"],
+    "description": "A specialized platform providing over 500 labeled image classes and 5 million images for computer vision research."
+  },
+  {
+    "url": "https://whoisdatacenter.com/",
+    "tags": ["datasets", "database", "security", "domain-data"],
+    "description": "A commercial provider of WHOIS data, offering feeds for newly registered, expiring, and updated domains."
+  },
+  {
+    "url": "https://github.com/tb0hdan/domains",
+    "tags": ["datasets", "github-repo", "domain-data", "open-data"],
+    "description": "A massive GitHub repository containing a large-scale internet domains dataset."
+  },
+  {
+    "url": "https://paracrawl.eu/",
+    "tags": ["datasets", "text-data", "open-data", "corpora"],
+    "description": "A project providing large-scale parallel corpora for European languages, co-financed by the EU."
+  },
+  {
+    "url": "https://datarade.ai/",
+    "tags": ["datasets", "marketplace", "resource-directory"],
+    "description": "A global data marketplace for finding and comparing data products from over 500 providers."
+  },
+  {
+    "url": "https://www.kaggle.com/datasets",
+    "tags": ["datasets", "open-data", "ai-ml", "community"],
+    "description": "One of the largest platforms for open datasets, data science competitions, and community-driven research."
+  },
+  {
+    "url": "https://github.com/datasets",
+    "tags": ["datasets", "github-repo", "open-data", "curated-list"],
+    "description": "A GitHub organization focused on curating and providing high-quality, important open datasets."
+  },
+  {
+    "url": "https://github.com/datasets/awesome-data",
+    "tags": ["curated-list", "github-repo", "datasets", "open-data"],
+    "description": "An 'awesome' style list on GitHub featuring a variety of interesting and important datasets."
+  },
+  {
+    "url": "https://github.com/google-research/meta-dataset",
+    "tags": ["datasets", "github-repo", "ai-ml", "research"],
+    "description": "A dataset of datasets from Google Research designed for few-shot learning research."
+  },
+  {
+    "url": "https://haveibeenpwned.com/Passwords",
+    "tags": ["datasets", "security", "open-data", "tools"],
+    "description": "A corpus of previously breached passwords provided to help services block compromised credentials."
+  },
+  {
+    "url": "https://imgur.com/a/SnSIQRu",
+    "tags": ["image-data", "ai-ml", "gallery"],
+    "description": "An Imgur gallery showcasing keyword comparison results from CLIP and VQGAN AI models."
+  },
+  {
+    "url": "https://imgur.com/gallery/BZzXLHY",
+    "tags": ["image-data", "ai-ml", "gallery"],
+    "description": "A collection of art styles as perceived by AI models VQGAN and CLIP."
+  },
+  {
+    "url": "https://vdb.vtbs.moe/",
+    "tags": ["datasets", "database", "entertainment", "metadata"],
+    "description": "The Virtual Youtuber Name List Database, containing structured information about VTubers."
+  },
+  {
+    "url": "https://www.cs.tau.ac.il/~wolf/ytfaces/",
+    "tags": ["datasets", "image-data", "ai-ml", "research"],
+    "description": "The YouTube Faces Database, containing face videos designed for studying unconstrained face recognition."
+  },
+  {
+    "url": "https://socialgrep.com/datasets",
+    "tags": ["datasets", "social-media", "archive"],
+    "description": "A platform specializing in social media data extraction and datasets (Site was unreachable during fetch)."
+  },
+  {
+    "url": "https://opendata.cityofnewyork.us/",
+    "tags": ["open-data", "government-data", "datasets", "nyc"],
+    "description": "The official open data portal for the City of New York, providing free public data from city agencies."
+  },
+  {
+    "url": "https://data.lacity.org/",
+    "tags": ["open-data", "government-data", "datasets", "los-angeles"],
+    "description": "The open data portal for the City of Los Angeles, offering insights into city finances and services."
+  },
+  {
+    "url": "https://www.opendataphilly.org/",
+    "tags": ["open-data", "government-data", "datasets", "philadelphia"],
+    "description": "A catalog of open data in the Philadelphia region, including official city datasets."
+  },
+  {
+    "url": "https://data.cityofsacramento.org/",
+    "tags": ["open-data", "government-data", "datasets", "sacramento"],
+    "description": "The official open data site for the City of Sacramento."
+  },
+  {
+    "url": "https://ucr.fbi.gov/crime-in-the-u.s",
+    "tags": ["datasets", "government-data", "security", "crime-stats"],
+    "description": "The FBI's Uniform Crime Reporting (UCR) database, providing crime statistics for the United States."
+  },
+  {
+    "url": "https://ec.europa.eu/eurostat/data/database",
+    "tags": ["datasets", "government-data", "statistics", "europe"],
+    "description": "Eurostat's statistical database, providing a wide range of data about the European Union."
+  },
+  {
+    "url": "https://medium.com/machine-learning-in-practice/my-curated-list-of-ai-and-machine-learning-resources-from-around-the-web-9a97823b8524",
+    "tags": ["ai-ml", "resource-directory", "blog-post", "curated-list"],
+    "description": "A comprehensive list of free AI and machine learning resources, including courses, bloggers, and tools."
+  },
+  {
+    "url": "https://github.com/jakejarvis/awesome-shodan-queries",
+    "tags": ["security", "osint", "github-repo", "awesome-list"],
+    "description": "A curated collection of interesting and useful search queries for the Shodan search engine."
+  },
+  {
+    "url": "https://dev.to/bartosz/top-10-reverse-engineering-tools-3ni3",
+    "tags": ["reverse-engineering", "security", "tools", "blog-post"],
+    "description": "A blog post reviewing the top 10 most popular tools for reverse engineering and binary analysis."
+  },
+  {
+    "url": "https://www.pelock.com/articles/reverse-engineering-tools-review",
+    "tags": ["reverse-engineering", "security", "tools", "blog-post"],
+    "description": "A detailed review of various reverse engineering tools, including their advantages and disadvantages."
+  },
+  {
+    "url": "https://www.osintme.com/index.php/2021/01/16/ultimate-osint-with-shodan-100-great-shodan-queries/",
+    "tags": ["osint", "security", "search-engine", "blog-post"],
+    "description": "An extensive list of over 100 tested Shodan queries for OSINT investigations."
+  },
+  {
+    "url": "https://www.osintme.com/index.php/2022/11/10/dark-web-osint-new-working-links-and-resources/",
+    "tags": ["osint", "dark-web", "security", "resource-directory"],
+    "description": "A collection of functional links and resources for conducting OSINT on the dark web."
+  },
+  {
+    "url": "https://www.osintme.com/index.php/2022/07/31/30-domain-ip-address-osint-resources/",
+    "tags": ["osint", "domain-data", "network-security", "resource-directory"],
+    "description": "A handy reference sheet of over 30 resources for researching domains and IP addresses."
+  },
+  {
+    "url": "https://www.osintme.com/index.php/2022/07/14/list-of-60-hacker-cracker-carder-cyber-criminal-forums-for-investigators/",
+    "tags": ["osint", "security", "community", "resource-directory"],
+    "description": "A list of over 100 hacker and cybercriminal forums for threat intelligence monitoring."
+  },
+  {
+    "url": "https://forum.vivaldi.net/topic/46609/guide-vivaldi-search-engines-collection",
+    "tags": ["search-engine", "tools", "community", "resource-directory"],
+    "description": "A community-contributed collection of search engine URLs for use in the Vivaldi browser."
+  },
+  {
+    "url": "https://www.searchenginejournal.com/seo-guide/what-people-search-for/",
+    "tags": ["search-engine", "seo", "tools", "blog-post"],
+    "description": "An article detailing 44 free tools to help understand user search behavior and keywords."
+  },
+  {
+    "url": "https://ahrefs.com/blog/google-advanced-search-operators/",
+    "tags": ["search-engine", "seo", "tools", "blog-post"],
+    "description": "A complete guide to 44 advanced Google search operators for improved search results."
+  },
+  {
+    "url": "https://ml4a.github.io/guides/",
+    "tags": ["ai-ml", "education", "github-repo", "resource-directory"],
+    "description": "Machine Learning for Artists: A collection of guides and demos for learning AI and creative coding."
+  },
+  {
+    "url": "https://mahnob-db.eu/",
+    "tags": ["datasets", "ai-ml", "multimodal", "research"],
+    "description": "A repository of multimodal databases for human-computer interaction, laughter, and mimicry research."
+  },
+  {
+    "url": "https://github.com/emijrp/awesome-awesome",
+    "tags": ["curated-list", "github-repo", "awesome-list", "resource-directory"],
+    "description": "A meta-list on GitHub curating other 'awesome' style curated lists across many topics."
+  },
+  {
+    "url": "https://github.com/erichs/awesome-awesome",
+    "tags": ["curated-list", "github-repo", "awesome-list", "resource-directory"],
+    "description": "Another curated list of awesome lists, providing a broad directory of GitHub resources."
+  },
+  {
+    "url": "https://github.com/jnv/lists",
+    "tags": ["curated-list", "github-repo", "resource-directory"],
+    "description": "The definitive list of lists curated on GitHub and elsewhere."
+  },
+  {
+    "url": "https://github.com/bradoyler/awesome-all",
+    "tags": ["curated-list", "github-repo", "awesome-list", "software"],
+    "description": "A curated list of awesome lists covering frameworks, libraries, and software."
+  },
+  {
+    "url": "https://github.com/cuuupid/awesome-lists",
+    "tags": ["curated-list", "github-repo", "awesome-list", "deprecated"],
+    "description": "A now-deprecated curated list of other curated lists on GitHub."
+  },
+  {
+    "url": "https://github.com/phpearth/awesome-community",
+    "tags": ["curated-list", "github-repo", "community", "resource-directory"],
+    "description": "A curated list of programming communities, discussion channels, and technical resources."
+  },
+  {
+    "url": "https://github.com/prahladyeri/CuratedLists",
+    "tags": ["curated-list", "github-repo", "resource-directory"],
+    "description": "A GitHub repository containing curated lists of various topics and tools."
+  },
+  {
+    "url": "https://github.com/brmson/dataset-factoid-curated",
+    "tags": ["datasets", "github-repo", "ai-ml", "research"],
+    "description": "A curated research dataset of factoid questions for question-answering systems."
+  },
+  {
+    "url": "https://gourav.io/clone-wars",
+    "tags": ["github-repo", "software", "education", "resource-directory"],
+    "description": "A list of 100+ open-source clones of popular websites like Airbnb and Netflix for learning purposes."
+  },
+  {
+    "url": "https://www.oberlo.com/blog/image-search-engine",
+    "tags": ["search-engine", "image-data", "tools", "blog-post"],
+    "description": "A guide to the best image search engines and reverse image search tools."
+  },
+  {
+    "url": "https://hackr.io/blog/google-dorks-cheat-sheet",
+    "tags": ["security", "search-engine", "tools", "cheat-sheet"],
+    "description": "A cheat sheet for Google Dorks, a hacking technique for finding hidden search results."
+  },
+  {
+    "url": "https://leafmarks.medium.com/best-website-directory-7d23eb8de970",
+    "tags": ["resource-directory", "tools", "blog-post"],
+    "description": "A curated and continually updated list of the best websites and online tools."
+  },
+  {
+    "url": "https://krazydad.com/",
+    "tags": ["puzzles", "entertainment", "education"],
+    "description": "A website offering thousands of free printable and interactive puzzles, including Sudoku and mazes."
+  },
+  {
+    "url": "https://0ut3r.space/2020/09/25/hacker-forums/",
+    "tags": ["security", "community", "blog-post"],
+    "description": "A blog post discussing various hacker forums and the importance of practical IT security skills."
+  },
+  {
+    "url": "https://gitgud.io/iblist/textboards.json/-/blob/master/textboards.json",
+    "tags": ["datasets", "community", "anonymous", "git-repo"],
+    "description": "A public JSON list of registration-free, anonymous textboards hosted on GitGud."
+  },
+  {
+    "url": "https://www.scholarcy.com/the-5-best-ai-tools-for-postgraduate-research/",
+    "tags": ["ai-ml", "research", "tools", "education"],
+    "description": "An article highlighting the best AI tools for academic researchers and postgraduate students."
+  },
+  {
+    "url": "https://github.com/P3TERX/GeoLite.mmdb",
+    "tags": ["datasets", "github-repo", "geospatial", "network-security"],
+    "description": "A repository providing MaxMind's GeoIP2 GeoLite2 databases in MMDB format."
+  },
+  {
+    "url": "https://datasets.filecoin.io/",
+    "tags": ["datasets", "open-data", "decentralized-storage"],
+    "description": "Filecoin Dataset Explorer: A portal to discover large-scale open-access datasets stored on the Filecoin network."
+  },
+  {
+    "url": "https://www.moelib.com/",
+    "tags": ["resource-directory", "entertainment", "anime", "tools"],
+    "description": "MoeLib: A collection of various nijigen (2D/anime) related resources and tools."
+  },
+  {
+    "url": "https://www.furry.be/links.html",
+    "tags": ["resource-directory", "entertainment", "community"],
+    "description": "A collection of links related to the furry community and digital art (Adult content warning)."
+  },
+  {
+    "url": "https://github.com/geeksniper/reverse-engineering-toolkit",
+    "tags": ["reverse-engineering", "security", "github-repo", "tools"],
+    "description": "A collection of tools and resources for software reverse engineering on GitHub."
+  },
+  {
+    "url": "https://github.com/TheAlgorithms/Python",
+    "tags": ["github-repo", "software", "education", "algorithms"],
+    "description": "A massive collection of algorithms implemented in Python, available on GitHub."
+  },
+  {
+    "url": "https://github.com/tzutalin/awesome-visual-slam",
+    "tags": ["ai-ml", "github-repo", "awesome-list", "research"],
+    "description": "A curated list of vision-based SLAM and Visual Odometry open source projects and papers."
+  },
+  {
+    "url": "https://github.com/targed/GPT-Plugins",
+    "tags": ["ai-ml", "github-repo", "awesome-list", "tools"],
+    "description": "A comprehensive list of plugins and extensions for ChatGPT and other GPT-based models."
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Patterns_in_nature",
+    "tags": ["wikipedia", "education", "science"],
+    "description": "A Wikipedia article exploring the visible regularities of form found in the natural world."
+  },
+  {
+    "url": "https://supermachine.art/",
+    "tags": ["ai-ml", "image-generation", "tools"],
+    "description": "Supermachine: An AI-powered platform for generating images and videos using the latest models."
+  },
+  {
+    "url": "https://docs.google.com/spreadsheets/d/1FqbszINlToZG9aniP3XwEpnZCIP0r8iKaT4b7Iqe10g/htmlview",
+    "tags": ["datasets", "osint", "domain-data"],
+    "description": "European Watch List: A Google Spreadsheet containing lists of domains and reverse WHOIS notes."
+  },
+  {
+    "url": "https://gist.github.com/TomDemeranville/8699224",
+    "tags": ["datasets", "github-gist", "research", "csv"],
+    "description": "A CSV list of DOI prefix publishers and journals shared via GitHub Gist."
+  },
+  {
+    "url": "http://924.org/links.htm",
+    "tags": ["resource-directory", "community", "automotive"],
+    "description": "A collection of links for the Porsche 924 enthusiast community."
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/List_of_online_databases",
+    "tags": ["wikipedia", "curated-list", "database"],
+    "description": "A Wikipedia list of various online databases accessible via the internet."
+  },
+  {
+    "url": "https://www.makeuseof.com/tag/15-massive-online-databases-know/",
+    "tags": ["database", "knowledge-base", "blog-post"],
+    "description": "An article highlighting 15 massive online knowledge bases and databases."
+  },
+  {
+    "url": "https://www.technologyreview.com/2010/12/03/261008/the-70-online-databases-that-define-our-planet/",
+    "tags": ["database", "research", "blog-post"],
+    "description": "An MIT Technology Review article about 70 databases used for modeling global systems."
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Wikipedia:List_of_online_newspaper_archives",
+    "tags": ["wikipedia", "curated-list", "archive", "news"],
+    "description": "A Wikipedia project page listing online newspaper archives from around the world."
+  },
+  {
+    "url": "https://marijanakay.com/blog/content-graphs-charts",
+    "tags": ["error", "blog-post"],
+    "description": "A blog post that was unreachable (Database Error) during the extraction process."
+  },
+  {
+    "url": "https://jfdb.jp/",
+    "tags": ["database", "entertainment", "movies", "japan"],
+    "description": "The Japanese Film Database (JFDB), providing information on Japanese movies and cast/staff."
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Category:Online_databases",
+    "tags": ["wikipedia", "category", "database"],
+    "description": "The Wikipedia category page for online databases, containing numerous subcategories and articles."
+  },
+  {
+    "url": "https://eos.com/blog/free-satellite-imagery-sources/",
+    "tags": ["datasets", "satellite-imagery", "geospatial", "open-data"],
+    "description": "A guide to various providers and sources for free satellite imagery data."
+  },
+  {
+    "url": "https://musical-artifacts.com/",
+    "tags": ["music-resources", "open-data", "community"],
+    "description": "A collaborative platform for sharing free and open music-making resources like soundfonts and presets."
+  },
+  {
+    "url": "https://www.wikimedia.org/",
+    "tags": ["wikimedia", "knowledge-base", "open-data"],
+    "description": "The portal for all Wikimedia projects, including Wikipedia, Commons, and Wikidata."
+  },
+  {
+    "url": "https://github.com/sindresorhus/awesome",
+    "tags": ["curated-list", "github-repo", "awesome-list", "resource-directory"],
+    "description": "The original 'awesome' list on GitHub, containing links to hundreds of other curated resource lists."
+  },
+  {
+    "url": "https://www.loc.gov/",
+    "tags": ["archive", "library", "government-data", "usa"],
+    "description": "The Library of Congress website, providing access to massive digital collections and national archives."
+  },
+  {
+    "url": "https://www.europeana.eu/en/collections/topic/18-newspapers",
+    "tags": ["newspaper-archive", "europe", "history"],
+    "description": "Europeana's newspaper collection, providing access to millions of digitized newspaper pages across Europe."
+  },
+  {
+    "url": "https://chroniclingamerica.loc.gov/",
+    "tags": ["newspaper-archive", "usa", "history", "government-data"],
+    "description": "Chronicling America: A searchable database of historic American newspapers from 1770 to 1963."
+  },
+  {
+    "url": "https://libguides.bgsu.edu/c.php?g=227439&p=1507130",
+    "tags": ["error", "library-guide"],
+    "description": "A library guide that was unreachable or restricted during access."
+  },
+  {
+    "url": "https://libguides.bham.ac.uk/c.php?g=544560&p=3733286",
+    "tags": ["newspaper-archive", "library-guide", "research-tool"],
+    "description": "A University of Birmingham library guide for finding European and international newspapers."
+  },
+  {
+    "url": "https://www.poetryfoundation.org/poems",
+    "tags": ["literature", "poetry", "archive"],
+    "description": "The Poetry Foundation's extensive archive of poems, poets, and poetry-related resources."
+  },
+  {
+    "url": "https://www.poetry.com/",
+    "tags": ["literature", "poetry", "community"],
+    "description": "An online community for poets to share their work and enter contests."
+  },
+  {
+    "url": "https://www.poemhunter.com/",
+    "tags": ["literature", "poetry", "search-engine"],
+    "description": "A large database and search engine for poems and poets from around the world."
+  },
+  {
+    "url": "https://news.google.com/newspapers",
+    "tags": ["newspaper-archive", "archive", "search-engine"],
+    "description": "Google News Archive Search, providing access to thousands of scanned historical newspapers."
+  },
+  {
+    "url": "https://guides.slv.vic.gov.au/newspapers/victorian",
+    "tags": ["newspaper-archive", "australia", "library-guide"],
+    "description": "A research guide from the State Library of Victoria for finding Victorian historical newspapers."
+  },
+  {
+    "url": "https://mymemory.translated.net/",
+    "tags": ["translation", "datasets", "corpora"],
+    "description": "MyMemory: The world's largest collaborative translation memory and bilingual text archive."
+  },
+  {
+    "url": "https://quotes.toscrape.com/",
+    "tags": ["quotes", "scraping-sandbox", "education"],
+    "description": "A sandbox website designed for practicing web scraping, containing a collection of famous quotes."
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Category:Social_networking_services",
+    "tags": ["wikipedia", "category", "social-media"],
+    "description": "The Wikipedia category page listing various social networking services."
+  },
+  {
+    "url": "https://publicsearch1.chicagopolice.org/",
+    "tags": ["arrest-records", "government-data", "security", "chicago"],
+    "description": "The Chicago Police Department's public arrest record search portal."
+  },
+  {
+    "url": "https://www.mass.gov/",
+    "tags": ["government-data", "usa", "massachusetts"],
+    "description": "The official website of the Commonwealth of Massachusetts, providing state-wide records and services."
+  },
+  {
+    "url": "https://www.cityofpleasantonca.gov/gov/depts/police/blotter.asp",
+    "tags": ["error", "government-data", "police"],
+    "description": "The police blotter page for the City of Pleasanton, which returned a 404 error."
+  },
+  {
+    "url": "https://www.bop.gov/inmateloc/",
+    "tags": ["government-data", "usa", "prison-data"],
+    "description": "The Federal Bureau of Prisons inmate locator tool for finding federal prisoners."
+  },
+  {
+    "url": "https://www.makeuseof.com/tag/4-steps-find-information-someone-online/",
+    "tags": ["osint", "tools", "blog-post"],
+    "description": "An article detailing steps and tools for finding information about people online."
+  },
+  {
+    "url": "https://www.makeuseof.com/tag/15-websites-to-trace-people-online/",
+    "tags": ["osint", "search-engine", "blog-post"],
+    "description": "A list of 13 websites and search engines for finding people on the internet."
+  },
+  {
+    "url": "https://www.wikihow.com/Find-Information-on-People",
+    "tags": ["osint", "tools", "how-to"],
+    "description": "A wikiHow guide on how to find information about people using online and in-person methods."
+  },
+  {
+    "url": "https://www.lifewire.com/find-anyone-online-3482687",
+    "tags": ["osint", "search-engine", "blog-post"],
+    "description": "An article highlighting 8 free ways and resources to find someone online."
+  },
+  {
+    "url": "https://usersearch.org/index.php",
+    "tags": ["osint", "social-media", "search-engine"],
+    "description": "UserSearch: A tool for reverse username, email, and phone lookups across thousands of platforms."
+  },
+  {
+    "url": "https://www.fontsquirrel.com/",
+    "tags": ["design-resources", "fonts", "tools"],
+    "description": "Font Squirrel: A repository of high-quality, legitimately free fonts for commercial use."
+  },
+  {
+    "url": "https://archive.org/details/magazineart",
+    "tags": ["archive", "design-resources", "art"],
+    "description": "A collection of digitized art and design magazines hosted on the Internet Archive."
+  },
+  {
+    "url": "https://forvo.com/",
+    "tags": ["music-resources", "linguistics", "audio-data"],
+    "description": "Forvo: The largest pronunciation dictionary, containing billions of native speaker recordings."
+  },
+  {
+    "url": "https://tvtropes.org/",
+    "tags": ["entertainment", "knowledge-base", "pop-culture"],
+    "description": "TV Tropes: A massive wiki cataloging recurrent plot devices and archetypes in media."
+  },
+  {
+    "url": "https://www.frontiersin.org/",
+    "tags": ["research", "open-data", "science"],
+    "description": "Frontiers: An open access publisher of peer-reviewed scientific articles across many disciplines."
+  },
+  {
+    "url": "https://sci-hub.se/",
+    "tags": ["research", "security-blocked", "database"],
+    "description": "Sci-Hub: A shadow library providing free access to millions of research papers (blocked or unreachable)."
+  },
+  {
+    "url": "https://www.city-data.com/",
+    "tags": ["datasets", "demographics", "usa"],
+    "description": "City-Data: A comprehensive database of statistics and demographics for US cities."
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Category:Book_websites",
+    "tags": ["wikipedia", "category", "literature"],
+    "description": "The Wikipedia category page listing various websites related to books and literature."
+  },
+  {
+    "url": "https://blog.feedspot.com",
+    "tags": ["security-blocked", "resource-directory"],
+    "description": "Feedspot blog: A directory of blogs and influencers (Access was blocked by CloudFront)."
+  },
+  {
+    "url": "https://www.exploit-db.com/",
+    "tags": ["security", "malware-database", "research"],
+    "description": "Exploit Database: A CVE-compliant archive of public exploits and vulnerability reports."
+  },
+  {
+    "url": "https://www.slideshare.net/",
+    "tags": ["knowledge-base", "education", "community"],
+    "description": "SlideShare: A professional content sharing community for presentations and infographics."
+  },
+  {
+    "url": "https://www.blockchain.com",
+    "tags": ["finance", "crypto", "search-engine"],
+    "description": "Blockchain.com: A popular crypto platform and explorer for blockchain data."
+  },
+  {
+    "url": "https://ad.video/",
+    "tags": ["error", "media"],
+    "description": "A video/ad site that returned a 'File not found' error."
+  },
+  {
+    "url": "https://aprilfoolsdayontheweb.com/",
+    "tags": ["entertainment", "archive", "pop-culture"],
+    "description": "A comprehensive listing of April Fools' Day jokes from websites dating back to 2004."
+  },
+  {
+    "url": "https://www.wikihow.com",
+    "tags": ["knowledge-base", "education", "how-to"],
+    "description": "wikiHow: The world's most popular how-to website with thousands of well-researched guides."
+  },
+  {
+    "url": "https://www.wikihow.life",
+    "tags": ["knowledge-base", "education", "how-to"],
+    "description": "wikiHow Life: A specialized version of wikiHow focusing on personal well-being and life skills."
+  },
+  {
+    "url": "http://www.moreofit.com/",
+    "tags": ["security-blocked", "search-engine"],
+    "description": "A 'similar sites' search engine that was blocked during access."
+  },
+  {
+    "url": "https://www.goodreads.com/",
+    "tags": ["literature", "community", "reviews"],
+    "description": "Goodreads: The world's largest site for readers and book recommendations."
+  },
+  {
+    "url": "https://fcit.usf.edu/",
+    "tags": ["education", "design-resources", "government-data"],
+    "description": "Florida Center for Instructional Technology: Providing over 100,000 pieces of free digital content for classrooms."
+  },
+  {
+    "url": "https://malpedia.caad.fkie.fraunhofer.de/",
+    "tags": ["security", "malware-database", "research"],
+    "description": "Malpedia: A curated resource for rapid identification and actionable context in malware investigations."
+  },
+  {
+    "url": "https://best-hashtags.com/",
+    "tags": ["social-media", "tools", "marketing"],
+    "description": "A hashtag generator and analytics tool for Instagram and TikTok."
+  },
+  {
+    "url": "https://ritetag.com/",
+    "tags": ["social-media", "tools", "marketing"],
+    "description": "RiteTag: Provides instant hashtag suggestions based on real-time engagement data."
+  },
+  {
+    "url": "https://www.kissthisguy.com/",
+    "tags": ["entertainment", "music-resources", "community"],
+    "description": "The Archive of Misheard Song Lyrics, a social website for sharing 'mondegreens'."
+  },
+  {
+    "url": "http://www.amiright.com/",
+    "tags": ["entertainment", "music-resources", "community"],
+    "description": "Am I Right: A music humor site specializing in misheard lyrics, parodies, and trivia."
+  },
+  {
+    "url": "https://free-proxy-list.net/",
+    "tags": ["tools", "network-security", "proxy-list"],
+    "description": "A frequently updated list of free HTTP and SOCKS proxy servers."
+  },
+  {
+    "url": "https://webtechsurvey.com/",
+    "tags": ["tools", "marketing", "tech-checker"],
+    "description": "WebTechSurvey: A platform for website technology profiling and market share analysis."
+  },
+  {
+    "url": "https://sitereport.netcraft.com/",
+    "tags": ["tools", "security", "tech-checker"],
+    "description": "Netcraft Site Report: Reveals the infrastructure and technologies used by any website."
+  },
+  {
+    "url": "https://builtwith.com/",
+    "tags": ["tools", "marketing", "tech-checker"],
+    "description": "BuiltWith: A powerful web technology profiler and lead generation tool."
+  },
+  {
+    "url": "https://hunter.io/",
+    "tags": ["tools", "marketing", "email-data"],
+    "description": "Hunter.io: A leading solution for finding and verifying professional email addresses."
+  },
+  {
+    "url": "https://phonebook.cz/",
+    "tags": ["osint", "email-data", "search-engine"],
+    "description": "Phonebook.cz: A tool for listing domains, emails, and URLs for any input domain."
+  },
+  {
+    "url": "https://email-checker.net/",
+    "tags": ["tools", "marketing", "email-data"],
+    "description": "Email Checker: A free tool to verify if a specific email address exists and is valid."
+  },
+  {
+    "url": "https://namechk.com/",
+    "tags": ["osint", "social-media", "tools"],
+    "description": "Namechk: A username and domain name availability checker across hundreds of platforms."
+  },
+  {
+    "url": "https://whatsmyname.app/",
+    "tags": ["osint", "social-media", "tools"],
+    "description": "WhatsMyName: An OSINT tool to enumerate usernames across many websites."
+  },
+  {
+    "url": "https://namecheckup.com/",
+    "tags": ["osint", "social-media", "tools"],
+    "description": "Namecheckup: A tool to find available social media usernames and domains."
+  },
+  {
+    "url": "https://webmii.com/",
+    "tags": ["osint", "search-engine", "people-search"],
+    "description": "Webmii: A people search engine that aggregates public information from across the web."
+  },
+  {
+    "url": "https://thatsthem.com/",
+    "tags": ["security-blocked", "people-search", "osint"],
+    "description": "ThatsThem: A people search engine (Access was blocked during the extraction process)."
+  },
+  {
+    "url": "https://voterrecords.com",
+    "tags": ["security-blocked", "government-data", "osint"],
+    "description": "VoterRecords: A database of public voter registration records (Access was blocked by Cloudflare)."
+  },
+  {
+    "url": "https://socialbearing.com/",
+    "tags": ["social-media", "tools", "deprecated"],
+    "description": "SocialBearing: A Twitter search and analytics tool (Currently non-operational due to API changes)."
+  },
+  {
+    "url": "https://www.trustpilot.com/",
+    "tags": ["consumer-reviews", "community", "reviews"],
+    "description": "Trustpilot: A major review platform where consumers share their shopping experiences."
+  },
+  {
+    "url": "https://www.tripadvisor.com/",
+    "tags": ["consumer-reviews", "travel", "reviews"],
+    "description": "Tripadvisor: A massive travel guidance platform with billions of reviews for hotels and restaurants."
+  },
+  {
+    "url": "https://www.makeuseof.com/tag/5-complaint-sites-pissed-consumers/",
+    "tags": ["consumer-reviews", "tools", "blog-post"],
+    "description": "An article reviewing the best complaint sites for unhappy consumers."
+  },
+  {
+    "url": "https://www.bbb.org/",
+    "tags": ["security-blocked", "consumer-reviews", "government-data"],
+    "description": "Better Business Bureau (BBB): A non-profit organization focused on marketplace trust (Access was blocked)."
+  },
+  {
+    "url": "https://www.pissedconsumer.com/",
+    "tags": ["consumer-reviews", "community", "reviews"],
+    "description": "PissedConsumer: A consumer advocacy website for sharing reviews and complaints."
+  },
+  {
+    "url": "https://www.complaintsboard.com/",
+    "tags": ["consumer-reviews", "security-blocked", "reviews"],
+    "description": "ComplaintsBoard: A platform for consumers to post complaints and seek resolution (Security verification required)."
+  },
+  {
+    "url": "https://www.consumeraffairs.com/",
+    "tags": ["consumer-reviews", "news", "reviews"],
+    "description": "ConsumerAffairs: A resource for consumer news, reviews, and safety recalls."
+  },
+  {
+    "url": "https://www.sitejabber.com/",
+    "tags": ["consumer-reviews", "community", "reviews"],
+    "description": "Sitejabber (SmartCustomer): A platform for consumers to find and share reviews of online businesses."
+  },
+  {
+    "url": "https://bukrate.com/",
+    "tags": ["resource-directory", "tools", "finance"],
+    "description": "Bukrate: A container of free resources, deals, and online tools."
+  },
+  {
+    "url": "https://www.brainyquote.com/",
+    "tags": ["quotes", "knowledge-base", "pop-culture"],
+    "description": "BrainyQuote: A massive collection of inspirational and famous quotes."
+  },
+  {
+    "url": "https://quotesondesign.com/",
+    "tags": ["quotes", "design-resources", "tools"],
+    "description": "Quotes on Design: A curated collection of design-related quotations."
+  },
+  {
+    "url": "https://www.quotegarden.com/",
+    "tags": ["quotes", "literature", "curated-list"],
+    "description": "The Quote Garden: A large compilation of quotations arranged by topic."
+  },
+  {
+    "url": "https://proverbicals.com/",
+    "tags": ["proverbs", "literature", "knowledge-base"],
+    "description": "Proverbicals: A library of proverbial wisdom, sayings, and cultural maxims."
+  },
+  {
+    "url": "https://www.chinese-tools.com/chinese/proverbs",
+    "tags": ["proverbs", "chinese-language", "linguistics"],
+    "description": "A collection of hundreds of Chinese proverbs with translations and literal meanings."
+  },
+  {
+    "url": "https://www.zillow.com/",
+    "tags": ["real-estate", "marketplace", "usa"],
+    "description": "Zillow: The leading real estate marketplace for for-sale and rental listings."
+  },
+  {
+    "url": "https://www.trulia.com/",
+    "tags": ["real-estate", "marketplace", "usa"],
+    "description": "Trulia: Real estate listings and neighborhood information for home buyers and renters."
+  },
+  {
+    "url": "https://www.rightmove.co.uk/",
+    "tags": ["real-estate", "marketplace", "uk"],
+    "description": "Rightmove: The UK's largest property portal for homes for sale and to rent."
+  },
+  {
+    "url": "https://www.property24.com/",
+    "tags": ["real-estate", "marketplace", "south-africa"],
+    "description": "Property24: South Africa's leading property website for houses and apartments."
+  },
+  {
+    "url": "https://www.redfin.com/",
+    "tags": ["real-estate", "marketplace", "usa"],
+    "description": "Redfin: A full-service real estate brokerage and search platform (Security verification required)."
+  },
+  {
+    "url": "https://www.homes.com/",
+    "tags": ["real-estate", "marketplace", "security-blocked"],
+    "description": "Homes.com: Real estate listings (Access was denied during the extraction process)."
+  },
+  {
+    "url": "https://www.songfacts.com/",
+    "tags": ["music-resources", "entertainment", "knowledge-base"],
+    "description": "Songfacts: Detailed stories, meanings, and facts about popular songs and artists."
+  },
+  {
+    "url": "https://www.tunefind.com/",
+    "tags": ["music-resources", "entertainment", "movies", "tv"],
+    "description": "Tunefind: A database for identifying songs and soundtracks from movies and TV shows."
+  },
+  {
+    "url": "https://remidurant.com/artists/#",
+    "tags": ["ai-ml", "design-resources", "research"],
+    "description": "Artist Studies: A tool for exploring artist names and styles for AI art prompts."
+  },
+  {
+    "url": "https://www.wattpad.com",
+    "tags": ["literature", "writing-resources", "community"],
+    "description": "Wattpad: A global platform for readers and writers to share and discover original stories."
+  },
+  {
+    "url": "https://blog.reedsy.com",
+    "tags": ["writing-resources", "education", "blog-post"],
+    "description": "Reedsy Blog: Offers advice on writing, publishing, and marketing for authors."
+  },
+  {
+    "url": "https://storylineonline.net/",
+    "tags": ["literature", "education", "media"],
+    "description": "Storyline Online: Features actors reading children's books to inspire reading."
+  },
+  {
+    "url": "https://www.freechildrenstories.com/",
+    "tags": ["literature", "education", "open-data"],
+    "description": "Free Children's Stories: A collection of original stories for kids, available for free."
+  },
+  {
+    "url": "https://www.storyberries.com/",
+    "tags": ["literature", "education", "open-data"],
+    "description": "Storyberries: A massive library of free bedtime stories and books for children."
+  },
+  {
+    "url": "https://bookriot.com/",
+    "tags": ["literature", "news", "reviews"],
+    "description": "Book Riot: A media site celebrating all things books with recommendations and reviews."
+  },
+  {
+    "url": "https://yourstoryclub.com",
+    "tags": ["literature", "writing-resources", "community"],
+    "description": "Your Story Club: A platform for reading and publishing short stories and poems."
+  },
+  {
+    "url": "https://www.booktrust.org.uk/",
+    "tags": ["literature", "education", "charity"],
+    "description": "BookTrust: The UK's largest children's reading charity, providing books and resources."
+  },
+  {
+    "url": "https://www.webnovel.com",
+    "tags": ["literature", "writing-resources", "entertainment"],
+    "description": "WebNovel: A platform for reading fantasy novels and webcomics, often translated."
+  },
+  {
+    "url": "https://readfanfic.com/",
+    "tags": ["literature", "fanfiction", "error"],
+    "description": "ReadFanfic: A site for fanfiction that was redirecting or unreachable."
+  },
+  {
+    "url": "https://commaful.com/",
+    "tags": ["literature", "entertainment", "adult-content"],
+    "description": "Commaful: A story-sharing platform (Redirected to an adult site during access)."
+  },
+  {
+    "url": "https://www.fanfiction.net/",
+    "tags": ["literature", "fanfiction", "community"],
+    "description": "FanFiction.net: The world's largest archive and forum for fan-created stories."
+  },
+  {
+    "url": "https://www.quotev.com/",
+    "tags": ["literature", "entertainment", "community"],
+    "description": "Quotev: A social site for reading/writing stories, taking quizzes, and surveys."
+  },
+  {
+    "url": "https://www.akross.ru/index.cgi",
+    "tags": ["entertainment", "anime", "media", "russia"],
+    "description": "AKROSS: An international AMV (Anime Music Video) contest and database."
+  },
+  {
+    "url": "https://www.desktophut.com/",
+    "tags": ["wallpapers", "design-resources", "tools"],
+    "description": "DesktopHut: A collection of 4K live and animated wallpapers for PC and mobile."
+  },
+  {
+    "url": "https://mylivewallpapers.com/",
+    "tags": ["wallpapers", "design-resources", "tools"],
+    "description": "MyLiveWallpapers: Free live wallpapers and screensavers for desktop and mobile."
+  },
+  {
+    "url": "https://steamcommunity.com/app/431960/workshop/",
+    "tags": ["wallpapers", "software", "community"],
+    "description": "Steam Workshop for Wallpaper Engine, featuring user-created animated wallpapers."
+  },
+  {
+    "url": "https://www.wallwallpaper.com/",
+    "tags": ["wallpapers", "design-resources", "open-data"],
+    "description": "MrWallpaper: A repository of thousands of HD wallpapers for various devices."
+  },
+  {
+    "url": "https://livewallpapers4free.com/",
+    "tags": ["wallpapers", "design-resources", "tools"],
+    "description": "LiveWallpapers4Free: Top live wallpapers and animated backgrounds for PC."
+  },
+  {
+    "url": "https://www.smashwords.com/",
+    "tags": ["literature", "marketplace", "writing-resources"],
+    "description": "Smashwords: An e-book distribution platform for independent authors and publishers."
+  },
+  {
+    "url": "https://www.kobo.com/ww/en",
+    "tags": ["literature", "marketplace", "e-books"],
+    "description": "Rakuten Kobo: A worldwide store for e-books and audiobooks."
+  },
+  {
+    "url": "https://vtubie.com/",
+    "tags": ["vtuber-data", "entertainment", "security-blocked"],
+    "description": "Vtubie: A database and community for VTubers (Access was blocked)."
+  },
+  {
+    "url": "https://holodex.net/",
+    "tags": ["vtuber-data", "entertainment", "media"],
+    "description": "Holodex: A central platform for discovering and watching VTuber live streams."
+  },
+  {
+    "url": "https://virtual-youtuber.userlocal.jp/",
+    "tags": ["vtuber-data", "entertainment", "japan", "statistics"],
+    "description": "UserLocal VTuber Ranking: Detailed stats and rankings for virtual YouTubers."
+  },
+  {
+    "url": "https://steamdb.info/",
+    "tags": ["gaming", "database", "statistics"],
+    "description": "SteamDB: An independent database for everything on the Steam platform (Access limited)."
+  },
+  {
+    "url": "https://steamcharts.com/",
+    "tags": ["gaming", "database", "statistics"],
+    "description": "Steam Charts: Tracks concurrent player counts for all games on Steam."
+  },
+  {
+    "url": "https://steamplayercount.com/",
+    "tags": ["gaming", "database", "statistics"],
+    "description": "Steam Player Count: Provides real-time statistics for trending Steam games."
+  },
+  {
+    "url": "https://vndb.org/",
+    "tags": ["gaming", "literature", "database", "visual-novel"],
+    "description": "VNDB: A comprehensive community-driven database for visual novels."
+  },
+  {
+    "url": "https://www.userbenchmark.com/",
+    "tags": ["benchmarks", "hardware", "research"],
+    "description": "UserBenchmark: User-submitted benchmarks for comparing PC components like CPUs and GPUs."
+  },
+  {
+    "url": "https://www.cpubenchmark.net/",
+    "tags": ["benchmarks", "hardware", "tools"],
+    "description": "PassMark CPU Benchmarks: Extensive charts for comparing microprocessor performance."
+  },
+  {
+    "url": "https://www.pcgamebenchmark.com/",
+    "tags": ["benchmarks", "gaming", "hardware", "tools"],
+    "description": "PCGameBenchmark: A tool to check if a PC can run specific games based on specs."
+  },
+  {
+    "url": "https://www.cpu-world.com",
+    "tags": ["benchmarks", "hardware", "knowledge-base"],
+    "description": "CPU-World: News and detailed technical information about vintage and modern microprocessors."
+  },
+  {
+    "url": "https://www.3dmark.com/",
+    "tags": ["benchmarks", "hardware", "gaming", "tools"],
+    "description": "3DMark: The industry standard for gaming and graphics performance benchmarking."
+  },
+  {
+    "url": "https://www.anandtech.com/",
+    "tags": ["tech-news", "hardware", "community"],
+    "description": "AnandTech: A leading hardware and technology news and review site with an active community."
+  },
+  {
+    "url": "https://hwbot.org/",
+    "tags": ["benchmarks", "hardware", "overclocking", "error"],
+    "description": "HWBOT: A site for hardware benchmarking and overclocking competitions (Unreachable)."
+  },
+  {
+    "url": "https://nanoreview.net/en",
+    "tags": ["benchmarks", "tech-news", "hardware"],
+    "description": "NanoReview: Advanced tech comparisons and ratings for CPUs, GPUs, and smartphones."
+  },
+  {
+    "url": "https://www.androidbenchmark.net/",
+    "tags": ["benchmarks", "hardware", "mobile"],
+    "description": "Android Benchmark Charts: PassMark benchmarks for Android device performance."
+  },
+  {
+    "url": "https://www.91mobiles.com/",
+    "tags": ["tech-news", "marketplace", "mobile", "india"],
+    "description": "91mobiles: A gadget discovery site in India for mobile phone prices and reviews."
+  },
+  {
+    "url": "https://www.antutu.com",
+    "tags": ["benchmarks", "hardware", "mobile"],
+    "description": "AnTuTu: One of the most popular benchmarking apps for smartphone performance."
+  },
+  {
+    "url": "https://www.techcenturion.com/",
+    "tags": ["tech-news", "hardware", "research"],
+    "description": "Tech Centurion: Product reviews and buying guides for computer hardware and smartphones."
+  },
+  {
+    "url": "https://www.notebookcheck.net/",
+    "tags": ["tech-news", "hardware", "research"],
+    "description": "Notebookcheck: In-depth reviews and news on laptops, smartphones, and tablets."
+  },
+  {
+    "url": "https://www.mysmartprice.com/",
+    "tags": ["tech-news", "marketplace", "electronics", "india"],
+    "description": "MySmartPrice: Gadget news, reviews, and price comparison for home appliances and tech."
+  },
+  {
+    "url": "https://influencermarketinghub.com/best-price-comparison-sites/",
+    "tags": ["tech-news", "marketing", "tools", "blog-post"],
+    "description": "An article listing top price comparison sites in the USA."
+  },
+  {
+    "url": "https://www.calendarr.com/",
+    "tags": ["holidays", "reference", "calendars"],
+    "description": "Calendarr: Online calendars with holidays for various countries and years."
+  },
+  {
+    "url": "https://www.timeanddate.com/",
+    "tags": ["reference", "calendars", "time-zones"],
+    "description": "Time and Date: A comprehensive resource for time, time zones, calendars, and astronomical data."
+  },
+  {
+    "url": "https://www.holidayscalendar.com/",
+    "tags": ["holidays", "reference", "calendars"],
+    "description": "Holidays Calendar: A guide to daily, upcoming, and national holidays worldwide."
+  },
+  {
+    "url": "https://nationaldaycalendar.com/",
+    "tags": ["holidays", "pop-culture", "reference"],
+    "description": "National Day Calendar: The official source for identifying and celebrating national days."
+  },
+  {
+    "url": "https://www.nationaldaystoday.com/",
+    "tags": ["holidays", "reference", "error"],
+    "description": "National Days Today: A website for holiday information (Privacy/SSL error)."
+  },
+  {
+    "url": "https://nationaltoday.com/",
+    "tags": ["holidays", "pop-culture", "reference"],
+    "description": "National Today: Tracks holidays and special interest days across various categories."
+  },
+  {
+    "url": "https://internationaleventday.com/",
+    "tags": ["holidays", "reference", "media"],
+    "description": "International Event Days: A calendar for world holidays and office celebrations."
+  },
+  {
+    "url": "https://www.holidaysmart.com/",
+    "tags": ["holidays", "reference", "knowledge-base"],
+    "description": "HolidaySmart: Provides up-to-date information on worldwide holiday traditions."
+  },
+  {
+    "url": "https://web-holidays.com/",
+    "tags": ["holidays", "reference", "community"],
+    "description": "Web-Holidays: Information and recipes for celebrating world holidays and festivals."
+  },
+  {
+    "url": "https://www.thereisadayforthat.com/",
+    "tags": ["holidays", "reference", "knowledge-base"],
+    "description": "There is a Day for That!: Celebrating a variety of daily observances and national days."
+  },
+  {
+    "url": "https://www.checkiday.com/",
+    "tags": ["holidays", "reference", "pop-culture"],
+    "description": "Checkiday: A daily listing of holidays and special interest days."
+  },
+  {
+    "url": "https://anydayguide.com/",
+    "tags": ["holidays", "reference", "calendars"],
+    "description": "AnydayGuide: A daily guide to holidays, festivals, and events worldwide."
+  },
+  {
+    "url": "https://www.wikidates.org",
+    "tags": ["reference", "calendars", "holidays"],
+    "description": "WikiDates: Information about today's date, week number, and moon phases."
+  },
+  {
+    "url": "https://happydays365.org/",
+    "tags": ["entertainment", "finance", "blog-post"],
+    "description": "HappyDays365: A guide to online casinos and bonuses (Redirected during extraction)."
+  },
+  {
+    "url": "https://www.daysoftheyear.com/",
+    "tags": ["holidays", "reference", "pop-culture"],
+    "description": "Days Of The Year: A guide to national days, holidays, and weird celebrations."
+  },
+  {
+    "url": "https://www.holidayinsights.com/",
+    "tags": ["holidays", "reference", "calendars"],
+    "description": "Holiday Insights: A resource for daily national, international, and special holidays."
+  },
+  {
+    "url": "https://en.unesco.org/commemorations",
+    "tags": ["holidays", "reference", "education", "science"],
+    "description": "UNESCO Commemorations: Highlights global cultural, scientific, and educational milestones."
+  },
+  {
+    "url": "https://www.sportskeeda.com/wiki",
+    "tags": ["gaming", "entertainment", "wiki", "community"],
+    "description": "Sportskeeda Wiki: A resource for game tips, walkthroughs, and trivia for esports and anime."
+  },
+  {
+    "url": "https://www.musicdex.org/",
+    "tags": ["music-resources", "vtuber-data", "metadata"],
+    "description": "MusicDex: A database and archive for music releases, focusing on anime and VTubers."
+  },
+  {
+    "url": "https://www.memedroid.com/",
+    "tags": ["entertainment", "pop-culture", "media", "community"],
+    "description": "Memedroid: A social site for sharing, rating, and discovering funny memes."
+  },
+  {
+    "url": "https://www.webtoons.com",
+    "tags": ["literature", "entertainment", "media", "visual-novel"],
+    "description": "WEBTOON: A major platform for reading webcomics and manga across many genres."
+  },
+  {
+    "url": "https://moewalls.com/",
+    "tags": ["wallpapers", "design-resources", "tools"],
+    "description": "MoeWalls: Popular free live and animated wallpapers for desktop and mobile."
+  },
+  {
+    "url": "https://kidadl.com/",
+    "tags": ["education", "entertainment", "reference", "community"],
+    "description": "Kidadl: A resource for free ideas for family fun and activity-based learning."
+  },
+  {
+    "url": "https://publicwww.com/",
+    "tags": ["programming", "marketing", "search-engine", "tools"],
+    "description": "PublicWWW: A source code search engine for HTML, JS, and CSS snippets."
+  },
+  {
+    "url": "https://holo.poi.cat",
+    "tags": ["vtuber-data", "entertainment", "statistics"],
+    "description": "HoloStats: YouTube channel statistics and analytics for VTubers (Superseded by vtstats)."
+  },
+  {
+    "url": "https://wheresthejump.com/",
+    "tags": ["entertainment", "movies", "horror", "knowledge-base"],
+    "description": "Where's the Jump?: A database tracking jump scares in horror movies and TV shows."
+  },
+  {
+    "url": "https://memegine.com",
+    "tags": ["entertainment", "media", "error"],
+    "description": "Memegine: A meme search engine (Deployment paused during extraction)."
+  },
+  {
+    "url": "https://www.musipedia.org/",
+    "tags": ["music-resources", "reference", "search-engine"],
+    "description": "Musipedia: A searchable database for melodies and music sheets (Security verification required)."
+  },
+  {
+    "url": "https://www.computerlanguage.com/",
+    "tags": ["programming", "reference", "knowledge-base"],
+    "description": "ComputerLanguage.com: A long-running tech encyclopedia for computer terms and jargon."
+  },
+  {
+    "url": "https://wisdomquotes.com/",
+    "tags": ["quotes", "reference", "pop-culture"],
+    "description": "Wisdom Quotes: A collection of wise quotes for personal growth and inner peace."
+  },
+  {
+    "url": "https://quotes.thefamouspeople.com/",
+    "tags": ["entertainment", "media", "sports", "error"],
+    "description": "The Famous People Quotes (Redirected to a sports streaming site during extraction)."
+  },
+  {
+    "url": "https://www.azquotes.com/",
+    "tags": ["quotes", "reference", "pop-culture"],
+    "description": "A-Z Quotes: Discover and share inspirational, famous, and rare quotes."
+  },
+  {
+    "url": "https://letterboxd.com/",
+    "tags": ["entertainment", "movies", "reviews", "community"],
+    "description": "Letterboxd: A social platform for tracking, reviewing, and discovering films."
+  },
+  {
+    "url": "https://scrolller.com/",
+    "tags": ["entertainment", "media", "community"],
+    "description": "Scrolller: A platform for exploring millions of random videos and pictures."
+  },
+  {
+    "url": "https://www.hooktheory.com/trends",
+    "tags": ["music-resources", "education", "knowledge-base"],
+    "description": "Hooktheory: A database and tool for analyzing chord progressions in popular songs."
+  },
+  {
+    "url": "http://redditlist.com/",
+    "tags": ["social-media", "statistics", "reference", "error"],
+    "description": "RedditList: Tracks popularity and statistics for Reddit subreddits (SSL error)."
+  },
+  {
+    "url": "https://socialgrep.com/",
+    "tags": ["social-media", "osint", "search-engine", "error"],
+    "description": "SocialGrep: A search engine for social media data (Origin unreachable)."
+  },
+  {
+    "url": "https://subredditstats.com/",
+    "tags": ["social-media", "statistics", "reference"],
+    "description": "Subreddit Stats: Provides statistics and ranking lists for every subreddit."
+  },
+  {
+    "url": "https://redditmetis.com/",
+    "tags": ["social-media", "statistics", "osint"],
+    "description": "RedditMetis: A tool for Reddit user profile analysis and statistics."
+  },
+  {
+    "url": "https://social-rise.com/",
+    "tags": ["social-media", "marketing", "tools"],
+    "description": "Social Rise: A tool for social media promotion and scheduling, especially for creators."
+  },
+  {
+    "url": "https://musescore.com/",
+    "tags": ["music-resources", "education", "community"],
+    "description": "MuseScore: The world's largest sheet music catalog and community."
+  },
+  {
+    "url": "https://equipboard.com/",
+    "tags": ["music-resources", "hardware", "community"],
+    "description": "Equipboard: A database for discovering the music gear used by professional artists."
+  },
+  {
+    "url": "https://samplette.io",
+    "tags": ["music-resources", "audio-data", "tools"],
+    "description": "Samplette: A tool for discovering and exploring music samples and rare tracks."
+  },
+  {
+    "url": "https://playphrase.me",
+    "tags": ["entertainment", "movies", "linguistics", "tools"],
+    "description": "PlayPhrase.me: A search engine for finding and watching specific movie phrases for learning."
+  },
+  {
+    "url": "https://getyarn.io/",
+    "tags": ["entertainment", "movies", "tv", "media"],
+    "description": "Yarn: A search tool for finding video clips from movies, TV shows, and music videos."
+  },
+  {
+    "url": "https://www.yarn.co/",
+    "tags": ["entertainment", "movies", "tv", "media"],
+    "description": "Yarn ( yarn.co ): Search clips by quote from a vast database of media."
+  },
+  {
+    "url": "https://www.quodb.com/",
+    "tags": ["entertainment", "movies", "tv", "knowledge-base"],
+    "description": "QuoDB: A comprehensive database of movie and series quotes with time-based context."
+  },
+  {
+    "url": "https://www.whatismymovie.com/",
+    "tags": ["entertainment", "movies", "search-engine"],
+    "description": "What is my movie?: A search engine that lets you find movies using natural language descriptions."
+  },
+  {
+    "url": "https://www.quotes.net/",
+    "tags": ["quotes", "literature", "entertainment", "knowledge-base"],
+    "description": "Quotes.net: A vast collection of literary and movie quotes collaboratively curated."
+  },
+  {
+    "url": "https://www.phrases.com/",
+    "tags": ["linguistics", "reference", "knowledge-base"],
+    "description": "Phrases.com: A crowdsourced dictionary for common phrases, idioms, and casual sayings."
+  },
+  {
+    "url": "https://www.biographies.net/",
+    "tags": ["reference", "history", "knowledge-base"],
+    "description": "Biographies.net: A large collection of biographies about famous individuals."
+  },
+  {
+    "url": "https://www.literature.com/",
+    "tags": ["literature", "writing-resources", "community"],
+    "description": "Literature.com: A resource for free online classic and modern books."
+  },
+  {
+    "url": "https://www.references.net/",
+    "tags": ["reference", "curated-list", "resource-directory"],
+    "description": "References.net: A multidisciplinary web directory of reference-related resources."
+  },
+  {
+    "url": "https://www.rhymes.com/",
+    "tags": ["linguistics", "writing-resources", "tools"],
+    "description": "Rhymes.com: An online rhyming dictionary for word suggestions and compositions."
+  },
+  {
+    "url": "https://www.theidioms.com/",
+    "tags": ["linguistics", "reference", "knowledge-base"],
+    "description": "The Idioms: A large dictionary of English idioms and phrases with accurate meanings."
+  },
+  {
+    "url": "https://www.vitibet.com",
+    "tags": ["sports", "statistics", "marketing"],
+    "description": "Vitibet: Provides football predictions and statistical forecasts for sports fans."
+  },
+  {
+    "url": "https://plays.org/",
+    "tags": ["entertainment", "gaming", "open-data"],
+    "description": "Plays.org: A collection of hundreds of free HTML5 video games playable in the browser."
+  },
+  {
+    "url": "https://www.pling.com/",
+    "tags": ["design-resources", "software", "community", "linux"],
+    "description": "Pling: A community for sharing desktop themes, artworks, and open-source software."
+  },
+  {
+    "url": "https://www.renderhub.com/",
+    "tags": ["design-resources", "marketplace", "gaming", "community"],
+    "description": "RenderHub: A marketplace and community for 3D models and digital art assets."
+  },
+  {
+    "url": "https://levelup.gitconnected.com/",
+    "tags": ["programming", "education", "blog-post"],
+    "description": "Level Up Coding: A developer-focused platform for coding tutorials and tech news."
+  },
+  {
+    "url": "https://personalitylist.com/",
+    "tags": ["error"],
+    "description": "PersonalityList: A site for personality data (Internal Server Error)."
+  },
+  {
+    "url": "https://lexica.art/",
+    "tags": ["ai-ml", "image-data", "search-engine"],
+    "description": "Lexica: An AI image generation engine and search tool for CLIP-generated imagery."
+  },
+  {
+    "url": "https://openbase.com/",
+    "tags": ["programming", "software", "error"],
+    "description": "Openbase: A tool for package reviews and discovery (Unreachable)."
+  },
+  {
+    "url": "https://www.sitesimilar.net/",
+    "tags": ["reference", "search-engine", "security-blocked"],
+    "description": "SiteSimilar: A tool for finding websites similar to a given URL (Access blocked)."
+  },
+  {
+    "url": "https://vsthemes.org/en/",
+    "tags": ["design-resources", "wallpapers", "software"],
+    "description": "VSThemes: A site for customizing Windows with themes, wallpapers, and skins."
+  },
+  {
+    "url": "https://peal.io",
+    "tags": ["finance", "ai-ml", "research"],
+    "description": "Kazuha ( peal.io ): AI-powered investment insights extracted from financial content."
+  },
+  {
+    "url": "https://archiveofourown.org/",
+    "tags": ["literature", "fanfiction", "community", "archive"],
+    "description": "Archive of Our Own (AO3): A non-profit archive for transformative fanworks."
+  },
+  {
+    "url": "https://sullygnome.com",
+    "tags": ["entertainment", "statistics", "media", "twitch"],
+    "description": "SullyGnome: Provides Twitch stats and analytics for channels and games."
+  },
+  {
+    "url": "https://twitchtracker.com/",
+    "tags": ["entertainment", "statistics", "media", "twitch"],
+    "description": "TwitchTracker: Detailed Twitch viewer stats, rankings, and key insights."
+  },
+  {
+    "url": "https://www.vg-resource.com/",
+    "tags": ["gaming", "design-resources", "wiki", "community"],
+    "description": "The VG Resource: A collection of sites for video game assets like sprites and models."
+  },
+  {
+    "url": "https://wallpaperwaifu.com/",
+    "tags": ["wallpapers", "design-resources", "anime"],
+    "description": "WallpaperWaifu: A large collection of free live and animated wallpapers for desktop."
+  },
+  {
+    "url": "https://hdlivewall.com/",
+    "tags": ["wallpapers", "design-resources", "error"],
+    "description": "HD Live Wall: A live wallpaper site (Unreachable or missing files)."
+  },
+  {
+    "url": "https://www.hindawi.com/",
+    "tags": ["research", "open-data", "science", "security-blocked"],
+    "description": "Hindawi: A publisher of peer-reviewed, open access scientific journals (Access blocked)."
+  },
+  {
+    "url": "https://web2.coloradosprings.gov/policeblotter/",
+    "tags": ["arrest-records", "government-data", "error"],
+    "description": "Colorado Springs Police Blotter (Timeout error during extraction)."
+  },
+  {
+    "url": "https://www.gjcity.org/877/Police-Blotter",
+    "tags": ["arrest-records", "government-data", "usa"],
+    "description": "Police Blotter for Grand Junction, CO: Daily recap of arrests and crimes."
+  },
+  {
+    "url": "https://saratogatodaynewspaper.com/news/police-blotter",
+    "tags": ["arrest-records", "news", "usa"],
+    "description": "Police blotter section of Saratoga TODAY newspaper."
+  },
+  {
+    "url": "https://humboldtgov.org/331/Jail-Reports",
+    "tags": ["arrest-records", "government-data", "usa"],
+    "description": "Daily jail reports and arrest lists for Humboldt County, CA."
+  },
+  {
+    "url": "https://www.burbankpd.org/crime-information/daily-arrest-logs/",
+    "tags": ["arrest-records", "government-data", "usa"],
+    "description": "Daily arrest logs and booking information for the Burbank Police Department."
+  },
+  {
+    "url": "https://booth.pm/en",
+    "tags": ["marketplace", "design-resources", "entertainment", "japan"],
+    "description": "BOOTH: An international marketplace for indie art, 3D models, and music."
+  },
+  {
+    "url": "https://www.deezer.com/en/",
+    "tags": ["entertainment", "media", "music-resources"],
+    "description": "Deezer: A global music streaming service with millions of tracks and podcasts."
+  },
+  {
+    "url": "https://pomuhub.com/",
+    "tags": ["vtuber-data", "entertainment", "media"],
+    "description": "Pomuhub: A portal for tracking and watching Nijisanji and other VTuber live streams."
+  },
+  {
+    "url": "https://catalog.neet.tv/",
+    "tags": ["social-media", "imageboard", "community"],
+    "description": "Yotsuba Catalog: A catalog mode for browsing 4chan boards."
+  },
+  {
+    "url": "https://github.com/mikf/gallery-dl/tree/master/gallery_dl/extractor",
+    "tags": ["programming", "tools", "github-repo", "media"],
+    "description": "A GitHub repository for gallery-dl, a tool for downloading image galleries."
+  },
+  {
+    "url": "https://opentextbooks.library.arizona.edu/",
+    "tags": ["education", "literature", "open-data"],
+    "description": "University of Arizona Open Textbooks: A platform for free-to-use textbooks."
+  },
+  {
+    "url": "https://www.plugsocketmuseum.nl/Overview.html",
+    "tags": ["reference", "history", "knowledge-base"],
+    "description": "Museum of Plugs and Sockets: A detailed technical museum of global electrical standards."
+  },
+  {
+    "url": "https://gifmagazine.net/?locale=en",
+    "tags": ["entertainment", "media", "error"],
+    "description": "GIF Magazine: A platform for GIF art (SSL/Authority error)."
+  },
+  {
+    "url": "https://lumendatabase.org/",
+    "tags": ["osint", "legal", "archive", "government-data"],
+    "description": "Lumen: A database collecting legal complaints and takedown notices for online content."
+  },
+  {
+    "url": "https://raindrop.io/aixdesign",
+    "tags": ["curated-list", "resource-directory", "design-resources"],
+    "description": "AIxDESIGN Bookmark Library: A curated collection of AI and design resources on Raindrop.io."
+  },
+  {
+    "url": "https://raindrop.io/whoisdsmith",
+    "tags": ["curated-list", "resource-directory", "tools"],
+    "description": "A personal collection of curated links covering OSINT, dev tools, and tech on Raindrop.io."
+  },
+  {
+    "url": "https://geoyp.com/",
+    "tags": ["osint", "geospatial", "reference"],
+    "description": "GeoYP: A global geographic data platform transforming coordinates into structured intelligence."
+  },
+  {
+    "url": "https://www.sandiego.gov/public-library",
+    "tags": ["library", "education", "government-data", "usa"],
+    "description": "The official website for the City of San Diego Public Library system."
+  },
+  {
+    "url": "https://databases.library.jhu.edu/",
+    "tags": ["library", "research", "database", "education"],
+    "description": "Johns Hopkins University library database portal, providing research resources."
+  },
+  {
+    "url": "https://architecturenotes.co/",
+    "tags": ["programming", "education", "blog-post"],
+    "description": "Architecture Notes: Deep dives on system design and software development."
+  },
+  {
+    "url": "http://www.wiu.edu/libraries/databases/",
+    "tags": ["library", "research", "database", "education"],
+    "description": "Western Illinois University library databases, indexing periodicals and e-resources."
+  },
+  {
+    "url": "https://www.nypl.org/research/collections/articles-databases",
+    "tags": ["library", "research", "database", "education"],
+    "description": "New York Public Library (NYPL) online resources and research databases."
+  },
+  {
+    "url": "https://www.exponentialview.co/archive",
+    "tags": ["tech-news", "ai-ml", "research", "blog-post"],
+    "description": "Exponential View: A newsletter archive exploring the future of technology and AI."
+  },
+  {
+    "url": "https://www.animewallpapers.com/",
+    "tags": ["wallpapers", "anime", "design-resources", "security-blocked"],
+    "description": "Anime Wallpapers: A site for high-quality anime-themed backgrounds (Access blocked)."
+  },
+  {
+    "url": "http://www.nattoli.net/",
+    "tags": ["anime-manga", "art", "blog-post", "reviews"],
+    "description": "Nattoli's Blog: Reviews and opinions on Japanese import artbooks, doujinshi, and anime magazines."
+  },
+  {
+    "url": "https://www.tinami.com/",
+    "tags": ["anime-manga", "art", "community", "japan"],
+    "description": "TINAMI: A Japanese social platform for manga artists, illustrators, and cosplayers to share work."
+  },
+  {
+    "url": "https://anidb.net/",
+    "tags": ["anime-manga", "database", "metadata", "security-blocked"],
+    "description": "AniDB: A comprehensive database of anime information and metadata (Access blocked)."
+  },
+  {
+    "url": "https://www.animecubed.com/index.shtml",
+    "tags": ["anime-manga", "image-data", "wallpapers", "gallery"],
+    "description": "Anime Cubed: A large resource for anime and manga pictures, galleries, and wallpapers."
+  },
+  {
+    "url": "https://www.animenewsnetwork.com/",
+    "tags": ["anime-manga", "news", "knowledge-base", "encyclopedia"],
+    "description": "Anime News Network: The leading source for anime and manga news, reviews, and an extensive encyclopedia."
+  },
+  {
+    "url": "https://incidentdatabase.ai/",
+    "tags": ["ai-ml", "database", "safety", "research"],
+    "description": "AI Incident Database: A project dedicated to documenting and indexing AI-related incidents and harms."
+  },
+  {
+    "url": "https://itdoesnttastelikechicken.com/",
+    "tags": ["food-recipes", "lifestyle", "vegan", "security-blocked"],
+    "description": "It Doesn't Taste Like Chicken: Quick and easy vegan recipes (Access blocked)."
+  },
+  {
+    "url": "https://discover.hubpages.com/",
+    "tags": ["knowledge-base", "community", "blog-post", "media"],
+    "description": "HubPages: A network of sites where users write and share articles on various topics and passions."
+  },
+  {
+    "url": "https://mavink.com/",
+    "tags": ["image-data", "design-resources", "search-engine", "tools"],
+    "description": "Mavink: An intelligent image search engine for finding design inspiration and trends."
+  },
+  {
+    "url": "https://icons8.com/",
+    "tags": ["design-resources", "icons", "ai-ml", "tools"],
+    "description": "Icons8: Offers free icons, clipart illustrations, photos, and music for designers, plus AI-powered tools."
+  },
+  {
+    "url": "https://anilist.co/",
+    "tags": ["anime-manga", "database", "statistics", "community"],
+    "description": "AniList: A modern platform for tracking, sharing, and discovering anime and manga."
+  },
+  {
+    "url": "https://www.switch.ch/open-data/",
+    "tags": ["open-data", "domain-data", "government-data", "switzerland"],
+    "description": "SWITCH Open Data: Provides datasets related to Swiss internet domain names and infrastructure."
+  },
+  {
+    "url": "https://codeberg.org/explore/repos",
+    "tags": ["software-development", "git-repo", "community", "open-source"],
+    "description": "Codeberg: A non-profit, community-led platform for hosting free and open-source software projects."
+  },
+  {
+    "url": "https://framagit.org/public/projects",
+    "tags": ["software-development", "git-repo", "community", "open-source"],
+    "description": "Framagit: A GitLab-based hosting service for free and open-source projects, part of the Framasoft network."
+  },
+  {
+    "url": "https://asciinema.org/explore",
+    "tags": ["media", "software-development", "tools", "community"],
+    "description": "asciinema: A platform for recording and sharing terminal sessions in a lightweight, searchable format."
+  },
+  {
+    "url": "https://awesome.video/",
+    "tags": ["media", "curated-list", "resource-directory", "education"],
+    "description": "Awesome Video: A curated collection of high-quality video resources for learning and inspiration."
+  },
+  {
+    "url": "https://github.com/Athena-OS/athena-iso",
+    "tags": ["security", "osint", "software", "github-repo"],
+    "description": "Athena OS: A Nix-based operating system focused on cybersecurity and ethical hacking tools."
+  },
+  {
+    "url": "https://blackarch.org/tools.html",
+    "tags": ["security", "software", "linux", "tools"],
+    "description": "BlackArch Linux Tools: A complete list of over 2,800 tools available in the BlackArch penetration testing distribution."
+  },
+  {
+    "url": "https://theresanaiforthat.com/",
+    "tags": ["ai-ml", "resource-directory", "tools", "business"],
+    "description": "There's An AI For That: The world's largest directory of AI tools, categorized by tasks and use cases."
+  },
+  {
+    "url": "https://meyer.id/",
+    "tags": ["security", "tools", "error"],
+    "description": "Authentik (meyer.id): A personal authentication service page (Empty content during extraction)."
+  },
+  {
+    "url": "https://www.everythingreptiles.com/",
+    "tags": ["animals", "education", "error"],
+    "description": "Everything Reptiles: A resource for reptile care (DNS error during extraction)."
+  },
+  {
+    "url": "https://www.adoptapet.com/",
+    "tags": ["pet-adoption", "database", "security-blocked"],
+    "description": "Adopt-a-Pet: A major platform for pet adoption from shelters and rescues (Access blocked)."
+  },
+  {
+    "url": "https://tammy.ai/",
+    "tags": ["ai-ml", "error"],
+    "description": "tammy.ai: A domain for an AI service (Domain was for sale during extraction)."
+  },
+  {
+    "url": "https://www.opensourceagenda.com/",
+    "tags": ["entertainment", "error"],
+    "description": "Open Source Agenda (Redirected to a gambling site during extraction)."
+  },
+  {
+    "url": "https://saasdiscovery.com/",
+    "tags": ["software", "business", "resource-directory", "tools"],
+    "description": "SaaS Discovery: A platform for discovering and comparing software alternatives for business."
+  },
+  {
+    "url": "https://www.psx-place.com/",
+    "tags": ["gaming", "community", "error"],
+    "description": "PSX-PLACE: A community for PlayStation enthusiasts (Temporarily offline during extraction)."
+  },
+  {
+    "url": "https://awesomeopensource.com",
+    "tags": ["software", "curated-list", "open-source", "security-blocked"],
+    "description": "Awesome Open Source: A large directory of open-source projects (Access blocked)."
+  },
+  {
+    "url": "https://coder.social/",
+    "tags": ["programming", "social-media", "github-repo", "tools"],
+    "description": "Coder Social: A platform for discovering trending GitHub repositories and connecting with developers."
+  },
+  {
+    "url": "https://www.statscrop.com/",
+    "tags": ["statistics", "seo", "tools", "security-blocked"],
+    "description": "StatsCrop: Provides website statistics, rankings, and SEO analysis tools (Access blocked)."
+  },
+  {
+    "url": "https://codemonkey.link/",
+    "tags": ["error"],
+    "description": "codemonkey.link (DNS error during extraction)."
+  },
+  {
+    "url": "http://www.moreofit.com",
+    "tags": ["search-engine", "error"],
+    "description": "MoreOfIt: A tool for finding similar websites (Access forbidden during extraction)."
+  },
+  {
+    "url": "https://vocadb.net/",
+    "tags": ["music-resources", "database", "vocaloid", "community"],
+    "description": "VocaDB: A collaborative music database for Vocaloid and other singing synthesizers."
+  },
+  {
+    "url": "https://www.debugpoint.com/",
+    "tags": ["programming", "linux", "news", "how-to"],
+    "description": "DebugPoint: A portal for Linux tutorials, software reviews, and developer guides."
+  },
+  {
+    "url": "https://ostechnix.com/",
+    "tags": ["programming", "linux", "news", "how-to"],
+    "description": "OSTechNix: Features news and tutorials about open-source software, Linux, and Unix."
+  },
+  {
+    "url": "https://github.com/promptslab/Awesome-Prompt-Engineering",
+    "tags": ["ai-ml", "github-repo", "awesome-list", "research"],
+    "description": "Awesome Prompt Engineering: A curated list of resources for optimizing LLM prompts."
+  },
+  {
+    "url": "https://github.com/forReason/GPT-Prompt-Templates",
+    "tags": ["ai-ml", "github-repo", "tools"],
+    "description": "GPT Prompt Templates: A library of templates for writing productive ChatGPT prompts."
+  },
+  {
+    "url": "https://github.com/yokoffing/ChatGPT-Prompts",
+    "tags": ["ai-ml", "github-repo", "curated-list"],
+    "description": "ChatGPT-Prompts: A curation of prompts for ChatGPT and Bing AI."
+  },
+  {
+    "url": "https://github.com/hagezi/dns-blocklists",
+    "tags": ["security", "tools", "github-repo", "open-data"],
+    "description": "Hagezi DNS Blocklists: A repository of comprehensive DNS blocklists for a cleaner internet."
+  },
+  {
+    "url": "https://github.com/hagezi/dns-data-collection",
+    "tags": ["security", "github-repo", "error"],
+    "description": "Hagezi DNS Data Collection (404 Page not found on GitHub during extraction)."
+  },
+  {
+    "url": "https://github.com/sefinek24/PiHole-Blocklist-Collection",
+    "tags": ["security", "tools", "github-repo", "open-data"],
+    "description": "PiHole Blocklist Collection: A repository of over 100 blocklists for various DNS servers."
+  },
+  {
+    "url": "https://github.com/blocklistproject/Lists",
+    "tags": ["security", "tools", "github-repo", "open-data"],
+    "description": "Blocklist Project Lists: A repository of primary blocklists for domain filtering."
+  },
+  {
+    "url": "https://github.com/dmachard/python-blocklist-aggregator",
+    "tags": ["security", "programming", "tools", "github-repo"],
+    "description": "Python Blocklist Aggregator: A tool for aggregating domain blocklists from multiple sources."
+  },
+  {
+    "url": "https://github.com/duckduckgo/tracker-blocklists",
+    "tags": ["security", "privacy", "tools", "github-repo"],
+    "description": "DuckDuckGo Tracker Blocklists: The web tracker blocklists used by DuckDuckGo apps and extensions."
+  },
+  {
+    "url": "https://github.com/mullvad/dns-blocklists",
+    "tags": ["security", "privacy", "tools", "github-repo"],
+    "description": "Mullvad DNS Blocklists: Lists and configurations for the Mullvad DNS blocking service."
+  },
+  {
+    "url": "https://github.com/jmdugan/blocklists",
+    "tags": ["security", "tools", "github-repo", "open-data"],
+    "description": "Shared Domain Blocklists: A collection of shared lists for blocking problem domains using hosts files."
+  },
+  {
+    "url": "https://github.com/Sinfonietta/hostfiles/",
+    "tags": ["security", "tools", "github-repo", "open-data"],
+    "description": "Sinfonietta Hostfiles: A collection of category-specific host files for domain blocking."
+  },
+  {
+    "url": "https://www.herohunt.ai/",
+    "tags": ["ai-ml", "business", "tools", "marketing"],
+    "description": "HeroHunt.ai: An AI-powered talent search engine for recruiters to find and engage candidates."
+  },
+  {
+    "url": "https://www.pttweb.cc/",
+    "tags": ["social-media", "community", "taiwan"],
+    "description": "PTT Web: A web interface for the popular Taiwanese Bulletin Board System, PTT."
+  },
+  {
+    "url": "https://bestpitchdeck.com/",
+    "tags": ["finance", "business", "resource-directory", "tools"],
+    "description": "Best Pitch Deck: A collection of winning pitch deck examples from high-growth startups and unicorns."
+  },
+  {
+    "url": "https://star-history.com/",
+    "tags": ["programming", "statistics", "tools", "github-repo"],
+    "description": "Star History: A tool for viewing and comparing the star growth of open-source projects on GitHub."
+  },
+  {
+    "url": "https://www.codepile.net/",
+    "tags": ["programming", "software-development", "community", "tools"],
+    "description": "CodePile: A collaborative code-sharing hub designed for easy sharing and working on code together."
+  },
+  {
+    "url": "https://explainthejoke.com/",
+    "tags": ["entertainment", "education", "linguistics", "blog-post"],
+    "description": "Explain the Joke: A blog dedicated to explaining the layers of meaning in English jokes for learners."
+  },
+  {
+    "url": "https://top-funny-jokes.com/",
+    "tags": ["entertainment", "error"],
+    "description": "Top Funny Jokes (DNS error during extraction)."
+  },
+  {
+    "url": "https://o-hand.com/",
+    "tags": ["entertainment", "lifestyle", "blog-post"],
+    "description": "O-hand: A blog featuring funny jokes, puns, riddles, and lifestyle advice."
+  },
+  {
+    "url": "https://www.countryliving.com/",
+    "tags": ["lifestyle", "design-resources", "food-recipes", "news"],
+    "description": "Country Living: A magazine focusing on home decor, crafts, food, and country lifestyle."
+  },
+  {
+    "url": "https://www.producthunt.com/",
+    "tags": ["tech-news", "innovation", "community", "security-blocked"],
+    "description": "Product Hunt: A platform for discovering and sharing new tech products (Access blocked)."
+  },
+  {
+    "url": "https://www.gapminder.org/",
+    "tags": ["statistics", "education", "research", "open-data"],
+    "description": "Gapminder: An independent educational non-profit fighting global misconceptions using data-driven tools."
+  },
+  {
+    "url": "https://github.com/topics/hostfile",
+    "tags": ["security", "tools", "github-repo", "resource-directory"],
+    "description": "GitHub Topics - Hostfile: A collection of repositories related to hostfile-based domain blocking."
+  },
+  {
+    "url": "https://github.com/StevenBlack/hosts",
+    "tags": ["security", "tools", "github-repo", "open-data"],
+    "description": "Steven Black's Hosts: A consolidated and extended hosts file for blocking ads and malware."
+  },
+  {
+    "url": "https://github.com/lightswitch05/hosts",
+    "tags": ["security", "tools", "github-repo", "open-data"],
+    "description": "Lightswitch05 Hosts: A regularly updated hostfile blocklist for ads and tracking."
+  },
+  {
+    "url": "https://github.com/Bkamahl/HostFiles",
+    "tags": ["security", "tools", "github-repo", "open-data"],
+    "description": "Bkamahl HostFiles: A repository of host files for blocking ads and trackers."
+  },
+  {
+    "url": "https://10fastfingers.com/typing-test/english",
+    "tags": ["puzzles", "education", "tools"],
+    "description": "10FastFingers: A free tool for testing and improving typing speed and accuracy in many languages."
+  },
+  {
+    "url": "https://www.icann.org/resources/pages/tlds-2012-02-25-en",
+    "tags": ["domain-data", "government-data", "metadata", "knowledge-base"],
+    "description": "ICANN List of TLDs: The official list of all valid top-level domains in the internet's root zone."
+  },
+  {
+    "url": "https://ntldstats.com/",
+    "tags": ["domain-data", "statistics", "research", "business"],
+    "description": "nTLDStats: Provides detailed insights and statistics about new generic top-level domains (gTLDs)."
+  },
+  {
+    "url": "https://neocities.org/browse",
+    "tags": ["communities", "art", "personal", "history"],
+    "description": "Neocities Browse: A directory of personal websites and creative projects hosted on Neocities."
+  },
+  {
+    "url": "https://macrochan.org/index.php",
+    "tags": ["entertainment", "imageboard", "community"],
+    "description": "Macrochan: A community-driven imageboard for sharing and discussing various images and macros."
+  },
+  {
+    "url": "https://www.pngwing.com/",
+    "tags": ["design-resources", "image-data", "tools", "marketplace"],
+    "description": "PNGWing: A massive library of high-quality cutout PNG images with transparent backgrounds for designers."
+  },
+  {
+    "url": "https://www.scribd.com/explore",
+    "tags": ["literature", "knowledge-base", "media", "business"],
+    "description": "Everand (formerly Scribd Explore): A platform for discovering millions of ebooks, audiobooks, and magazines."
+  },
+  {
+    "url": "https://www.strawberryreef.com/",
+    "tags": ["entertainment", "toys", "knowledge-base", "collector-guide"],
+    "description": "Strawberry Reef: A comprehensive reference and identification guide for My Little Pony collectors."
+  },
+  {
+    "url": "https://www.ponylandpress.com/",
+    "tags": ["entertainment", "toys", "knowledge-base", "collector-guide"],
+    "description": "Ponyland Press: A vintage My Little Pony collector's guide with pictures and info on hundreds of ponies."
+  },
+  {
+    "url": "https://thetvdb.com/",
+    "tags": ["entertainment", "movies", "tv", "database"],
+    "description": "TheTVDB: A comprehensive, fan-driven database for identifying TV shows and films."
+  },
+  {
+    "url": "https://ponepaste.org/archive",
+    "tags": ["entertainment", "literature", "fanfiction", "community"],
+    "description": "PonePaste Archive: A pastebin-style archive for sharing stories and content related to My Little Pony."
+  },
+  {
+    "url": "https://polyhaven.com/",
+    "tags": ["design-resources", "image-data", "open-data", "community"],
+    "description": "Poly Haven: A public 3D asset library providing free HDRIs, textures, and models under CC0."
+  },
+  {
+    "url": "https://pomiferous.com/",
+    "tags": ["design-resources", "nature", "database", "knowledge-base"],
+    "description": "Pomiferous: A highly extensive database and resource for information on over 7,000 apple varieties."
+  },
+  {
+    "url": "https://worthdoingbadly.com/",
+    "tags": ["programming", "security", "research", "blog-post"],
+    "description": "Worth Doing Badly: A blog featuring programming experiments and security research by @zhuowei."
+  },
+  {
+    "url": "https://morioh.com/",
+    "tags": ["entertainment", "finance", "error"],
+    "description": "Morioh: A social network for developers (Redirected to a gambling site during extraction)."
+  },
+  {
+    "url": "https://www.betaseries.com/en/",
+    "tags": ["entertainment", "movies", "tv", "news"],
+    "description": "BetaSeries: Provides the latest news, release schedules, and planning tools for TV shows and movies."
+  },
+  {
+    "url": "https://www.fimfiction.net/",
+    "tags": ["entertainment", "literature", "fanfiction", "security-blocked"],
+    "description": "Fimfiction: A large community-driven archive for My Little Pony fanfiction (Access blocked)."
+  },
+  {
+    "url": "https://spells8.com/",
+    "tags": ["lifestyle", "spirituality", "community", "blog-post"],
+    "description": "Spells8: A platform providing rituals, spells, and lessons for Wiccan and spiritual practices."
+  },
+  {
+    "url": "https://www.opendoor.com/homes",
+    "tags": ["real-estate", "marketplace", "business", "usa"],
+    "description": "Opendoor: A platform for buying and selling homes directly, providing market listings across the US."
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/List_of_Internet_phenomena",
+    "tags": ["wikipedia", "history", "pop-culture", "encyclopedia"],
+    "description": "Wikipedia: A dynamic list cataloging significant internet phenomena and sensations over time."
+  },
+  {
+    "url": "https://www.fark.com/",
+    "tags": ["communities", "news", "entertainment", "community"],
+    "description": "Fark: A long-running community news site featuring humorous views on bizarre and interesting articles."
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Category:Dynamic_lists",
+    "tags": ["wikipedia", "category", "metadata"],
+    "description": "Wikipedia Category: Dynamic Lists - A hidden administrative category for maintaining dynamic lists."
+  },
+  {
+    "url": "https://steemit.com/",
+    "tags": ["communities", "social-media", "crypto", "community"],
+    "description": "Steemit: A blockchain-based social media and blogging platform where users are rewarded for content."
+  },
+  {
+    "url": "https://slashdot.org/",
+    "tags": ["communities", "news", "tech-news", "community"],
+    "description": "Slashdot: A classic 'news for nerds' platform featuring technology news and community discussions."
+  },
+  {
+    "url": "https://join-lemmy.org/instances",
+    "tags": ["communities", "social-media", "open-source", "fediverse"],
+    "description": "Lemmy Instances: A directory of servers for the Lemmy network, a federated Reddit-like social platform."
+  },
+  {
+    "url": "https://www.saidit.net/",
+    "tags": ["communities", "social-media", "community"],
+    "description": "Saidit: A community-driven social news platform and alternative to Reddit."
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/List_of_viral_videos",
+    "tags": ["wikipedia", "history", "pop-culture", "media"],
+    "description": "Wikipedia: A dynamic list of viral videos that have gained significant internet popularity."
+  },
+  {
+    "url": "https://pastebin.com/archive",
+    "tags": ["communities", "programming", "media", "tools"],
+    "description": "Pastebin Archive: A collection of the most recently created public text pastes on Pastebin."
+  },
+  {
+    "url": "https://spells8.com/",
+    "tags": ["lifestyle", "spirituality", "community", "blog-post"],
+    "description": "Spells8: A resource for daily rituals, spells, and spiritual lessons for the Wiccan community."
+  },
+  {
+    "url": "https://www.opendoor.com/homes",
+    "tags": ["real-estate", "marketplace", "business", "usa"],
+    "description": "Opendoor: A platform for buying and selling homes, offering a simplified real estate experience."
+  },
+  {
+    "url": "https://myfigurecollection.net/",
+    "tags": ["anime-manga", "database", "toys", "community"],
+    "description": "MyFigureCollection: A major database and community for collectors of Japanese figures and goods."
+  },
+  {
+    "url": "https://otakumode.com/shop",
+    "tags": ["anime-manga", "marketplace", "toys", "business"],
+    "description": "Tokyo Otaku Mode Shop: An international marketplace for Japanese anime figures, fashion, and merch."
+  },
+  {
+    "url": "https://animegami.co.uk/",
+    "tags": ["anime-manga", "error"],
+    "description": "Animegami: An anime figure shop (Website under maintenance during extraction)."
+  },
+  {
+    "url": "https://www.amiami.com/eng/",
+    "tags": ["anime-manga", "marketplace", "toys", "japan"],
+    "description": "AmiAmi: One of Japan's largest online character and hobby shops for international collectors."
+  },
+  {
+    "url": "https://www.playbook.com/s/community/portfolioshowcase",
+    "tags": ["design-resources", "community", "portfolio", "art"],
+    "description": "Playbook Portfolio Showcase: A community space for artists and designers to share creative work."
+  },
+  {
+    "url": "https://archive.org/details/macos-collection",
+    "tags": ["archiving", "software", "history", "open-data"],
+    "description": "Internet Archive - macOS Collection: A collection of digitized macOS ISOs for archival purposes."
+  },
+  {
+    "url": "https://www.aiartapps.com/ai-art-latest-resources",
+    "tags": ["ai-ml", "design-resources", "resource-directory", "tools"],
+    "description": "AI Art Latest Resources: A directory for finding new tools and resources for AI art creation."
+  },
+  {
+    "url": "https://www.siliconera.com/",
+    "tags": ["anime-manga", "news", "gaming", "community"],
+    "description": "Siliconera: Provides international video game news, translations, and anime-related culture insights."
+  },
+  {
+    "url": "https://influencemap.cmlab.dev/browse",
+    "tags": ["research", "education", "science", "database"],
+    "description": "InfluenceFlower: A visual exploration tool for research influences and awards in computer science."
+  },
+  {
+    "url": "https://pcpartpicker.com/",
+    "tags": ["hardware", "tools", "business", "security-blocked"],
+    "description": "PCPartPicker: A tool for comparing PC component prices and compatibility (Access blocked)."
+  },
+  {
+    "url": "https://www.ultralivewallpaper.com/index.html",
+    "tags": ["wallpapers", "error"],
+    "description": "Ultra Live Wallpaper (Domain had recently expired during extraction)."
+  },
+  {
+    "url": "https://rare-gallery.com/live-wallpapers/",
+    "tags": ["wallpapers", "design-resources", "security-blocked"],
+    "description": "Rare Gallery Live Wallpapers (Access blocked by security verification)."
+  },
+  {
+    "url": "https://sr.ht/projects",
+    "tags": ["software-development", "git-repo", "community", "open-source"],
+    "description": "SourceHut Projects: A directory of public projects hosted on the SourceHut software forge."
+  },
+  {
+    "url": "https://thepihut.com/",
+    "tags": ["hardware", "marketplace", "education", "tools"],
+    "description": "The Pi Hut: A major store for Raspberry Pi, Arduino, and maker products for DIY electronics."
+  },
+  {
+    "url": "https://tcgrepublic.com/",
+    "tags": ["anime-manga", "marketplace", "gaming", "japan"],
+    "description": "TCG Republic: A specialized shop for rare Japanese single trading cards and TCG products."
+  },
+  {
+    "url": "https://www.yeggi.com/",
+    "tags": ["design-resources", "search-engine", "3d-printing", "security-blocked"],
+    "description": "Yeggi: A search engine for 3D printable models (Access blocked by human verification)."
+  },
+  {
+    "url": "https://solarisjapan.com/",
+    "tags": ["anime-manga", "marketplace", "toys", "japan"],
+    "description": "Solaris Japan: A leading online store for Japanese anime figures, video games, and merch."
+  },
+  {
+    "url": "https://weightofstuff.com/",
+    "tags": ["reference", "education", "knowledge-base"],
+    "description": "Weight of Stuff: A site dedicated to researching and providing the weights of various random items."
+  },
+  {
+    "url": "https://www.themeasureofthings.com/default.php",
+    "tags": ["reference", "education", "search-engine", "tools"],
+    "description": "The Measure of Things: A search engine for comparing measurements to familiar objects."
+  },
+  {
+    "url": "https://www.thegeekpub.com/",
+    "tags": ["gaming", "marketplace", "hardware", "how-to"],
+    "description": "The Geek Pub Arcade: A store and resource for building arcade cabinets and maker projects."
+  },
+  {
+    "url": "https://www.pngegg.com",
+    "tags": ["design-resources", "image-data", "tools", "marketplace"],
+    "description": "PNGEgg: A library of exclusive transparent PNG images and stickers for designers."
+  },
+  {
+    "url": "https://mintable.app/",
+    "tags": ["design-resources", "marketplace", "crypto", "closed"],
+    "description": "Mintable: An NFT marketplace (Discontinued during the extraction process)."
+  },
+  {
+    "url": "https://publicsuffix.org/list/",
+    "tags": ["domain-data", "metadata", "tools", "open-data"],
+    "description": "Public Suffix List: A community-maintained list of domain name suffixes used in internet apps."
+  },
+  {
+    "url": "https://scans.io/",
+    "tags": ["security", "research", "datasets", "open-data"],
+    "description": "Stanford Internet Research Data Repository: A public archive of research datasets describing internet hosts."
+  },
+  {
+    "url": "https://github.com/rbsec/dnscan/blob/master/subdomains-10000.txt",
+    "tags": ["security", "osint", "github-repo", "tools"],
+    "description": "dnscan Subdomain List: A list of 10,000 common subdomains for OSINT and security scanning."
+  },
+  {
+    "url": "https://archives.ndtv.com/",
+    "tags": ["news", "archive", "media", "india"],
+    "description": "NDTV News Archive: A searchable daily archive of Indian and world news stories and videos."
+  },
+  {
+    "url": "https://archives.yale.edu/",
+    "tags": ["archiving", "library", "research", "education"],
+    "description": "Archives at Yale: A portal for searching and discovering primary source materials across Yale's repositories."
+  },
+  {
+    "url": "https://catalog.archives.gov/",
+    "tags": ["archiving", "government-data", "usa", "knowledge-base"],
+    "description": "National Archives Catalog: The online portal for records held at the U.S. National Archives."
+  },
+  {
+    "url": "https://www.archives.gov/news",
+    "tags": ["news", "archiving", "government-data", "history"],
+    "description": "National Archives News: Updates and stories about significant historical records and exhibitions."
+  },
+  {
+    "url": "https://www.archives.go.jp/guide/reading.html",
+    "tags": ["archiving", "government-data", "japan", "how-to"],
+    "description": "National Archives of Japan: A guide for visitors on how to access and read historical documents."
+  },
+  {
+    "url": "https://www.archives.govt.nz/research-guidance/research-guides/war-records",
+    "tags": ["archiving", "government-data", "new-zealand", "history"],
+    "description": "Archives New Zealand: Research guides for finding war records and military personnel files."
+  },
+  {
+    "url": "https://hypestat.com/",
+    "tags": ["statistics", "seo", "tools", "research"],
+    "description": "HypeStat: Provides free website statistics, analytics, and ranking information for any site."
+  },
+  {
+    "url": "https://links.giveawayoftheday.com/",
+    "tags": ["statistics", "security", "tools", "resource-directory"],
+    "description": "Giveawayoftheday Analytics: Displays traffic, social metrics, and safety data for websites."
+  },
+  {
+    "url": "https://www.whtop.com/",
+    "tags": ["software", "business", "reviews", "resource-directory"],
+    "description": "WHTop: A comprehensive directory and review platform for web hosting providers worldwide."
+  },
+  {
+    "url": "https://themesinfo.com/latest",
+    "tags": ["software", "programming", "tools", "tech-checker"],
+    "description": "ThemesInfo: A tool for detecting WordPress themes and plugins used by any website."
+  },
+  {
+    "url": "https://www.scamadviser.com/",
+    "tags": ["security", "consumer-reviews", "tools", "business"],
+    "description": "ScamAdviser: A tool for checking website risks and identifying fraudulent or scam sites."
+  },
+  {
+    "url": "https://blotter.sites.phillypolice.com/tag/wanted/",
+    "tags": ["arrest-records", "government-data", "security", "philadelphia"],
+    "description": "Philadelphia Police Wanted List: A blotter featuring information on wanted individuals in Philadelphia."
+  },
+  {
+    "url": "https://www.youtube.com/@PhiladelphiaPolice/videos",
+    "tags": ["arrest-records", "media", "government-data", "news"],
+    "description": "Philadelphia Police YouTube: Video updates and press conferences from the Philadelphia Police Department."
+  },
+  {
+    "url": "https://stats.wnba.com/players/",
+    "tags": ["sports", "statistics", "reference", "metadata"],
+    "description": "WNBA Player Stats: The official portal for detailed season leaders and historical player statistics."
+  },
+  {
+    "url": "https://www.stats.govt.nz/topics/accommodation",
+    "tags": ["statistics", "government-data", "business", "new-zealand"],
+    "description": "Stats NZ - Accommodation: Official statistics about the commercial accommodation industry in New Zealand."
+  },
+  {
+    "url": "https://stats.areppim.com/stats/stats_afghanxdeadxwound.htm",
+    "tags": ["statistics", "history", "research", "war-stats"],
+    "description": "areppim War Statistics: Detailed casualty ratios and data for US participants in major wars."
+  },
+  {
+    "url": "http://stats.washingtonpost.com/fb/index.asp",
+    "tags": ["sports", "news", "media", "statistics"],
+    "description": "Washington Post Sports Stats: Provides scores, analysis, and updates for pro and college sports teams."
+  },
+  {
+    "url": "https://stats.foldingathome.org/donor",
+    "tags": ["science", "statistics", "open-data", "community"],
+    "description": "Folding@home Statistics: Tracks donor contributions and project progress for distributed computing research."
+  },
+  {
+    "url": "https://stats.oecd.org/Index.aspx?DataSetCode=REVCMR",
+    "tags": ["statistics", "government-data", "economics", "research"],
+    "description": "OECD Revenue Statistics: A dataset providing comparative data on tax levels and structures in OECD countries."
+  },
+  {
+    "url": "https://figshare.com/browse",
+    "tags": ["research", "datasets", "open-data", "archive"],
+    "description": "Figshare: A repository where researchers can preserve and share their research outputs, including data."
+  },
+  {
+    "url": "https://arthub.ai/",
+    "tags": ["ai-ml", "design-resources", "community", "art"],
+    "description": "Arthub.ai: A creative community for showcasing, discovering, and sharing AI-generated art and prompts."
+  },
+  {
+    "url": "https://www.prompthunt.com/explore",
+    "tags": ["ai-ml", "design-resources", "tools", "community"],
+    "description": "Prompt Hunt: A platform for exploring, creating, and sharing AI art prompts for multiple models."
+  },
+  {
+    "url": "https://neural.love/",
+    "tags": ["ai-ml", "design-resources", "tools", "media"],
+    "description": "neural.love: Provides AI-powered tools for image and video enhancement, generation, and editing."
+  },
+  {
+    "url": "https://www.chichi-pui.com/",
+    "tags": ["ai-ml", "design-resources", "community", "japan"],
+    "description": "chichi-pui: A Japanese social platform and generator dedicated to AI-generated images and prompts."
+  },
+  {
+    "url": "https://solojake.com/portal.php",
+    "tags": ["error"],
+    "description": "SoloJake (Privacy error during extraction)."
+  },
+  {
+    "url": "https://aitag.top/",
+    "tags": ["ai-ml", "design-resources", "tools", "japan"],
+    "description": "AITag: A simple and easy-to-use Japanese AI drawing tag generator and encyclopedia."
+  },
+  {
+    "url": "https://searchcode.com/",
+    "tags": ["programming", "software-development", "search-engine", "ai-ml"],
+    "description": "searchcode: A code intelligence engine providing structured code search and retrieval for LLMs."
+  },
+  {
+    "url": "https://www.public-index.org/",
+    "tags": ["error"],
+    "description": "www.public-index.org (DNS error during extraction)."
+  },
+  {
+    "url": "https://www.topsitessearch.com/",
+    "tags": ["statistics", "seo", "tools", "search-engine"],
+    "description": "Top Sites Search: Provides website ranking information, host checks, and SEO discovery tools."
+  },
+  {
+    "url": "https://dmoz-odp.org/",
+    "tags": ["error"],
+    "description": "dmoz-odp.org (DNS error during extraction)."
+  },
+  {
+    "url": "https://www.cy-pr.com/",
+    "tags": ["statistics", "seo", "tools", "russia"],
+    "description": "CY-PR: A Russian analysis service for webmasters, providing SEO site auditing and position tracking."
+  },
+  {
+    "url": "https://mutagen.ru/",
+    "tags": ["statistics", "seo", "tools", "russia"],
+    "description": "Mutagen: A Russian tool for SEO keyword analysis, competition tracking, and site promotion."
+  },
+  {
+    "url": "https://rennlist.com/",
+    "tags": ["communities", "automotive", "community", "security-blocked"],
+    "description": "Rennlist: The largest online resource for Porsche owners and enthusiasts (Access blocked)."
+  },
+  {
+    "url": "https://www.bibme.org/",
+    "tags": ["education", "tools", "writing-resources"],
+    "description": "BibMe: A free bibliography and citation maker supporting multiple styles for students and researchers."
+  },
+  {
+    "url": "https://www.kitchenstories.com/en",
+    "tags": ["food-recipes", "lifestyle", "media", "how-to"],
+    "description": "Kitchen Stories: A platform featuring thousands of recipes, videos, and articles with tips from chefs."
+  },
+  {
+    "url": "http://www.dogbazar.org/",
+    "tags": ["error"],
+    "description": "www.dogbazar.org (DNS error during extraction)."
+  },
+  {
+    "url": "https://www.spamhaus.org/statistics/registrars/",
+    "tags": ["security", "statistics", "domain-data", "research"],
+    "description": "Spamhaus Statistics: Provides reputation stats on domain registrars associated with malicious domains."
+  },
+  {
+    "url": "https://www.spamhaus.org/statistics/tlds/",
+    "tags": ["security", "statistics", "domain-data", "research"],
+    "description": "Spamhaus Statistics: Tracks reputation statistics for TLDs associated with malicious and spam activities."
+  },
+  {
+    "url": "https://meme.fandom.com/wiki/Teh_Meme_Wiki",
+    "tags": ["entertainment", "pop-culture", "wiki", "community"],
+    "description": "Teh Meme Wiki: A collaborative encyclopedia on Fandom dedicated to memes and internet humor."
+  },
+  {
+    "url": "https://www.aitoolsclub.com/",
+    "tags": ["ai-ml", "error"],
+    "description": "AI Tools Club (SSL handshake failed during extraction)."
+  },
+  {
+    "url": "https://www.youtube.com/@ScenicRelaxation8K/videos",
+    "tags": ["media", "travel", "nature", "lifestyle"],
+    "description": "8K Scenic Relaxation YouTube: Features high-definition relaxation videos of nature and travel journeys."
+  },
+  {
+    "url": "https://lebanon.desertcart.com/",
+    "tags": ["marketplace", "business", "security-blocked"],
+    "description": "Desertcart Lebanon: An international marketplace for cross-border shopping (Access blocked)."
+  },
+  {
+    "url": "https://alltoplinks.com/",
+    "tags": ["news", "curated-list", "community", "resource-directory"],
+    "description": "All Top Links: A platform for sharing and discovering trending links and stories from across the web."
+  },
+  {
+    "url": "https://www.dontwasteyourmoney.com/",
+    "tags": ["consumer-reviews", "news", "lifestyle", "business"],
+    "description": "Don't Waste Your Money: Consumer news and in-depth research to help users make informed purchases."
+  },
+  {
+    "url": "https://www.thingiverse.com/",
+    "tags": ["design-resources", "3d-printing", "open-hardware", "community"],
+    "description": "Thingiverse: The world's largest community for sharing and discovering 3D printable hardware designs."
+  },
+  {
+    "url": "https://goblintechkeys.com/",
+    "tags": ["hardware", "marketplace", "design-resources", "business"],
+    "description": "Goblintechkeys: A store for custom mechanical keyboards, keycaps, and corporate swag."
+  },
+  {
+    "url": "https://divinikey.com/",
+    "tags": ["hardware", "marketplace", "community", "usa"],
+    "description": "Divinikey: A leading store for custom keyboard kits, keycaps, switches, and components."
+  },
+  {
+    "url": "https://popkeycap.com/",
+    "tags": ["hardware", "marketplace", "design-resources", "business"],
+    "description": "POPKEYCAP: A mechanical keyboard store specializing in various keycap sets and kits."
+  },
+  {
+    "url": "https://keycaplendar.firebaseapp.com/",
+    "tags": ["hardware", "database", "statistics", "tools"],
+    "description": "KeycapLendar: A documentation app for tracking current, future, and past keycap group buys."
+  },
+  {
+    "url": "https://game8.co/",
+    "tags": ["gaming", "news", "how-to", "community"],
+    "description": "Game8: A major source for gaming news, app walkthroughs, and interactive game tools from Japan."
+  },
+  {
+    "url": "https://dalle2.gallery",
+    "tags": ["entertainment", "error"],
+    "description": "DALL-E 2 Gallery (Redirected to a placeholder or unrelated service during extraction)."
+  },
+  {
+    "url": "https://www.datasetlist.com/",
+    "tags": ["ai-ml", "datasets", "research", "resource-directory"],
+    "description": "Dataset List: A curated collection of the biggest machine learning datasets available online."
+  },
+  {
+    "url": "https://www.retroreversing.com/",
+    "tags": ["security", "reverse-engineering", "gaming", "education"],
+    "description": "Retro Reversing: A resource for retro game reverse engineering, featuring tutorials and tools."
+  },
+  {
+    "url": "https://finalweapon.net/",
+    "tags": ["anime-manga", "gaming", "news", "reviews"],
+    "description": "Final Weapon: A news hub for video games, anime, and manga, focusing on Japanese industry hits."
+  },
+  {
+    "url": "https://www.allcrafts.net/",
+    "tags": ["lifestyle", "design-resources", "how-to", "community"],
+    "description": "AllCrafts.net: A free crafts network providing thousands of projects and patterns across many categories."
+  },
+  {
+    "url": "https://www.craftville.com/",
+    "tags": ["lifestyle", "design-resources", "open-data", "community"],
+    "description": "Craftville: Features over 140,000 free craft downloads for card makers and scrap-bookers."
+  },
+  {
+    "url": "https://www.craftshq.com.au/",
+    "tags": ["error"],
+    "description": "Crafts HQ Australia (Access forbidden during extraction)."
+  },
+  {
+    "url": "https://www.patternlinks.com/",
+    "tags": ["lifestyle", "design-resources", "how-to", "error"],
+    "description": "PatternLinks: A site for craft patterns (Redirecting during extraction)."
+  },
+  {
+    "url": "https://www.mineprints.net/",
+    "tags": ["gaming", "design-resources", "community", "tools"],
+    "description": "Mineprints: A visual library for exploring and sharing Minecraft building blueprints and schematics."
+  },
+  {
+    "url": "https://arbital.com/",
+    "tags": ["education", "ai-ml", "philosophy", "knowledge-base"],
+    "description": "Arbital: A community wiki for explanations on AI alignment, math, and rationality (Integrated into LessWrong)."
+  },
+  {
+    "url": "https://www.trendhunter.com/",
+    "tags": ["business", "innovation", "news", "community"],
+    "description": "Trend Hunter: The world's largest trend platform, using AI to unlock consumer insights and future trends."
+  },
+  {
+    "url": "https://www.myminifactory.com/",
+    "tags": ["design-resources", "3d-printing", "marketplace", "community"],
+    "description": "MyMiniFactory: A platform for sharing and downloading high-quality 3D printable models for makers."
+  },
+  {
+    "url": "https://mathigon.org/",
+    "tags": ["education", "science", "mathematics", "tools"],
+    "description": "Mathigon: An interactive mathematical playground with free courses and manipulatives for learning."
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Glossary_of_dance_moves",
+    "tags": ["wikipedia", "lifestyle", "art", "encyclopedia"],
+    "description": "Wikipedia: A glossary of dance moves, providing definitions and descriptions for various dance styles."
+  },
+  {
+    "url": "https://makeameme.org/",
+    "tags": ["entertainment", "pop-culture", "tools", "community"],
+    "description": "Make a Meme: A free and intuitive online meme generator for creating and sharing humorous images."
+  },
+  {
+    "url": "https://twfan.net/",
+    "tags": ["social-media", "statistics", "japan", "community"],
+    "description": "Twfan: A Japanese service for tracking trending tweets and popular content on Twitter."
+  },
+  {
+    "url": "https://dynasty-scans.com/",
+    "tags": ["anime-manga", "media", "community", "literature"],
+    "description": "Dynasty Reader: An online manga reader specializing in scanlations and community releases."
+  },
+  {
+    "url": "https://fedi.mint.lgbt/explore",
+    "tags": ["communities", "social-media", "fediverse", "error"],
+    "description": "Mint.lgbt Explore (DNS error during extraction)."
+  },
+  {
+    "url": "https://gollum.space/",
+    "tags": ["communities", "anime", "ai-ml", "resource-directory"],
+    "description": "Gollum Space: A directory and search portal for AI art, anime, and community telegram channels."
+  },
+  {
+    "url": "https://www.mixcloud.com/",
+    "tags": ["music-resources", "media", "community", "audio-data"],
+    "description": "Mixcloud: A global audio culture platform where creators share DJ sets, podcasts, and radio shows."
+  },
+  {
+    "url": "https://www.color-hex.com/",
+    "tags": ["design-resources", "tools", "metadata", "knowledge-base"],
+    "description": "Color Hex: A tool for exploring color codes, models (RGB, HSL, etc.), and generating CSS samples."
+  },
+  {
+    "url": "https://www.rhymefinder.net/",
+    "tags": ["linguistics", "writing-resources", "tools", "security-blocked"],
+    "description": "RhymeFinder: A tool for finding rhymes and word suggestions (Access blocked)."
+  },
+  {
+    "url": "https://www.rhymezone.com/",
+    "tags": ["linguistics", "writing-resources", "tools", "dictionary"],
+    "description": "RhymeZone: A comprehensive rhyming dictionary and thesaurus for finding synonyms and adjectives."
+  },
+  {
+    "url": "https://www.powerthesaurus.org/",
+    "tags": ["linguistics", "writing-resources", "tools", "security-blocked"],
+    "description": "Power Thesaurus: A crowd-sourced online thesaurus for finding synonyms and antonyms (Access blocked)."
+  },
+  {
+    "url": "https://comparewords.com/",
+    "tags": ["linguistics", "education", "tools", "knowledge-base"],
+    "description": "CompareWords: A tool for comparing English words to identify differences in meaning and usage."
+  },
+  {
+    "url": "https://wikidiff.com/",
+    "tags": ["linguistics", "education", "tools", "knowledge-base"],
+    "description": "WikiDiff: Allows users to compare and contrast definitions, origins, and synonyms of two different words."
+  }
+,
+  {
+    "url": "https://www.lifescience.net/news/latest/",
+    "tags": ["news", "science", "research", "resource-directory"],
+    "description": "Life Science Network: Latest news, press releases, and announcements in life sciences and biotechnology."
+  },
+  {
+    "url": "https://discover.getrevue.co/",
+    "tags": ["news", "newsletter", "error"],
+    "description": "Revue Discover: A directory for newsletters (Site unreachable during extraction)."
+  },
+  {
+    "url": "https://chminer.net/en/",
+    "tags": ["statistics", "media", "youtube", "tools"],
+    "description": "chminer: A YouTube trending chart and channel statistics portal."
+  },
+  {
+    "url": "https://www.euclideanspace.com/",
+    "tags": ["education", "science", "mathematics", "programming"],
+    "description": "EuclideanSpace: A comprehensive resource on mathematics and its computational applications."
+  },
+  {
+    "url": "https://www.rocketmeme.com/",
+    "tags": ["entertainment", "pop-culture", "error"],
+    "description": "RocketMeme: A meme-related domain (Domain for sale during extraction)."
+  },
+  {
+    "url": "https://9gag.com/",
+    "tags": ["entertainment", "pop-culture", "media", "community"],
+    "description": "9GAG: A popular platform for funny memes, GIFs, videos, and viral news."
+  },
+  {
+    "url": "http://www.quickmeme.com/",
+    "tags": ["entertainment", "pop-culture", "media", "community"],
+    "description": "quickmeme: A source for funny memes, images, and captioning tools."
+  },
+  {
+    "url": "https://dribbble.com/",
+    "tags": ["design-resources", "community", "portfolio"],
+    "description": "Dribbble: The leading destination to find and showcase creative work and designer portfolios."
+  },
+  {
+    "url": "https://allchans.org/",
+    "tags": ["imageboard", "community", "resource-directory"],
+    "description": "AllChans: An anonymous imageboard directory listing sites like 4chan and its alternatives."
+  },
+  {
+    "url": "https://www.pixoto.com/photo-contests",
+    "tags": ["design-resources", "community", "error"],
+    "description": "Pixoto Photo Contests (Access blocked by human verification during extraction)."
+  },
+  {
+    "url": "https://youglish.com/",
+    "tags": ["linguistics", "education", "tools", "media"],
+    "description": "YouGlish: A tool that uses YouTube clips to help people improve their pronunciation in multiple languages."
+  },
+  {
+    "url": "https://gamesdb.launchbox-app.com/",
+    "tags": ["gaming", "database", "metadata", "design-resources"],
+    "description": "LaunchBox Games Database: A comprehensive crowd-sourced database for video game metadata and images."
+  },
+  {
+    "url": "https://www.barbadosindex.com/",
+    "tags": ["resource-directory", "business", "barbados"],
+    "description": "BarbadosIndex: A verified online business directory portal for local services in Barbados."
+  },
+  {
+    "url": "https://prompthero.com/",
+    "tags": ["ai-ml", "design-resources", "community", "tools"],
+    "description": "PromptHero: A massive search engine for AI prompts covering Stable Diffusion, Midjourney, and ChatGPT."
+  },
+  {
+    "url": "https://www.vault.world/",
+    "tags": ["design-resources", "marketplace", "art", "crypto"],
+    "description": "VAULT by 500px: An NFT marketplace for creators to discover, buy, and sell unique digital art."
+  },
+  {
+    "url": "https://foundation.app/",
+    "tags": ["design-resources", "marketplace", "art", "crypto"],
+    "description": "Foundation: A creative playground for artists and collectors to participate in the NFT economy."
+  },
+  {
+    "url": "https://gs.statcounter.com/",
+    "tags": ["statistics", "tech-news", "research", "open-data"],
+    "description": "Statcounter Global Stats: Tracks market share for browsers, OS, and search engines globally."
+  },
+  {
+    "url": "https://crackmes.one/",
+    "tags": ["security", "reverse-engineering", "education", "community"],
+    "description": "Crackmes.one: A platform for downloading and sharing crackmes to practice reverse engineering skills."
+  },
+  {
+    "url": "https://www.osintme.com/",
+    "tags": ["osint", "security", "blog-post", "resource-directory"],
+    "description": "Osint Me: A blog and resource hub dedicated to open-source intelligence and dark web investigations."
+  },
+  {
+    "url": "https://stats.oecd.org/",
+    "tags": ["statistics", "research", "open-data", "government-data"],
+    "description": "OECD.Stat: The OECD's database of international statistics across various domains."
+  },
+  {
+    "url": "https://www.internetworldstats.com",
+    "tags": ["statistics", "research", "error"],
+    "description": "Internet World Stats: Global internet usage and population statistics (Privacy error during extraction)."
+  },
+  {
+    "url": "https://power.automate.gallery/",
+    "tags": ["software", "tools", "error"],
+    "description": "Power Automate Gallery (Unreachable during extraction)."
+  },
+  {
+    "url": "https://tylerayoung.com/",
+    "tags": ["programming", "blog-post", "software"],
+    "description": "Tyler A. Young's Blog: Insights on software engineering, photography, and open-source projects."
+  },
+  {
+    "url": "https://www.allrecipes.com",
+    "tags": ["food-recipes", "community", "lifestyle"],
+    "description": "Allrecipes: A massive collection of user-submitted recipes, ratings, and cooking tips."
+  },
+  {
+    "url": "https://www.bbcgoodfood.com/",
+    "tags": ["food-recipes", "lifestyle", "news"],
+    "description": "BBC Good Food: A leading resource for quality home cooking recipes and nutritional advice."
+  },
+  {
+    "url": "https://www.cookingclassy.com/",
+    "tags": ["food-recipes", "lifestyle", "blog-post"],
+    "description": "Cooking Classy: Features delicious, easy-to-make recipes for home cooks and families."
+  },
+  {
+    "url": "https://www.simplyrecipes.com/",
+    "tags": ["food-recipes", "lifestyle", "how-to"],
+    "description": "Simply Recipes: Offers trusted recipes and cooking advice aimed at making home cooking more joyful."
+  },
+  {
+    "url": "https://www.epicurious.com/",
+    "tags": ["food-recipes", "lifestyle", "media"],
+    "description": "Epicurious: A premier food resource featuring over 33,000 professional recipes and kitchen tips."
+  },
+  {
+    "url": "https://www.howtocook.recipes/",
+    "tags": ["food-recipes", "education", "how-to"],
+    "description": "How To Cook Recipes: Easy guides and video tutorials for learning how to cook delicious meals at home."
+  },
+  {
+    "url": "https://www.vegrecipesofindia.com/recipes/",
+    "tags": ["food-recipes", "lifestyle", "india", "security-blocked"],
+    "description": "Veg Recipes of India: A massive collection of vegetarian Indian recipes (Access blocked)."
+  },
+  {
+    "url": "https://www.tasteofhome.com/",
+    "tags": ["food-recipes", "lifestyle", "community"],
+    "description": "Taste of Home: A community-driven magazine featuring real-home recipes, tips, and holiday ideas."
+  },
+  {
+    "url": "https://www.airfryeryum.com/",
+    "tags": ["food-recipes", "lifestyle", "tools", "blog-post"],
+    "description": "Air Fryer Yum: Specializes in quick and easy recipes specifically for air fryers."
+  },
+  {
+    "url": "https://thebellyrulesthemind.net/",
+    "tags": ["food-recipes", "lifestyle", "india", "blog-post"],
+    "description": "Belly Rules The Mind: Focuses on healthy vegetarian and vegan recipes from various cuisines."
+  },
+  {
+    "url": "https://www.thespruceeats.com",
+    "tags": ["food-recipes", "lifestyle", "how-to"],
+    "description": "The Spruce Eats: Provides thousands of recipes, cooking tips, and product reviews for home cooks."
+  },
+  {
+    "url": "https://ohmyveggies.com/",
+    "tags": ["food-recipes", "lifestyle", "vegetarian", "blog-post"],
+    "description": "Oh My Veggies: A blog dedicated to easy, flavorful vegetarian and vegan meal inspiration."
+  },
+  {
+    "url": "https://insanelygoodrecipes.com/",
+    "tags": ["food-recipes", "lifestyle", "blog-post"],
+    "description": "Insanely Good Recipes: Making dinner time fun and simple with family-friendly recipes."
+  },
+  {
+    "url": "https://www.indianhealthyrecipes.com",
+    "tags": ["food-recipes", "lifestyle", "india", "health"],
+    "description": "Swasthi's Recipes: An ultimate guide to authentic and restaurant-quality Indian recipes."
+  },
+  {
+    "url": "https://www.egginfo.co.uk/",
+    "tags": ["food-recipes", "health", "research", "government-data"],
+    "description": "British Lion Eggs: Official information on egg recipes, nutrition, and safety in the UK."
+  },
+  {
+    "url": "https://www.budgetbytes.com/",
+    "tags": ["food-recipes", "lifestyle", "finance", "security-blocked"],
+    "description": "Budget Bytes: Provides delicious recipes designed for a small budget (Access blocked)."
+  },
+  {
+    "url": "https://www.inspiredtaste.net/",
+    "tags": ["food-recipes", "lifestyle", "blog-post"],
+    "description": "Inspired Taste: A food blog devoted to easy home cooking with step-by-step videos."
+  },
+  {
+    "url": "https://www.thekitchn.com/",
+    "tags": ["food-recipes", "lifestyle", "design-resources", "community"],
+    "description": "The Kitchn: Inspiring cooks through recipes, kitchen design, and shopping guides."
+  },
+  {
+    "url": "https://www.recipetineats.com/",
+    "tags": ["food-recipes", "lifestyle", "blog-post"],
+    "description": "RecipeTin Eats: Quick and easy dinner recipes, classics, and one-pot wonders by Nagi."
+  },
+  {
+    "url": "https://ahrefs.com/blog",
+    "tags": ["marketing", "seo", "blog-post", "tools"],
+    "description": "Ahrefs Blog: Actionable SEO and marketing guides and tips."
+  },
+  {
+    "url": "https://edutechwiki.unige.ch/en/Main_Page",
+    "tags": ["education", "wiki", "research", "software"],
+    "description": "EduTech Wiki: A resource kit for educational technology teaching and research by the University of Geneva."
+  },
+  {
+    "url": "https://www.futurepedia.io/",
+    "tags": ["ai-ml", "resource-directory", "tools"],
+    "description": "Futurepedia: A comprehensive and daily updated directory for finding the best AI tools and software."
+  },
+  {
+    "url": "https://fitfoodiefinds.com/",
+    "tags": ["food-recipes", "lifestyle", "health", "security-blocked"],
+    "description": "Fit Foodie Finds: Healthy recipes and lifestyle tips (Access blocked)."
+  },
+  {
+    "url": "https://github.com/ShadowWhisperer/BlockLists",
+    "tags": ["security", "github-repo", "tools", "open-data"],
+    "description": "BlockLists: A GitHub repository for custom DNS block lists for security and privacy."
+  },
+  {
+    "url": "https://www.discogs.com/",
+    "tags": ["music-resources", "database", "marketplace", "community"],
+    "description": "Discogs: The largest online music database and physical music marketplace."
+  },
+  {
+    "url": "https://rateyourmusic.com/",
+    "tags": ["music-resources", "database", "reviews", "security-blocked"],
+    "description": "Rate Your Music: A massive database for cataloging and reviewing music and films (Access blocked)."
+  },
+  {
+    "url": "https://www.soundtrack.net/",
+    "tags": ["music-resources", "entertainment", "movies", "tv"],
+    "description": "Soundtrack.net: A database for discovering songs and soundtracks in movies and television."
+  },
+  {
+    "url": "https://pixela.ai/",
+    "tags": ["ai-ml", "design-resources", "gaming", "community"],
+    "description": "Pixela.ai: A platform for sharing and discovering AI-generated game textures."
+  },
+  {
+    "url": "https://www.gwern.net/index",
+    "tags": ["research", "science", "ai-ml", "blog-post"],
+    "description": "Gwern.net: The personal research website of Gwern Branwen, covering AI, psychology, and statistics."
+  },
+  {
+    "url": "https://aminoapps.com/",
+    "tags": ["social-media", "community", "error"],
+    "description": "Amino: A social platform for building and joining specialized communities (Unreachable)."
+  },
+  {
+    "url": "https://www.reveddit.com/",
+    "tags": ["social-media", "tools", "privacy", "osint"],
+    "description": "Reveddit: A tool for revealing content that has been secretly removed from Reddit accounts."
+  },
+  {
+    "url": "https://www.bitchute.com/",
+    "tags": ["entertainment", "media", "community", "news"],
+    "description": "BitChute: A video service platform prioritizing creator freedom and user privacy."
+  },
+  {
+    "url": "https://academictorrents.com",
+    "tags": ["research", "datasets", "open-data", "archive"],
+    "description": "Academic Torrents: A distributed system for sharing enormous research datasets via BitTorrent."
+  },
+  {
+    "url": "https://www.data-is-plural.com/",
+    "tags": ["datasets", "curated-list", "news", "resource-directory"],
+    "description": "Data Is Plural: A weekly newsletter featuring a variety of useful and curious datasets."
+  },
+  {
+    "url": "https://data.nasdaq.com/",
+    "tags": ["finance", "datasets", "research", "business"],
+    "description": "Nasdaq Data Link: A premier source for financial, economic, and alternative alternative datasets."
+  },
+  {
+    "url": "https://github.com/frog23/TomScottMap",
+    "tags": ["media", "geospatial", "github-repo", "education"],
+    "description": "TomScottMap: An unofficial map geo-referencing the educational videos of Tom Scott."
+  },
+  {
+    "url": "https://www.atlasobscura.com/",
+    "tags": ["travel", "knowledge-base", "community", "security-blocked"],
+    "description": "Atlas Obscura: A definitive guide to the world's most curious and unusual places (Access blocked)."
+  },
+  {
+    "url": "https://wikitravel.org",
+    "tags": ["travel", "knowledge-base", "community", "security-blocked"],
+    "description": "Wikitravel: A free, complete, and up-to-date world-wide travel guide (Access blocked)."
+  },
+  {
+    "url": "https://www.lonelyplanet.com/",
+    "tags": ["travel", "knowledge-base", "media", "security-blocked"],
+    "description": "Lonely Planet: One of the world's leading travel media companies and guidebook publishers (Access blocked)."
+  },
+  {
+    "url": "https://globetrooper.com/",
+    "tags": ["travel", "knowledge-base", "community", "archive"],
+    "description": "Globetrooper: Features a free travel guide (Archived content from Wikitravel)."
+  },
+  {
+    "url": "https://matadornetwork.com/",
+    "tags": ["travel", "media", "lifestyle", "news"],
+    "description": "Matador Network: A global media brand and guide for modern adventurers."
+  },
+  {
+    "url": "https://index.quantumstat.com/",
+    "tags": ["ai-ml", "datasets", "research", "error"],
+    "description": "The Super Duper NLP Repo: A curated list of NLP datasets and models (Privacy error)."
+  },
+  {
+    "url": "https://metatext.io/datasets",
+    "tags": ["ai-ml", "datasets", "research", "curated-list"],
+    "description": "Metatext NLP Database: A curated repository of over 1,000 Natural Language Processing datasets."
+  },
+  {
+    "url": "https://substack.com",
+    "tags": ["news", "media", "community", "blog-post"],
+    "description": "Substack: A platform for independent writers to publish newsletters and build communities."
+  },
+  {
+    "url": "https://www.pragmatic.ml/",
+    "tags": ["ai-ml", "education", "error"],
+    "description": "Pragmatic Machine Learning (DNS error during extraction)."
+  },
+  {
+    "url": "https://dagshub.com/",
+    "tags": ["ai-ml", "software", "community", "datasets"],
+    "description": "DagsHub: A platform for managing multimodal AI, including data curation and experiment tracking."
+  },
+  {
+    "url": "https://hurrythefoodup.com/",
+    "tags": ["food-recipes", "health", "vegetarian", "lifestyle"],
+    "description": "Hurry The Food Up: Quick, tasty, and protein-rich vegetarian recipes for home cooks."
+  },
+  {
+    "url": "https://coolhunting.com/",
+    "tags": ["design-resources", "pop-culture", "news", "lifestyle"],
+    "description": "COOL HUNTING: A media site uncovering the latest in design, culture, and technology."
+  },
+  {
+    "url": "https://disboard.org/",
+    "tags": ["social-media", "community", "resource-directory", "security-blocked"],
+    "description": "DISBOARD: A public directory and search engine for Discord servers (Access blocked)."
+  },
+  {
+    "url": "https://www.kickstarter.com",
+    "tags": ["marketplace", "community", "art", "innovation"],
+    "description": "Kickstarter: A leading crowdfunding platform for creative projects in art, tech, and more."
+  },
+  {
+    "url": "https://website.informer.com/",
+    "tags": ["osint", "tools", "business", "security"],
+    "description": "Website Informer: Provides aggregated data reports on domains, including WHOIS and competitors."
+  },
+  {
+    "url": "https://pholder.com/",
+    "tags": ["entertainment", "pop-culture", "media", "community"],
+    "description": "Pholder: A tool for discovering and exploring trending images, GIFs, and videos from social media."
+  },
+  {
+    "url": "https://datahorde.org/",
+    "tags": ["archiving", "news", "community", "history"],
+    "description": "Data Horde: A project dedicated to internet history, archival news, and community spotlights."
+  },
+  {
+    "url": "https://tracker.gg/",
+    "tags": ["gaming", "statistics", "community", "tools"],
+    "description": "Tracker Network: Provides detailed stats and leaderboards for popular competitive video games."
+  },
+  {
+    "url": "https://www.flightstats.com/v2",
+    "tags": ["travel", "statistics", "tools", "business"],
+    "description": "FlightStats: A global flight tracker providing real-time flight status and airport delay information."
+  },
+  {
+    "url": "https://twitchlogger.pl/",
+    "tags": ["media", "history", "education", "closed"],
+    "description": "TwitchLogger: An educational project for logging Twitch data (Now closed)."
+  },
+  {
+    "url": "https://newalbumreleases.net/",
+    "tags": ["music-resources", "media", "news", "security-blocked"],
+    "description": "New Album Releases: A site for tracking and downloading new music releases (Access blocked)."
+  },
+  {
+    "url": "https://codingdeekshi.com/",
+    "tags": ["programming", "education", "error"],
+    "description": "Coding Deekshi: A programming tutorial site (Connection refused during extraction)."
+  },
+  {
+    "url": "https://codesandbox.io/",
+    "tags": ["programming", "software", "education", "tools"],
+    "description": "CodeSandbox: An instant cloud development platform for coding and collaborating in the browser."
+  },
+  {
+    "url": "https://morioh.com/",
+    "tags": ["entertainment", "finance", "error"],
+    "description": "Morioh: A social network for developers (Redirected to a gambling site during extraction)."
+  },
+  {
+    "url": "https://imgchest.com/",
+    "tags": ["entertainment", "media", "community", "archive"],
+    "description": "Image Chest: A free and uncensored image hosting and sharing service."
+  },
+  {
+    "url": "https://primes.utm.edu/",
+    "tags": ["science", "mathematics", "research", "database"],
+    "description": "The PrimePages: A definitive resource for prime number research and the largest known primes."
+  },
+  {
+    "url": "https://www.knowledgeboat.com",
+    "tags": ["education", "science", "mathematics", "tools"],
+    "description": "KnowledgeBoat: Provides free textbook solutions and practice tests for CBSE and ICSE students."
+  },
+  {
+    "url": "https://playgroundai.com/",
+    "tags": ["ai-ml", "design-resources", "tools", "community"],
+    "description": "Playground: A free AI design tool for creating art, logos, and social media graphics."
+  },
+  {
+    "url": "https://ideone.com/recent",
+    "tags": ["programming", "software", "community", "tools"],
+    "description": "Ideone: An online compiler and debugging tool that allows users to share and run code snippets."
+  },
+  {
+    "url": "https://www.whitepages.com/",
+    "tags": ["osint", "business", "tools", "usa"],
+    "description": "Whitepages: A trusted U.S. directory for finding people, phone numbers, and addresses."
+  },
+  {
+    "url": "https://picrew.me/discovery",
+    "tags": ["design-resources", "art", "entertainment", "japan"],
+    "description": "Picrew: A popular Japanese image maker platform for creating and playing with avatars."
+  },
+  {
+    "url": "https://wiby.me/",
+    "tags": ["search-engine", "history", "knowledge-base"],
+    "description": "Wiby: A search engine specifically for the 'classic' web, focusing on older-style, lightweight pages."
+  },
+  {
+    "url": "https://picsart.com/images",
+    "tags": ["design-resources", "art", "tools", "marketplace"],
+    "description": "Picsart: A massive library of free and premium photos, backgrounds, and graphics for designers."
+  },
+  {
+    "url": "https://www.askideas.com/",
+    "tags": ["design-resources", "lifestyle", "error"],
+    "description": "AskIdeas: A site for design and tattoo ideas (Privacy error during extraction)."
+  },
+  {
+    "url": "https://www.isowq.org/",
+    "tags": ["tools", "tech-news", "research", "business"],
+    "description": "ISOWQ: Performs technical analysis and audits of websites across hundreds of TLDs."
+  },
+  {
+    "url": "https://www.mypokecard.com/en/Card-Gallery",
+    "tags": ["entertainment", "gaming", "design-resources", "community"],
+    "description": "MyPokeCard: A gallery and generator for custom Pokemon cards created by users."
+  },
+  {
+    "url": "https://www.blogs-collection.com/",
+    "tags": ["resource-directory", "blog-post", "business"],
+    "description": "Blogs Directory: A collection of blogs categorized by topic and region for discovery."
+  },
+  {
+    "url": "https://channelcrawler.com",
+    "tags": ["media", "youtube", "business", "database"],
+    "description": "ChannelCrawler: The world's largest YouTube channel database for finding influencers and stats."
+  },
+  {
+    "url": "https://bitbin.it/latest_pastes",
+    "tags": ["programming", "media", "community", "closed"],
+    "description": "BitBin: A pastebin service (Closing down during extraction)."
+  },
+  {
+    "url": "https://paste.ulvis.net/last-pastes.html",
+    "tags": ["programming", "media", "tools"],
+    "description": "pastebin (ulvis.net): A tool for anonymously sharing and searching text pastes."
+  },
+  {
+    "url": "https://paste.ac/site/recent",
+    "tags": ["programming", "error"],
+    "description": "paste.ac (Domain for sale during extraction)."
+  },
+  {
+    "url": "https://www.paste.army/recent",
+    "tags": ["programming", "error"],
+    "description": "paste.army (Unreachable or empty during extraction)."
+  },
+  {
+    "url": "https://paste.thedevstack.de/lists",
+    "tags": ["programming", "media", "tools"],
+    "description": "SNIP: A developer-focused pastebin service for sharing code and snippets."
+  },
+  {
+    "url": "https://paste.vpsfree.cz/browse/",
+    "tags": ["programming", "error"],
+    "description": "Bepasty (Not found during extraction)."
+  },
+  {
+    "url": "https://paste.toolforge.org/lists",
+    "tags": ["programming", "error"],
+    "description": "Paste Toolforge (404 Not Found during extraction)."
+  },
+  {
+    "url": "https://pastes.io/archive/none",
+    "tags": ["programming", "media", "tools"],
+    "description": "Pastes.io: A simple and secure pastebin alternative for sharing text and code."
+  },
+  {
+    "url": "https://www.paste.tc/archive/markup",
+    "tags": ["programming", "media", "tools", "dark-web"],
+    "description": "Paste.tc Archive: A collection of public pastes, often containing dark web links and leaks."
+  },
+  {
+    "url": "https://paste.sx/archive/none",
+    "tags": ["programming", "error"],
+    "description": "paste.sx (Connection timed out during extraction)."
+  },
+  {
+    "url": "https://paste.cutelyst.org/all",
+    "tags": ["programming", "error"],
+    "description": "paste.cutelyst.org (Connection refused during extraction)."
+  },
+  {
+    "url": "https://pastelink.net/recent",
+    "tags": ["programming", "media", "tools", "community"],
+    "description": "Pastelink: An anonymous platform for publishing text with enabled hyperlinks."
+  },
+  {
+    "url": "https://www.loveandlemons.com/",
+    "tags": ["food-recipes", "health", "vegetarian", "blog-post"],
+    "description": "Love and Lemons: A trusted resource for healthy, whole food, and seasonal vegetarian recipes."
+  },
+  {
+    "url": "https://frommybowl.com/",
+    "tags": ["food-recipes", "health", "vegan", "security-blocked"],
+    "description": "From My Bowl: Easy vegan recipes (Access blocked)."
+  },
+  {
+    "url": "https://www.simplystacie.net/",
+    "tags": ["food-recipes", "lifestyle", "blog-post"],
+    "description": "Simply Stacie: Good food made easy with hundreds of family-friendly recipes."
+  },
+  {
+    "url": "https://www.taste.com.au/",
+    "tags": ["food-recipes", "lifestyle", "australia", "community"],
+    "description": "Taste.com.au: Australia's #1 cooking resource with over 50,000 recipes and menus."
+  },
+  {
+    "url": "https://asifood.com/category/national-holiday/",
+    "tags": ["holidays", "reference", "error"],
+    "description": "ASI Food National Holidays (404 Page Not Found during extraction)."
+  },
+  {
+    "url": "https://files.pushshift.io/",
+    "tags": ["datasets", "social-media", "research", "error"],
+    "description": "Pushshift.io: A massive archive of Reddit data for research (Web server down)."
+  },
+  {
+    "url": "https://zenodo.org/",
+    "tags": ["research", "datasets", "open-data", "archive"],
+    "description": "Zenodo: A general-purpose open-access repository for research outputs of all types."
+  },
+  {
+    "url": "https://triwer.io/",
+    "tags": ["finance", "crypto", "error"],
+    "description": "Triwer.io (Unreachable during extraction)."
+  },
+  {
+    "url": "https://tech.io/explore",
+    "tags": ["programming", "education", "community", "tools"],
+    "description": "Tech.io: An interactive and open-source platform for learning any technology through tutorials."
+  },
+  {
+    "url": "https://www.pillowfort.social/demo_login",
+    "tags": ["social-media", "community", "art"],
+    "description": "Pillowfort: A social network for creators and fans with a focus on privacy and control."
+  },
+  {
+    "url": "https://www.domcop.com/domains?dataSource=live",
+    "tags": ["osint", "business", "domain-data", "tools"],
+    "description": "Domcop: A powerful tool for finding and buying expired domain names with strong metrics."
+  },
+  {
+    "url": "https://socialtradia.com/",
+    "tags": ["social-media", "marketplace", "business"],
+    "description": "Social Tradia: A specialized marketplace for buying and selling active Instagram accounts."
+  },
+  {
+    "url": "https://www.eslprintables.com/",
+    "tags": ["education", "linguistics", "community", "error"],
+    "description": "ESL Printables: A website for sharing English teaching resources (Gateway time-out)."
+  },
+  {
+    "url": "https://musical-artifacts.com/",
+    "tags": ["music-resources", "open-data", "community", "nintendo"],
+    "description": "Musical Artifacts: A collaborative platform for sharing free and open music-making resources."
+  },
+  {
+    "url": "https://www.simplysated.com/",
+    "tags": ["food-recipes", "lifestyle", "blog-post"],
+    "description": "Simply Sated: A food blog featuring easy-to-follow recipes for classic dishes and treats."
+  },
+  {
+    "url": "https://divascancook.com/",
+    "tags": ["food-recipes", "lifestyle", "blog-post", "southern-usa"],
+    "description": "Divas Can Cook: Features Southern recipes made fun and easy with accompanying videos."
+  },
+  {
+    "url": "https://www.saveur.com/category/recipes/",
+    "tags": ["food-recipes", "lifestyle", "media", "culture"],
+    "description": "Saveur: A leading food and travel brand featuring authentic recipes from around the world."
+  },
+  {
+    "url": "https://issuu.com/",
+    "tags": ["archiving", "media", "business", "tools"],
+    "description": "Issuu: A digital publishing platform for creating and sharing interactive flipbooks and magazines."
+  },
+  {
+    "url": "https://fliphtml5.com",
+    "tags": ["archiving", "media", "business", "tools"],
+    "description": "FlipHTML5: A digital publishing platform for converting PDFs into interactive flipbooks and catalogs."
+  },
+  {
+    "url": "https://downmagaz.net/",
+    "tags": ["archiving", "media", "news", "resource-directory"],
+    "description": "DownMagaz: A massive free community for downloading digitized world magazines in PDF format."
+  },
+  {
+    "url": "https://allpoetry.com/",
+    "tags": ["literature", "poetry", "community", "writing-resources"],
+    "description": "All Poetry: The world's largest poetry site for poets to share, critique, and publish work."
+  },
+  {
+    "url": "https://www.telnetbbsguide.com/bbs/list/brief/",
+    "tags": ["history", "community", "database", "telecom"],
+    "description": "Telnet BBS Guide: A comprehensive and frequently updated directory of active Bulletin Board Systems."
+  },
+  {
+    "url": "https://app.any.run/",
+    "tags": ["security", "malware-database", "research", "tools"],
+    "description": "ANY.RUN: An interactive online malware analysis sandbox for researching files and URLs."
+  },
+  {
+    "url": "https://filesearch.link/",
+    "tags": ["search-engine", "osint", "error"],
+    "description": "FileSearch Link (Privacy error during extraction)."
+  },
+  {
+    "url": "https://www.petfinder.com/",
+    "tags": ["pet-adoption", "database", "usa", "community"],
+    "description": "Petfinder: The largest online database of adoptable pets from shelters and rescues across North America."
+  },
+  {
+    "url": "https://www.datamuse.com/api/",
+    "tags": ["linguistics", "programming", "tools", "database"],
+    "description": "Datamuse API: A powerful word-finding query engine for developers building writing and search apps."
+  },
+  {
+    "url": "https://www.manualslib.com/",
+    "tags": ["manuals", "database", "resource-directory", "tools"],
+    "description": "ManualsLib: A massive library of over 9.9 million free product manuals in PDF format."
+  },
+  {
+    "url": "https://mywaifulist.moe/",
+    "tags": ["entertainment", "anime", "database", "community"],
+    "description": "MyWaifuList: A comprehensive anime character database for voting, ranking, and discovery."
+  },
+  {
+    "url": "https://www.okonomikitchen.com/",
+    "tags": ["food-recipes", "lifestyle", "japan", "blog-post"],
+    "description": "Okonomi Kitchen: Traditional and modernized Japanese recipes using seasonal ingredients."
+  },
+  {
+    "url": "https://www.plurk.com/top",
+    "tags": ["social-media", "community", "asia"],
+    "description": "Plurk Top: A micro-blogging social network popular in Taiwan and Southeast Asia."
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research",
+    "tags": ["ai-ml", "datasets", "research", "wikipedia"],
+    "description": "Wikipedia: A comprehensive list of datasets for machine learning research across various fields."
+  },
+  {
+    "url": "https://oyasumi-chyuu.fun/index.php",
+    "tags": ["entertainment", "anime", "error"],
+    "description": "Oyasumi Chyuu (Privacy error during extraction)."
+  },
+  {
+    "url": "https://www.crunchbase.com/",
+    "tags": ["business", "finance", "database", "research"],
+    "description": "Crunchbase: A leading platform for finding business information about private and public companies."
+  },
+  {
+    "url": "https://observablehq.com/",
+    "tags": ["programming", "data-visualization", "education", "community"],
+    "description": "Observable: A platform for fast data exploration, prototyping, and interactive visualizations using notebooks."
+  },
+  {
+    "url": "https://www.literallyanything.io/gallery",
+    "tags": ["ai-ml", "tools", "error"],
+    "description": "Literally Anything Gallery (404 Not Found during extraction)."
+  },
+  {
+    "url": "https://www.connectedpapers.com/",
+    "tags": ["research", "database", "data-visualization", "tools"],
+    "description": "Connected Papers: A visual tool to help researchers find and explore academic papers relevant to their field."
+  },
+  {
+    "url": "https://emojicombos.com/",
+    "tags": ["entertainment", "pop-culture", "database", "design-resources"],
+    "description": "Emoji Combos: A database and search engine for creative emoji combinations and art."
+  },
+  {
+    "url": "http://www.minitokyo.net/",
+    "tags": ["design-resources", "anime", "wallpapers", "community"],
+    "description": "Minitokyo: An anime art community for sharing wallpapers, scans, and magazines."
+  }
+
+
+
+
+]

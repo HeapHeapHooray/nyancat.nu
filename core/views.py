@@ -1,3 +1,6 @@
+import json
+import os
+from django.conf import settings
 from django.shortcuts import render
 import yt_dlp
 from yt_dlp.networking.impersonate import ImpersonateTarget
@@ -5,6 +8,24 @@ from yt_dlp.networking.impersonate import ImpersonateTarget
 
 def index(request):
     return render(request, "core/index.html")
+
+
+def databases_collection(request):
+    json_path = os.path.join(settings.BASE_DIR, "tagged_databases", "tagged_databases.json")
+    with open(json_path, "r", encoding="utf-8") as f:
+        databases = json.load(f)
+    
+    # Extract unique tags and sort them
+    all_tags = set()
+    for db in databases:
+        for tag in db.get("tags", []):
+            all_tags.add(tag)
+    
+    context = {
+        "databases": databases,
+        "tags": sorted(list(all_tags)),
+    }
+    return render(request, "core/databases.html", context)
 
 
 def converter(request):

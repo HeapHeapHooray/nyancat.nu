@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("databases/", views.databases_collection, name="databases_collection"),
     path("converter/", views.converter, name="converter"),
     path("video-compressor/", views.video_compressor, name="video_compressor"),
     path("video-slicer/", views.video_slicer, name="video_slicer"),

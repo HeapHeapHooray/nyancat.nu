@@ -143,6 +143,15 @@
         .link-audio-to-video:hover {
             background-color: #dd44aa;
         }
+
+        .link-databases {
+            background-color: #0099ff;
+            border: 2px solid #0099ff;
+        }
+
+        .link-databases:hover {
+            background-color: #33aaff;
+        }
         
         .github-link {
             position: absolute;
@@ -195,6 +204,7 @@
         <a href="{% url 'video_compressor' %}" class="link-button link-video-compressor">Video Compressor/Resizer</a>
         <a href="{% url 'video_slicer' %}" class="link-button link-video-slicer">Audio/Video Slicer</a>
         <a href="{% url 'audio_to_video' %}" class="link-button link-audio-to-video">Audio to Video</a>
+        <a href="{% url 'databases_collection' %}" class="link-button link-databases">Databases Collection</a>
         <a href="{% url 'x_downloader' %}" class="link-button link-x-downloader">X Video Downloader</a>
         <a href="{% url 'bg_remover' %}" class="link-button link-bg-remover">Background Remover</a>
         <a href="{% url 'notepad' %}" class="link-button link-notepad">Notepad</a>
