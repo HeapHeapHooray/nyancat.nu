@@ -6086,5 +6086,16 @@
       "search-engine"
     ],
     "description": "YCF (YouTube Comment Finder): A tool for searching and exploring comments from YouTube videos and channels."
+  },
+  {
+    "url": "https://arrests.org/",
+    "tags": [
+      "arrest-records",
+      "government-data",
+      "usa",
+      "database",
+      "osint"
+    ],
+    "description": "Arrests.org: A searchable database of public arrest records and mugshots from various counties across the United States."
   }
 ]

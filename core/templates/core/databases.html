@@ -42,6 +42,35 @@
             text-decoration: underline;
         }
 
+        .tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 2px solid #00ffcc;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            background-color: rgba(0, 255, 204, 0.2);
+        }
+
+        .tab-btn.active {
+            background-color: #00ffcc;
+            color: #003366;
+            font-weight: bold;
+        }
+
         .search-container {
             width: 100%;
             max-width: 800px;
@@ -57,6 +86,17 @@
             color: white;
             font-family: inherit;
             font-size: 1rem;
+        }
+
+        .tab-content {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tab-content.active {
+            display: flex;
         }
 
         .tags-container {
@@ -157,7 +197,7 @@
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         @media (max-width: 600px) {
@@ -171,43 +211,106 @@
     <a href="{% url 'index' %}" class="home-link">&lt; Back to Home</a>
     <h1>Databases Collection</h1>
 
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('normal')">Normal</button>
+        <button class="tab-btn" onclick="switchTab('others')">Others</button>
+    </div>
+
     <div class="search-container">
         <input type="text" id="search-input" placeholder="Search databases by name, description or tags...">
     </div>
 
-    <div class="tags-container" id="tags-filter">
-        <span class="tag active" data-tag="all">All</span>
-        {% for tag in tags %}
-            <span class="tag" data-tag="{{ tag }}">{{ tag }}</span>
-        {% endfor %}
+    <!-- Normal Tab Content -->
+    <div id="normal-content" class="tab-content active">
+        <div class="tags-container" id="normal-tags-filter">
+            <span class="tag active" data-tag="all">All</span>
+            {% for tag in normal_tags %}
+                <span class="tag" data-tag="{{ tag }}">{{ tag }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="databases-grid" id="normal-grid">
+            {% for db in normal_databases %}
+                <div class="database-card" data-tags="{{ db.tags|join:',' }}" data-search="{{ db.url }} {{ db.description }} {{ db.tags|join:' ' }}">
+                    <h3>{{ db.url|truncatechars:50 }}</h3>
+                    <p>{{ db.description }}</p>
+                    <div class="card-tags">
+                        {% for tag in db.tags %}
+                            <span class="card-tag" onclick="filterByTag('{{ tag }}')">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    <a href="{{ db.url }}" target="_blank" rel="noopener noreferrer" class="visit-link">Visit Site &rarr;</a>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
-    <div class="databases-grid" id="databases-grid">
-        {% for db in databases %}
-            <div class="database-card" data-tags="{{ db.tags|join:',' }}" data-search="{{ db.url }} {{ db.description }} {{ db.tags|join:' ' }}">
-                <h3>{{ db.url|truncatechars:50 }}</h3>
-                <p>{{ db.description }}</p>
-                <div class="card-tags">
-                    {% for tag in db.tags %}
-                        <span class="card-tag" onclick="filterByTag('{{ tag }}')">{{ tag }}</span>
-                    {% endfor %}
+    <!-- Others Tab Content -->
+    <div id="others-content" class="tab-content">
+        <div class="tags-container" id="others-tags-filter">
+            <span class="tag active" data-tag="all">All</span>
+            {% for tag in other_tags %}
+                <span class="tag" data-tag="{{ tag }}">{{ tag }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="databases-grid" id="others-grid">
+            {% for db in other_databases %}
+                <div class="database-card" data-tags="{{ db.tags|join:',' }}" data-search="{{ db.url }} {{ db.description }} {{ db.tags|join:' ' }}">
+                    <h3>{{ db.url|truncatechars:50 }}</h3>
+                    <p>{{ db.description }}</p>
+                    <div class="card-tags">
+                        {% for tag in db.tags %}
+                            <span class="card-tag" onclick="filterByTag('{{ tag }}')">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    <a href="{{ db.url }}" target="_blank" rel="noopener noreferrer" class="visit-link">Visit Site &rarr;</a>
                 </div>
-                <a href="{{ db.url }}" target="_blank" rel="noopener noreferrer" class="visit-link">Visit Site &rarr;</a>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 
     <script>
         const searchInput = document.getElementById('search-input');
-        const tagsFilter = document.getElementById('tags-filter');
-        const dbCards = document.querySelectorAll('.database-card');
-        const tagElements = document.querySelectorAll('.tag');
         
-        let activeTag = 'all';
+        let currentTab = 'normal';
+        let activeTags = {
+            'normal': 'all',
+            'others': 'all'
+        };
         let searchQuery = '';
 
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update Tab Buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.innerText.toLowerCase() === tabName) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Update Tab Contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                if (content.id === tabName + '-content') {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+
+            // Reapply filters when switching tabs
+            filterDatabases();
+        }
+
         function filterDatabases() {
-            dbCards.forEach(card => {
+            const activeContent = document.getElementById(currentTab + '-content');
+            const activeTag = activeTags[currentTab];
+            const cards = activeContent.querySelectorAll('.database-card');
+            
+            cards.forEach(card => {
                 const cardTags = card.getAttribute('data-tags').split(',');
                 const searchContent = card.getAttribute('data-search').toLowerCase();
                 
@@ -224,25 +327,34 @@
 
         searchInput.addEventListener('input', (e) => {
             searchQuery = e.target.value;
+            // Only update the active tab's view
             filterDatabases();
         });
 
-        tagElements.forEach(tagEl => {
-            tagEl.addEventListener('click', () => {
+        // Delegate click events for tags to handle both tabs
+        document.querySelectorAll('.tag').forEach(tagEl => {
+            tagEl.addEventListener('click', (e) => {
+                // Prevent interfering with the card-tag span clicks if they bubble up
+                if (e.target.classList.contains('card-tag')) return;
+                
                 const tag = tagEl.getAttribute('data-tag');
                 setActiveTag(tag);
             });
         });
 
         function setActiveTag(tag) {
-            activeTag = tag;
-            tagElements.forEach(el => {
+            activeTags[currentTab] = tag;
+            
+            // Update visual active state for the current tab's tag buttons
+            const activeTagsContainer = document.getElementById(currentTab + '-tags-filter');
+            activeTagsContainer.querySelectorAll('.tag').forEach(el => {
                 if (el.getAttribute('data-tag') === tag) {
                     el.classList.add('active');
                 } else {
                     el.classList.remove('active');
                 }
             });
+            
             filterDatabases();
         }
 

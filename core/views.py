@@ -11,19 +11,29 @@ def index(request):
 
 
 def databases_collection(request):
-    json_path = os.path.join(settings.BASE_DIR, "tagged_databases", "tagged_databases.json")
-    with open(json_path, "r", encoding="utf-8") as f:
-        databases = json.load(f)
+    normal_path = os.path.join(settings.BASE_DIR, "tagged_databases", "tagged_databases.json")
+    with open(normal_path, "r", encoding="utf-8") as f:
+        normal_databases = json.load(f)
     
-    # Extract unique tags and sort them
-    all_tags = set()
-    for db in databases:
+    normal_tags = set()
+    for db in normal_databases:
         for tag in db.get("tags", []):
-            all_tags.add(tag)
+            normal_tags.add(tag)
+
+    others_path = os.path.join(settings.BASE_DIR, "tagged_databases", "other_tagged_databases.json")
+    with open(others_path, "r", encoding="utf-8") as f:
+        other_databases = json.load(f)
+    
+    other_tags = set()
+    for db in other_databases:
+        for tag in db.get("tags", []):
+            other_tags.add(tag)
     
     context = {
-        "databases": databases,
-        "tags": sorted(list(all_tags)),
+        "normal_databases": normal_databases,
+        "normal_tags": sorted(list(normal_tags)),
+        "other_databases": other_databases,
+        "other_tags": sorted(list(other_tags)),
     }
     return render(request, "core/databases.html", context)
 
