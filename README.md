@@ -31,13 +31,14 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - Processing history with video previews
   - Perfect for creating audio visualizers or lyric videos with album art
   - Mobile-friendly responsive design
-- **AI Background Remover**: Professional-grade background removal powered by InSPyReNet AI model.
+- **AI Background Remover**: Professional-grade background removal with multiple AI models.
+  - Two model options: InSPyReNet (~395MB) for high accuracy, RMBG-1.4 (~42MB) for speed
   - 100% client-side processing using ONNX Runtime Web
   - High-quality results for people, products, and objects
   - View original, mask, and result side-by-side
   - Automatic processing history stored locally in your browser
   - Export transparent PNG images
-  - ~395MB model download (one-time, cached in browser)
+  - Models cached in browser for instant reuse
 - **Notepad Editor**: Full-featured text editor with persistence.
   - Create, edit, and save text files
   - Upload and download text files
@@ -52,9 +53,11 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - **Backend**: Django (Python)
 - **Frontend**: HTML5, CSS3, JavaScript
 - **Media Processing**: [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) (FFmpeg ported to WebAssembly)
-- **AI Processing**: [Transformers.js](https://huggingface.co/docs/transformers.js) (@xenova/transformers)
-- **AI Model**: [RMBG-1.4](https://huggingface.co/briaai/RMBG-1.4) by BRIA AI
-- **Storage**: IndexedDB (for local history)
+- **AI Processing**: [ONNX Runtime Web](https://onnxruntime.ai/docs/tutorials/web/) for browser-based inference
+- **AI Models**: 
+  - [InSPyReNet-SwinB-Plus-Ultra](https://huggingface.co/OS-Software/InSPyReNet-SwinB-Plus-Ultra-ONNX) (~395MB) - High accuracy
+  - [RMBG-1.4](https://huggingface.co/briaai/RMBG-1.4) by BRIA AI (~42MB, quantized) - Fast and efficient
+- **Storage**: IndexedDB (for local history and model caching)
 
 ## Prerequisites
 
@@ -139,11 +142,15 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - Mobile-friendly responsive interface
 
 ### 5. Background Remover (`/bg-remover/`)
-- Remove backgrounds from images using AI
-- Powered by RMBG-1.4 model from BRIA AI
-- View the generated mask and final result
+- Remove backgrounds from images using AI with selectable models
+- Two model options:
+  - **InSPyReNet-SwinB-Plus-Ultra** (~395MB): Highest accuracy for complex scenes
+  - **RMBG-1.4** (~42MB, quantized): Fast processing, smaller download
+- 100% client-side processing with ONNX Runtime Web
+- View original image, generated mask, and final result side-by-side
 - Processing history stored locally in IndexedDB
 - Download results as transparent PNG files
+- Models cached in browser after first download
 - Works best with images containing people, products, or clear subjects
 
 ### 6. Notepad (`/notepad/`)
@@ -247,9 +254,12 @@ sudo certbot --nginx -d nyancat.nu
 
 ### For Background Remover:
 - **Modern Browser**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
-- **IndexedDB Support**: For storing processing history
-- **WebAssembly Support**: For running the AI model
-- **~176MB Initial Download**: Model is cached for future use
+- **IndexedDB Support**: For storing processing history and model caching
+- **WebAssembly Support**: For running ONNX models
+- **Initial Model Download**: 
+  - InSPyReNet: ~395MB (high accuracy)
+  - RMBG-1.4: ~42MB (fast, quantized)
+- **Models Cached**: After first download, models load instantly from browser cache
 
 ## Troubleshooting
 
@@ -262,10 +272,12 @@ sudo certbot --nginx -d nyancat.nu
 - For audio to video: Ensure image dimensions are reasonable (very large images may take longer to process)
 
 ### Background Remover Issues
+- Try RMBG-1.4 model first (smaller, faster download at ~42MB)
 - Clear browser cache if model fails to load
 - Ensure you have stable internet for initial model download
 - Check browser console for detailed error messages
 - Works best with clear, well-lit images
+- If InSPyReNet (~395MB) is too slow, switch to RMBG-1.4 for faster processing
 
 ## Contributing
 

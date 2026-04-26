@@ -287,7 +287,7 @@
             <label for="modelSelect" style="display: block; margin-bottom: 5px;">Select Model:</label>
             <select id="modelSelect" style="width: 100%; padding: 10px; border-radius: 5px; font-size: 1rem; background-color: white; color: #003366;">
                 <option value="inspyrenet">InSPyReNet-SwinB-Plus-Ultra (~395MB) - High accuracy</option>
-                <option value="rmbg14">RMBG-1.4 by BRIA AI (~176MB) - Fast and efficient</option>
+                <option value="rmbg14">RMBG-1.4 by BRIA AI (~42MB, quantized) - Fast and efficient</option>
             </select>
         </div>
         
@@ -355,7 +355,7 @@
                 normalization: { mean: [0.485, 0.456, 0.406], std: [0.229, 0.224, 0.225] }
             },
             rmbg14: {
-                url: 'https://huggingface.co/briaai/RMBG-1.4/resolve/main/onnx/model.onnx',
+                url: 'https://huggingface.co/briaai/RMBG-1.4/resolve/main/onnx/model_quantized.onnx',
                 inputSize: 1024,
                 type: 'onnx',
                 normalization: { mean: [0.5, 0.5, 0.5], std: [1.0, 1.0, 1.0] }
