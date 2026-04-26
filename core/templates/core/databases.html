@@ -30,16 +30,6 @@
             text-align: center;
         }
 
-        .collection-desc {
-            text-align: center;
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            margin-top: -10px;
-            margin-bottom: 30px;
-            color: #ddd;
-            max-width: 800px;
-            line-height: 1.5;
-        }
-
         .home-link {
             align-self: flex-start;
             color: #00ffcc;
@@ -180,8 +170,7 @@
 <body>
     <a href="{% url 'index' %}" class="home-link">&lt; Back to Home</a>
     <h1>Databases Collection</h1>
-    <p class="collection-desc">A collection of databases I've collected for around 2 years, before the big AI boom.</p>
-    
+
     <div class="search-container">
         <input type="text" id="search-input" placeholder="Search databases by name, description or tags...">
     </div>
