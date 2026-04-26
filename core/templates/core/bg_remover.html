@@ -281,7 +281,15 @@
     <h1>Local Background Remover</h1>
     <div class="container">
         <p>Remove backgrounds from images locally in your browser using AI!</p>
-        <p style="font-size: 0.8rem; color: #ccc;">Note: The first run will download the InSPyReNet model (~395MB), which may take a few minutes. All processing is done locally in your browser.</p>
+        <p style="font-size: 0.8rem; color: #ccc;">Note: The first run will download the selected model, which may take a few minutes. All processing is done locally in your browser.</p>
+        
+        <div style="text-align: left; margin-bottom: 15px;">
+            <label for="modelSelect" style="display: block; margin-bottom: 5px;">Select Model:</label>
+            <select id="modelSelect" style="width: 100%; padding: 10px; border-radius: 5px; font-size: 1rem; background-color: white; color: #003366;">
+                <option value="inspyrenet">InSPyReNet-SwinB-Plus-Ultra (~395MB) - High accuracy</option>
+                <option value="rmbg14">RMBG-1.4 by BRIA AI (~176MB) - Fast and efficient</option>
+            </select>
+        </div>
         
         <div style="text-align: left; margin-bottom: 15px;">
             <label for="imageInput" style="display: block; margin-bottom: 5px;">Select an Image:</label>
@@ -325,6 +333,7 @@
     <script type="module">
         const processBtn = document.getElementById('processBtn');
         const imageInput = document.getElementById('imageInput');
+        const modelSelect = document.getElementById('modelSelect');
         const status = document.getElementById('status');
         const originalImg = document.getElementById('originalImg');
         const maskCanvas = document.getElementById('maskCanvas');
@@ -334,10 +343,24 @@
         const historyGrid = document.getElementById('historyGrid');
         const clearHistoryBtn = document.getElementById('clearHistoryBtn');
 
+        // Model configuration
         let session = null;
-        // Use full precision model (FP16 produces NaN values in some browsers)
-        const MODEL_URL = 'https://huggingface.co/OS-Software/InSPyReNet-SwinB-Plus-Ultra-ONNX/resolve/main/onnx/model.onnx';
-        const INPUT_SIZE = 1024;
+        let currentModelType = 'inspyrenet';
+        
+        const MODELS = {
+            inspyrenet: {
+                url: 'https://huggingface.co/OS-Software/InSPyReNet-SwinB-Plus-Ultra-ONNX/resolve/main/onnx/model.onnx',
+                inputSize: 1024,
+                type: 'onnx',
+                normalization: { mean: [0.485, 0.456, 0.406], std: [0.229, 0.224, 0.225] }
+            },
+            rmbg14: {
+                url: 'https://huggingface.co/briaai/RMBG-1.4/resolve/main/onnx/model.onnx',
+                inputSize: 1024,
+                type: 'onnx',
+                normalization: { mean: [0.5, 0.5, 0.5], std: [1.0, 1.0, 1.0] }
+            }
+        };
 
         // History management using IndexedDB for large image storage
         const DB_NAME = 'bgRemoverHistory';
@@ -567,10 +590,16 @@
             return await blob.arrayBuffer();
         }
         
-        // Load the ONNX model
+        // Load the selected model
         async function loadModel() {
             try {
+                currentModelType = modelSelect.value;
+                const modelConfig = MODELS[currentModelType];
+                
                 status.innerText = 'Initializing...';
+                
+                // Clear previous model
+                session = null;
                 
                 // Configure ONNX Runtime
                 ort.env.wasm.numThreads = navigator.hardwareConcurrency || 4;
@@ -580,7 +609,7 @@
                 
                 // Try to load from cache first
                 status.innerText = 'Checking cache...';
-                const cachedModel = await loadModelFromCache(MODEL_URL);
+                const cachedModel = await loadModelFromCache(modelConfig.url);
                 
                 if (cachedModel) {
                     status.innerText = 'Loading model from cache...';
@@ -595,15 +624,15 @@
                     }
                 } else {
                     status.innerText = 'Downloading model...';
-                    console.log('Downloading model from:', MODEL_URL);
+                    console.log('Downloading model from:', modelConfig.url);
                     
                     // Download model with progress
-                    modelBuffer = await downloadModelWithProgress(MODEL_URL);
+                    modelBuffer = await downloadModelWithProgress(modelConfig.url);
                     
                     // Save to cache
                     status.innerText = 'Saving model to cache...';
                     try {
-                        await saveModelToCache(MODEL_URL, modelBuffer);
+                        await saveModelToCache(modelConfig.url, modelBuffer);
                         console.log('Model saved to cache, size:', modelBuffer.byteLength, 'bytes');
                     } catch (cacheError) {
                         console.warn('Failed to cache model:', cacheError);
@@ -633,27 +662,27 @@
             }
         }
 
-        // Preprocess image for InSPyReNet
+        // Preprocess image for ONNX models
         function preprocessImage(img) {
+            const modelConfig = MODELS[currentModelType];
+            const inputSize = modelConfig.inputSize;
+            const { mean, std } = modelConfig.normalization;
+            
             const canvas = document.createElement('canvas');
-            canvas.width = INPUT_SIZE;
-            canvas.height = INPUT_SIZE;
+            canvas.width = inputSize;
+            canvas.height = inputSize;
             const ctx = canvas.getContext('2d');
             
             // Draw and resize image
-            ctx.drawImage(img, 0, 0, INPUT_SIZE, INPUT_SIZE);
+            ctx.drawImage(img, 0, 0, inputSize, inputSize);
             
-            const imageData = ctx.getImageData(0, 0, INPUT_SIZE, INPUT_SIZE);
+            const imageData = ctx.getImageData(0, 0, inputSize, inputSize);
             const pixels = imageData.data;
             
-            // ImageNet normalization parameters
-            const mean = [0.485, 0.456, 0.406];
-            const std = [0.229, 0.224, 0.225];
-            
             // Prepare data in CHW format (channels, height, width)
-            const float32Data = new Float32Array(3 * INPUT_SIZE * INPUT_SIZE);
+            const float32Data = new Float32Array(3 * inputSize * inputSize);
             
-            for (let i = 0; i < INPUT_SIZE * INPUT_SIZE; i++) {
+            for (let i = 0; i < inputSize * inputSize; i++) {
                 const pixelIndex = i * 4;
                 
                 // Extract RGB values and convert to [0, 1]
@@ -663,8 +692,8 @@
                 
                 // Apply normalization: (value - mean) / std
                 float32Data[i] = (r - mean[0]) / std[0];
-                float32Data[INPUT_SIZE * INPUT_SIZE + i] = (g - mean[1]) / std[1];
-                float32Data[2 * INPUT_SIZE * INPUT_SIZE + i] = (b - mean[2]) / std[2];
+                float32Data[inputSize * inputSize + i] = (g - mean[1]) / std[1];
+                float32Data[2 * inputSize * inputSize + i] = (b - mean[2]) / std[2];
             }
             
             // Calculate min/max without spreading the array
@@ -677,7 +706,7 @@
             console.log('Input tensor sample:', Array.from(float32Data.slice(0, 10)));
             console.log('Input tensor stats - min:', min, 'max:', max);
             
-            return new ort.Tensor('float32', float32Data, [1, 3, INPUT_SIZE, INPUT_SIZE]);
+            return new ort.Tensor('float32', float32Data, [1, 3, inputSize, inputSize]);
         }
 
         // Sigmoid activation function
@@ -779,6 +808,15 @@
             return resizedMaskCanvas;
         }
 
+        // Model selection change handler
+        modelSelect.addEventListener('change', () => {
+            // Reload model when selection changes
+            processBtn.disabled = true;
+            processBtn.innerText = 'Loading Model...';
+            status.innerText = 'Loading new model...';
+            loadModel();
+        });
+        
         imageInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
@@ -824,11 +862,11 @@
                 const feeds = { input: inputTensor };
                 const results = await session.run(feeds);
                 
-                // InSPyReNet may have multiple outputs, find the right one
+                // Models may have multiple outputs, find the right one
                 console.log('Available outputs:', session.outputNames);
                 console.log('Number of outputs:', session.outputNames.length);
                 
-                // Try to find the output with the right shape (usually the last one for InSPyReNet)
+                // Try to find the output with the right shape
                 let output = null;
                 let validDataCount = 0;
                 
