@@ -214,6 +214,7 @@
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('normal')">Normal</button>
         <button class="tab-btn" onclick="switchTab('others')">Others</button>
+        <button class="tab-btn" onclick="switchTab('dorks')">Dorks</button>
     </div>
 
     <div class="search-container">
@@ -270,13 +271,30 @@
         </div>
     </div>
 
+    <!-- Dorks Tab Content -->
+    <div id="dorks-content" class="tab-content">
+        <!-- Dorks have no tags, but we keep the container for spacing/consistency if needed, or just skip it -->
+        <div class="tags-container" id="dorks-tags-filter" style="display: none;">
+            <span class="tag active" data-tag="all">All</span>
+        </div>
+
+        <div class="databases-grid" id="dorks-grid">
+            {% for dork in dorks %}
+                <div class="database-card" data-tags="" data-search="{{ dork }}">
+                    <p style="font-size: 1.1rem; word-break: break-word;">{{ dork }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
     <script>
         const searchInput = document.getElementById('search-input');
         
         let currentTab = 'normal';
         let activeTags = {
             'normal': 'all',
-            'others': 'all'
+            'others': 'all',
+            'dorks': 'all'
         };
         let searchQuery = '';
 

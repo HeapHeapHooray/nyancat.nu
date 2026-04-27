@@ -28,12 +28,19 @@ def databases_collection(request):
     for db in other_databases:
         for tag in db.get("tags", []):
             other_tags.add(tag)
+            
+    dorks_path = os.path.join(settings.BASE_DIR, "tagged_databases", "dorks.txt")
+    dorks = []
+    if os.path.exists(dorks_path):
+        with open(dorks_path, "r", encoding="utf-8") as f:
+            dorks = [line.strip() for line in f if line.strip()]
     
     context = {
         "normal_databases": normal_databases,
         "normal_tags": sorted(list(normal_tags)),
         "other_databases": other_databases,
         "other_tags": sorted(list(other_tags)),
+        "dorks": dorks,
     }
     return render(request, "core/databases.html", context)
 

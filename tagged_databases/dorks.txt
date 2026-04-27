@@ -1,0 +1,158 @@
+Google & DuckDuckGo Dork: '"cdn.discordapp.com/attachments"'
+Google Dork: '"linkpicture.com"'
+Google Dork: "site:freeimage.host"
+Google Dork: "This domain name registration has expired and renewal or deletion are pending. If you are the registrant and want to renew the domain name, please contact your registration service provider. "
+Google Dork: '"is for sale" "Please prove you're not a robot"'
+Google Dork: '"This domain name expired on"'
+Google Dork: '"This domain name expired on" "and is pending renewal or deletion."'
+Google Dork: '"This domain name expired on" "Click here to renew it.."'
+"Resources for <profession>", Example: Resources for biologists.
+"Database(s) for <profession>", Example: Database(s) for biologists.
+Google Dork: "site:fandom.com"
+Google Dork: "site:wikidot.com"
+Google Dork: "site:(any site listed in "https://www.mediawiki.org/wiki/Hosting_services" or "https://www.wikimatrix.org/")"
+A Strategy: search for a general/generic concept ex: "animated wallpapers", then search for specializations of that concept ex: "anime animated wallpapers"
+"awesomewebsites github"
+A Strategy: If I want to find databases that contain old retro games data I can search something like "retro games reviews" or I can alternatively search for a possible content
+of those websites (i.e. a game) for example: "Q*bert (1982) review".
+A Strategy: You can search for a specific content on a wiki or encyclopedia, then check on the sources to find databases.
+Google Dork: "site:blogspot.com"
+Google Dork: "site:herokuapp.com"
+Search for "Police Blotter"
+Google Dork: "inurl:police inurl:blotter"
+Google Dork: "site:forumcommunity.net"
+Google Dork: "site:heliohost.org"
+Google Dork: "site:raindrop.io"
+Google Dork: "inurl:library"
+Google Dork: "inurl:library site:.edu"
+Google Dork: "inurl:library site:.gov"
+Google Dork: "inurl:databases"
+"<topic> newsletter" for example: biology newsletter
+Google Dork: "site:getrevue.co"
+Google Dork: "site:write.as"
+Google Dork: "site:imgbb.com"
+Google Dork: "site:photobucket.com"
+Google Dork: "site:amazonaws.com"
+Google Dork: '"shodan.io/search?query="', '"google.com/search?q="' (and so on for different search engines... it returns pages that have a link to a search engine query)
+Google Dork: "inurl:stats" , "intitle:stats"
+Google Dork: "site:socratic.org inurl:questions"
+Google Dork: "recipe" "<insert some ingredient here> (it can be used to find websites of cooking recipes)
+Google Dork: "site:bit.ly"
+"[Name of a movie,game,tv series,etc] soundtrack"
+Google Dork: "site:prezi.com"
+Google Dork: "site:ufile.io", '"ufile.io"'
+Google Dork: "site:easyupload.io", '"easyupload.io"'
+Google Dork: "site:onlinesequencer.net"
+Google Dork: "site:colab.research.google.com"
+Google Dork: "site:zippyshare.com" , '"zippyshare.com"'
+Google Dork: '"Subscribe" "Newsletter"'
+Google Dork: "site:stringfixer.com"
+Google Dork: "site:forumotion.net"
+Google Dork: 'site:github.com "curated"'
+Google Dork: "site:wix.com", "site:wixsite.com"
+Google Dork: "site:knowledgeboat.com inurl:question"
+Google Dork: "site:onlinegdb.com/" (seems to be used to share links to pirate stuff and scams (those are usually in random websites that let you post stuff for free, like
+ the xiamo forums and eventcreate.com, then those posts have links to pirate websites or whatever), possibly SEO Parasites
+Google Dork: "site:eventcreate.com"
+Google Dork: "site:awesomescreenshot.com/ inurl:image -inurl:support"
+Google Dork: "site:listography.com"
+Google Dork: "site:joomla.com"
+Google Dork: "site:weebly.com"
+Google Dork: "site:squarespace.com"
+Google Dork: "site:paste.ee/"
+Google Dork: "site:paste2.org/"
+Google Dork: "site:pastelink.net"
+Google Dork: "site:paste.*"
+Google Dork: "site:*.blogspot.com/[YEAR]", example: "site:*.blogspot.com/2010"
+Google Dork: 'site:paste.* ".onion"'
+Google Dork: "site:paste.azago.in"
+Google Dork: "site:backlinktool.io/"
+Google Dork: "site:pst.klgrth.io"
+Google Dork: "site:paste.org"
+Google Dork: "site:paste.awesom.eu"
+Google Dork: "site:justpaste.it"
+Google Dork: "site:0paste.com"
+Google Dork: "site:paste.tbee-clan.de"
+Google Dork: "site:apaste.info"
+Google Dork: "site:paste.rs"
+Google Dork: "site:pastelink.net"
+Google Dork: "site:paste.jp"
+Google Dork: "site:coliru.stacked-crooked.com"
+Google Dork: "site:jemi.so"
+Google Dork: "site:scoop.it/"
+Google Dork: "site:triberr.com"
+Google Dork: "site:miraheze.org"
+Google Dork: "site:pillowfort.social"
+Google Dork: "site:scrapbox.io"
+Google Dork: "site:issuu.com"
+Google Dork: "site:fetcherx.com/"
+Google Dork: "site:turbobit.net/"
+Google Dork: "site:*.smugmug.com"
+Google Dork: "site:trinket.io/"
+Google Dork: "inurl:hololive"
+Google Dork: "site:hololive.*"
+Google Dork: "site:forum.*"
+Google Dork: "site:archive.*" and "site:archives.*"
+Google Dork: '"1girl" "solo"'
+https://publicwww.com/websites/%22https%3A%2F%2Fwww.google.com%2Fadsense%2Fdomains%2Fcaf.js%22/
+https://publicwww.com/websites/%22caf.js%22/
+https://publicwww.com/websites/parking+js/
+https://publicwww.com/websites/%22js%2Fparking%22/
+https://publicwww.com/websites/%22parking_session%3D%22/
+https://publicwww.com/websites/%22parking-lander%22/
+https://publicwww.com/websites/%22parkingcrew.net%22/
+https://publicwww.com/websites/%22parking-crew.com%22/
+https://stackoverflow.com/questions/490025/method-to-detect-a-parked-page
+https://www.garysieling.com/blog/detecting-parked-domains/
+https://github.com/urbanadventurer/WhatWeb/blob/master/plugins/parked-domain.rb
+https://github.com/gr3atest/excludeparked/blob/master/excludeparked.py
+Google Dork: "This domain name has been registered with Gandi.net. It is currently parked by the owner."
+Google Dork: '"The domain" "may be for sale. Click here to inquire about this domain."'
+Google Dork: '"This domain name (without content) may be available for sale or lease by its owner"'
+Domain Auction Websites like: https://auctions.godaddy.com and https://domainsforsale.ai/ can be used to find parked domains.
+Google Dork: '"is available for purchase or rental." "Make an offer or submit an inquiry."'
+
+https://publicwww.com/websites/%22x%28pageOptions%2C+%7B%22styleId%22%3A+6016880802%7D%29%3B%22/
+https://publicwww.com/websites/%22This+domain+has+expired+and+is+now+suspended.+If+you+would+like+to+restore+it+please+contact+the+registrar+used+to+register+your+domain.%22/
+https://publicwww.com/websites/%22This+domain+has+all+already+been+restored+and+not+Suspended+anymore.+If+you+are+the+registrant+of+the+domain+please+update+your+nameservers+so+it+resolves+to+your+site.+%22/
+https://publicwww.com/websites/%22pxlgnpgecom-a.akamaihd.net%22/
+Google Dork: '"Sedo Domain Parking"'
+Google Dork: '"This webpage was generated by the domain owner using Sedo Domain Parking"'
+https://publicwww.com/websites/%22https%3A%2F%2Fwww.sedo.com%2Fservices%2Fparking.php3%22/
+https://publicwww.com/websites/https%3A%2F%2Fwww.sedo.com%2Fservices%2Fparking.php3/
+https://publicwww.com/websites/https%3A%2F%2Fwww.afternic.com%2Fforsale/
+https://publicwww.com/websites/http%3A%2F%2Fc.parkingcrew.net%2Fscripts%2Fsale_form.js/
+Google Dork: '"Domain for sale."'
+Google Dork: '"Domain for sale." "or click here to make an offer "'
+Google Dork: '"This domain name may be for sale." "Click here to find out"'
+Google Dork: '"This domain name may be for sale."'
+https://publicwww.com/websites/www.efty.com+lander+theme/
+Google Dork: '"Please contact the owner for pricing information."'
+https://publicwww.com/websites/%22http%3A%2F%2Fcontrol.tierra.net%2Fspecial%2Fdomain_for_sale%22/
+Google Dork: '"Domain" "sale" "contact" "owner"'
+Google Dork: '"This Web page is parked FREE courtesy of epik.com"'
+Google Dork: '"Offered by NameWay.com"'
+https://publicwww.com/websites/%22https%3A%2F%2Fdan.com%2F%3Futm_campaign%3DParking%22/
+Google Dork: '"The domain name" "is for sale!"'
+Google Dork: '"The domain name" "is for sale. Make an offer or buy it now at a set price."'
+Google Dork: '"This premium domain name is available for purchase!"'
+Google Dork: '"NameBright.com - Next Generation Domain Registration"'
+https://publicwww.com/websites/%22https%3A%2F%2Fwww.mydomaincontact.com%2Findex.php%22/
+Google Dork: '"We're glad that you purchased your desired domain from us. Thank you! Now all that's left is to quickly set up a nice website."'
+https://publicwww.com/websites/www.domainprofi.com/
+Google Dork: 'site:www6.* "domain" "sale"'
+Google Dork: 'site:www9.* "domain" "sale"'
+https://publicwww.com/websites/%22www.efty.com%22/
+https://publicwww.com/websites/%22www.efty.com+for+sale+theme%22/
+https://publicwww.com/websites/%22http%3A%2F%2Fwww.efty.com%2Fimg%2Flogo_wh.png%22/
+https://publicwww.com/websites/%22img%2Flanding_themes%2Fcategory%2Fbackgrounds%2FBrandable.jpg%22/
+https://publicwww.com/websites/%22img%2Flanding_themes%2Fcategory%2Fbackgrounds%22/
+https://publicwww.com/websites/%22EFTY+MARKET+THEME%22/
+https://publicwww.com/websites/%22%3C%21--+EFTY+MARKET+THEME%22/
+Google Dork: "site:https://dan.com/domain-seller"
+https://publicwww.com/websites/%22https%3A%2F%2Fimg1.wsimg.com%2Fparking-lander%2Fstatic%2Fjs%22/
+https://publicwww.com/websites/%22parking-lander%2Fstatic%2Fjs%22/
+https://publicwww.com/websites/%22parking-lander%22/
+https://publicwww.com/websites/%22.net%2Fparking%22/
+https://publicwww.com/websites/%22divSponAds%22/
+https://publicwww.com/websites/%22https%3A%2F%2Fwww.name.com%2Fdomain%2Frenew%22/
