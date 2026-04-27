@@ -47,6 +47,10 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - Character and line count
   - Persistent across browser sessions
   - Keyboard shortcuts (Ctrl/Cmd+S to save, Ctrl/Cmd+N for new file)
+- **Video Downloaders**: Download videos from X (Twitter) and YouTube.
+  - Server-side extraction using yt-dlp
+  - Clean UI with thumbnail previews
+  - Local history of previously downloaded videos
 
 ## Tech Stack
 
@@ -62,7 +66,10 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 ## Prerequisites
 
 - Python 3.10+
+- Node.js & npm (required to install Deno)
 - A modern web browser that supports `SharedArrayBuffer` (required for ffmpeg.wasm).
+- Deno (required for yt-dlp JavaScript extraction).
+- Chromium (required for yt-dlp impersonation).
 
 ## Setup & Installation
 
@@ -93,7 +100,15 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
    gunicorn nyancat_site.wsgi:application --bind 0.0.0.0:8000
    ```
 
-6. **Access the site**:
+6. **Configure YouTube Downloader Cookies**:
+   To bypass YouTube's anti-bot protections, you must provide valid browser cookies. Usually, you generate these from a personal device/browser outside the server. First, run this on your local machine with an authenticated YouTube session:
+   ```bash
+   pip install pycookiecheat
+   python -m pycookiecheat -o remote_cookies.txt "https://youtube.com"
+   ```
+   Then upload `remote_cookies.txt` to your server and place it at `/var/remote_cookies.txt`. Make sure the web server has permission to read it.
+
+7. **Access the site**:
    Open [http://localhost:8000](http://localhost:8000) (or your server's IP) in your browser.
 
 ## Available Tools
@@ -163,14 +178,24 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - Supports multiple text file formats (.txt, .md, .json, .js, .css, .html, .xml, .csv, .log)
 - Content persists across browser sessions
 
+### 7. Video Downloaders (`/x-downloader/` & `/youtube-downloader/`)
+- Extract video information and download links from X (Twitter) and YouTube
+- Requires server-side processing with yt-dlp
+- **Requires browser cookies (`/var/remote_cookies.txt`) to bypass YouTube's anti-bot protections**
+- Retrieves highest quality format available
+- Displays video title, uploader, duration, and thumbnail
+- Keeps track of extraction history locally
+
 ## VPS Deployment (Nginx + Gunicorn + SSL)
 
 To run the converter on mobile and modern browsers, **HTTPS is mandatory**.
 
-### 1. Install Nginx and Certbot
+### 1. Install Dependencies
 ```bash
 sudo apt update
-sudo apt install nginx certbot python3-certbot-nginx
+sudo apt install nginx certbot python3-certbot-nginx chromium-browser npm
+# Install Deno
+sudo npm install -g deno
 ```
 
 ### 2. Configure Nginx

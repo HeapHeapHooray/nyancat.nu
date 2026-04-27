@@ -97,6 +97,15 @@
         .link-x-downloader:hover {
             background-color: #ffdd33;
         }
+
+        .link-youtube-downloader {
+            background-color: #ff0000;
+            border: 2px solid #ff0000;
+        }
+
+        .link-youtube-downloader:hover {
+            background-color: #ff3333;
+        }
         
         .link-bg-remover {
             background-color: #00ffcc;
@@ -206,6 +215,7 @@
         <a href="{% url 'audio_to_video' %}" class="link-button link-audio-to-video">Audio to Video</a>
         <a href="{% url 'databases_collection' %}" class="link-button link-databases">Databases Collection</a>
         <a href="{% url 'x_downloader' %}" class="link-button link-x-downloader">X Video Downloader</a>
+        <a href="{% url 'youtube_downloader' %}" class="link-button link-youtube-downloader">YouTube Video Downloader</a>
         <a href="{% url 'bg_remover' %}" class="link-button link-bg-remover">Background Remover</a>
         <a href="{% url 'notepad' %}" class="link-button link-notepad">Notepad</a>
     </div>

@@ -25,3 +25,26 @@ class XDownloaderTests(TestCase):
         response = self.client.post(self.url, {'url': 'https://twitter.com/Twitter/status/123456789'})
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "Only videos from X (Twitter) are supported.")
+
+
+class YouTubeDownloaderTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("youtube_downloader")
+
+    def test_youtube_downloader_get(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "core/youtube_downloader.html")
+
+    def test_youtube_downloader_youtube_url_rejected(self):
+        response = self.client.post(self.url, {"url": "https://x.com/somevideo"})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Only videos from YouTube are supported.")
+
+    def test_youtube_downloader_youtube_url_accepted(self):
+        response = self.client.post(
+            self.url, {"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "Only videos from YouTube are supported.")

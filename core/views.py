@@ -113,10 +113,67 @@ def x_downloader(request):
                             "url": info.get("url"),
                             "duration": duration_formatted,
                             "uploader": info.get("uploader"),
+                            "original_url": url,
                         }
                 except Exception as e:
                     error = str(e) if str(e) else repr(e)
 
     return render(
         request, "core/x_downloader.html", {"video_info": video_info, "error": error}
+    )
+
+
+def youtube_downloader(request):
+    video_info = None
+    error = None
+
+    if request.method == "POST":
+        url = request.POST.get("url", "").strip()
+        if url:
+            # Basic validation to ensure it's a YouTube URL
+            if not ("youtube.com" in url or "youtu.be" in url):
+                error = "Only videos from YouTube are supported."
+            else:
+                ydl_opts = {
+                    "format": "best",
+                    "noplaylist": True,
+                    "quiet": True,
+                    "cookiefile": "/var/remote_cookies.txt",
+                    "extractor_args": {"youtubepot-wpc": {"nosandbox": []}},
+                }
+                try:
+                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                        info = ydl.extract_info(url, download=False)
+
+                        # Format duration properly
+                        duration_seconds = info.get("duration")
+                        if duration_seconds:
+                            duration_seconds = int(duration_seconds)
+                            hours = duration_seconds // 3600
+                            minutes = (duration_seconds % 3600) // 60
+                            seconds = duration_seconds % 60
+                            if hours > 0:
+                                duration_formatted = (
+                                    f"{hours}:{minutes:02d}:{seconds:02d}"
+                                )
+                            else:
+                                duration_formatted = f"{minutes}:{seconds:02d}"
+                        else:
+                            duration_formatted = info.get("duration_string", "Unknown")
+
+                        video_info = {
+                            "title": info.get("title"),
+                            "thumbnail": info.get("thumbnail"),
+                            "url": info.get("url"),
+                            "duration": duration_formatted,
+                            "uploader": info.get("uploader"),
+                            "original_url": url,
+                        }
+                except Exception as e:
+                    error = str(e) if str(e) else repr(e)
+
+    return render(
+        request,
+        "core/youtube_downloader.html",
+        {"video_info": video_info, "error": error},
     )
