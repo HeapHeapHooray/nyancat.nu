@@ -189,6 +189,15 @@
     "description": "Archived.moe: A large repository for various imageboard archives (Access blocked by security verification)."
   },
   {
+    "url": "https://auctions.godaddy",
+    "tags": [
+      "domain-data",
+      "auctions",
+      "marketplace"
+    ],
+    "description": "GoDaddy Auctions: The aftermarket auction platform of the world's largest domain registrar."
+  },
+  {
     "url": "https://bitcoinmagazine.com",
     "tags": [
       "news",
@@ -227,6 +236,15 @@
       "knowledge-base"
     ],
     "description": "HackTricks: A massive wiki dedicated to cybersecurity methodologies, pentesting, and incident response."
+  },
+  {
+    "url": "https://brandpa.com/names",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "branding"
+    ],
+    "description": "Brandpa: A marketplace for discovering brandable domain names, typically coming with logos and brand identity."
   },
   {
     "url": "https://bravenewcoin.com",
@@ -355,6 +373,51 @@
     "description": "Dive into Deep Learning: A comprehensive open-source book with interactive code for learning AI and ML."
   },
   {
+    "url": "https://dan.com/search?&terms=*&results=50&order_by=views-desc",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "business"
+    ],
+    "description": "Dan.com: A modern domain marketplace focusing on transparent and frictionless domain trading and leasing."
+  },
+  {
+    "url": "https://designs.com/shop/browse?min_price=1&sort_key=created_at&sort_order=DESC",
+    "tags": [
+      "design-resources",
+      "marketplace",
+      "branding"
+    ],
+    "description": "Designs.com Shop: A marketplace offering design assets, logos, and potentially bundled domain brands."
+  },
+  {
+    "url": "https://domainhandel.biz/shop/",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "europe"
+    ],
+    "description": "Domainhandel: A German-centric marketplace for buying and selling internet domains."
+  },
+  {
+    "url": "https://domainsforsale.ai/",
+    "tags": [
+      "domain-data",
+      "ai-ml",
+      "marketplace"
+    ],
+    "description": "DomainsForSale.ai: A domain marketplace specifically focusing on .ai domains and artificial intelligence brands."
+  },
+  {
+    "url": "https://dotju.com/collections/all",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "branding"
+    ],
+    "description": "DotJu: A boutique marketplace featuring curated, short, and brandable domain names."
+  },
+  {
     "url": "https://eatradingacademy.com/software/forex-historical-data/",
     "tags": [
       "finance",
@@ -362,6 +425,15 @@
       "error"
     ],
     "description": "EA Trading Academy: A source for forex historical data (Page not found during extraction)."
+  },
+  {
+    "url": "https://efty.com/domains/",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "tools"
+    ],
+    "description": "Efty: A platform that helps domain investors manage, market, and sell their domain portfolios."
   },
   {
     "url": "https://en.picmix.com/",
@@ -773,6 +845,15 @@
     "description": "Newspaper Navigator: An experimental search tool for finding historic newspaper images by visual similarity."
   },
   {
+    "url": "https://nicsell.com/en/domains/top-auktionen",
+    "tags": [
+      "domain-data",
+      "auctions",
+      "europe"
+    ],
+    "description": "Nicsell: A popular domain catching and auction platform primarily focused on European ccTLDs (like .de)."
+  },
+  {
     "url": "https://parade.com",
     "tags": [
       "news",
@@ -781,6 +862,15 @@
       "media"
     ],
     "description": "Parade: A major magazine destination for celebrity news, entertainment, food recipes, and health tips."
+  },
+  {
+    "url": "https://perfectdomain.com/",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "business"
+    ],
+    "description": "PerfectDomain: A curated marketplace for high-quality, brandable domains and digital assets."
   },
   {
     "url": "https://photostockeditor.com/",
@@ -833,6 +923,15 @@
     "description": "Public Domain Pictures: A large repository of free high-quality stock images available for personal and commercial use."
   },
   {
+    "url": "https://publicwww.com/websites/www.domainprofi.com/",
+    "tags": [
+      "search-engine",
+      "osint",
+      "tools"
+    ],
+    "description": "PublicWWW: Source code search engine results showing websites affiliated with or linking to Domainprofi."
+  },
+  {
     "url": "https://rare-gallery.com/",
     "tags": [
       "wallpapers",
@@ -872,6 +971,15 @@
     "description": "Scammer.Info: A major community dedicated to identifying callers, reporting phone fraud, and scambaiting."
   },
   {
+    "url": "https://sedo.com/search/?language=en&listing_type%5B0%5D=3&listing_type%5B1%5D=5&listing_type%5B2%5D=4",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "auctions"
+    ],
+    "description": "Sedo: The world's largest domain marketplace and monetization provider, featuring millions of domains for sale or auction."
+  },
+  {
     "url": "https://skeb.jp/",
     "tags": [
       "anime-manga",
@@ -880,6 +988,15 @@
       "community"
     ],
     "description": "Skeb: A popular Japanese commission platform connecting fans with artists for custom artwork and voices."
+  },
+  {
+    "url": "https://slangdomains.com/domainlist.php",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "error"
+    ],
+    "description": "Slang Domains: A specialized domain marketplace (Parsing failed during extraction)."
   },
   {
     "url": "https://slashdot.org/",
@@ -1308,6 +1425,15 @@
     "description": "Caedes (Duplicate): A community-driven platform for high-resolution desktop wallpaper and art."
   },
   {
+    "url": "https://www.afternic.com/",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "business"
+    ],
+    "description": "Afternic: One of the largest and most active domain name marketplaces, connecting domain buyers with sellers."
+  },
+  {
     "url": "https://www.animatedimages.org/",
     "tags": [
       "media",
@@ -1345,6 +1471,24 @@
       "media"
     ],
     "description": "Bensound: A source for high-quality royalty-free music by independent artists for various creative projects."
+  },
+  {
+    "url": "https://www.brandforce.com/search/?keyword=",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "branding"
+    ],
+    "description": "Brandforce: A platform to discover and acquire high-quality, memorable domain names for businesses."
+  },
+  {
+    "url": "https://www.buydomains.com/",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "business"
+    ],
+    "description": "BuyDomains: A premier marketplace for finding and purchasing premium domain names for businesses."
   },
   {
     "url": "https://www.chosic.com/free-music/all/",
@@ -1406,6 +1550,15 @@
     "description": "Disciple Media: An article highlighting 13 popular and thriving online forums and communities in 2024."
   },
   {
+    "url": "https://www.domainprofi.com/en/",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "europe"
+    ],
+    "description": "Domainprofi: A European platform for trading and securing premium domain names."
+  },
+  {
     "url": "https://www.dreamstime.com/free-photos",
     "tags": [
       "stock-photos",
@@ -1414,6 +1567,24 @@
       "marketplace"
     ],
     "description": "Dreamstime: One of the largest collections of royalty-free and public domain (CC0) stock photos and high-quality images."
+  },
+  {
+    "url": "https://www.dynadot.com/",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "tools"
+    ],
+    "description": "Dynadot: An ICANN-accredited domain name registrar and web host featuring domain searching and registration tools."
+  },
+  {
+    "url": "https://www.dynadot.com/market/",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "auctions"
+    ],
+    "description": "Dynadot Market: The aftermarket section of Dynadot where users can bid on, buy, and sell domains."
   },
   {
     "url": "https://www.everypixel.com/",
@@ -2718,6 +2889,15 @@
     "description": "Reddit /r/worldnews: A major source for tracking and discussing global news and international affairs."
   },
   {
+    "url": "https://www.rentmyweb.com/",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "error"
+    ],
+    "description": "RentMyWeb: A domain or web real-estate rental platform (Parsing failed during extraction)."
+  },
+  {
     "url": "https://www.resetera.com/",
     "tags": [
       "gaming",
@@ -2726,6 +2906,15 @@
       "community"
     ],
     "description": "ResetEra: A premier video gaming forum destination for enthusiasts, journalists, and developers."
+  },
+  {
+    "url": "https://www.sav.com/domains/auctions",
+    "tags": [
+      "domain-data",
+      "auctions",
+      "marketplace"
+    ],
+    "description": "Sav: A domain registrar featuring a highly active platform for domain backordering and auctions."
   },
   {
     "url": "https://www.searchenginejournal.com/",
@@ -2835,6 +3024,15 @@
       "marketplace"
     ],
     "description": "Vecteezy: Offers millions of royalty-free vectors, stock photos, and videos for designers."
+  },
+  {
+    "url": "https://www.vereo.com/search/",
+    "tags": [
+      "domain-data",
+      "marketplace",
+      "branding"
+    ],
+    "description": "Vereo: A premium domain marketplace specializing in highly brandable names and digital assets."
   },
   {
     "url": "https://www.videezy.com/",
