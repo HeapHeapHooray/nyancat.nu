@@ -109,15 +109,26 @@
 
         .calendar-grid {
             display: grid;
-            grid-template-columns: repeat(7, minmax(0, 1fr));
-            gap: 5px;
-            width: 100%;
-            max-width: 800px;
+            grid-template-columns: repeat(7, 120px);
+            gap: 10px;
+            width: auto;
+            max-width: 100%;
             background: rgba(255, 255, 255, 0.05);
-            padding: 10px;
+            padding: 15px;
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            table-layout: fixed;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 153, 255, 0.5) transparent;
+        }
+
+        .calendar-grid::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .calendar-grid::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 153, 255, 0.5);
+            border-radius: 10px;
         }
 
         .calendar-day-header {
@@ -126,55 +137,109 @@
             padding: 10px 0;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 5px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+            width: 120px;
         }
 
         .calendar-day {
-            min-height: 100px;
+            width: 120px;
+            height: 120px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 5px;
-            padding: 5px;
+            border-radius: 10px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.2s;
             overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .calendar-day:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+            z-index: 10;
         }
 
         .calendar-day.today {
             background: rgba(0, 153, 255, 0.2);
-            border: 1px solid #0099ff;
+            border: 2px solid #0099ff;
         }
 
         .calendar-day.other-month {
-            opacity: 0.3;
+            opacity: 0.2;
         }
 
         .day-number {
             font-weight: bold;
             margin-bottom: 5px;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            color: #00ffcc;
         }
 
         .video-links {
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 5px;
             overflow-y: auto;
-            max-height: 70px;
+            flex-grow: 1;
+            padding-right: 2px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+        }
+
+        .video-links::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .video-links::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #00ffcc;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            animation: bounce 2s infinite;
+            text-shadow: 0 0 5px rgba(0,0,0,0.8);
+        }
+
+        .calendar-day.is-scrollable:hover .scroll-indicator {
+            opacity: 1;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-3px);}
+            60% {transform: translateX(-50%) translateY(-1.5px);}
         }
 
         .video-link {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             background: #00cc66;
             color: white;
-            padding: 2px 4px;
-            border-radius: 3px;
+            padding: 4px 6px;
+            border-radius: 4px;
             text-decoration: none;
             white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis;
+            text-overflow: clip; /* Show as much as possible */
             display: block;
             width: 100%;
+            flex-shrink: 0;
+            min-height: 22px;
+            line-height: 14px;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: -0.2px;
         }
 
         .video-link:hover {
@@ -383,6 +448,15 @@
                         videoContainer.appendChild(link);
                     });
                     day.appendChild(videoContainer);
+
+                    // Add scroll indicator if there are many videos
+                    if (dayVideos.length > 3) {
+                        day.classList.add('is-scrollable');
+                        const indicator = document.createElement('div');
+                        indicator.className = 'scroll-indicator';
+                        indicator.innerHTML = '▼';
+                        day.appendChild(indicator);
+                    }
                 }
                 
                 calendarGrid.appendChild(day);
