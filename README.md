@@ -52,9 +52,9 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - **Chat Logs**: Direct access to historical chat logs archived on Google Drive.
   - Interactive "Jump to Month" navigation for quick access to years of content.
   - Responsive perfectly-square calendar grid with scrollable daily entries.
-- **Video Downloaders**: Download videos from X (Twitter) and YouTube.
+- **Video Downloaders**: Download videos from X (Twitter), YouTube, and Instagram.
   - Server-side extraction using yt-dlp
-  - Clean UI with thumbnail previews
+  - Clean UI with thumbnail previews (proxied for reliability)
   - Local history of previously downloaded videos
 
 ## Tech Stack
@@ -195,10 +195,11 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - **Minecraft Chat Logs**: 
   - Direct access to archived chat logs on Google Drive
 
-### 8. Video Downloaders (`/x-downloader/` & `/youtube-downloader/`)
-- Extract video information and download links from X (Twitter) and YouTube
+### 8. Video Downloaders (`/x-downloader/`, `/youtube-downloader/` & `/instagram-downloader/`)
+- Extract video information and download links from X (Twitter), YouTube, and Instagram
 - Requires server-side processing with yt-dlp
 - **Requires browser cookies (`/var/remote_cookies.txt`) to bypass YouTube's anti-bot protections**
+- Features a robust backend proxy for Instagram thumbnails to bypass CDN hotlinking restrictions
 - Retrieves highest quality format available
 - Displays video title, uploader, duration, and thumbnail
 - Keeps track of extraction history locally
