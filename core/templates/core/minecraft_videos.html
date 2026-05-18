@@ -285,19 +285,82 @@
             text-decoration: underline;
         }
 
-        @media (max-width: 600px) {
-            .calendar-day {
-                min-height: 60px;
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
             }
-            .day-number {
+
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+
+            .jump-to-month {
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+
+            .month-link {
                 font-size: 0.7rem;
+                padding: 3px 6px;
             }
-            .video-link {
-                font-size: 0.55rem;
-                padding: 1px 2px;
+
+            .drive-button {
+                padding: 12px;
+                font-size: 1rem;
+                margin-bottom: 15px;
             }
+
+            .calendar-controls {
+                padding: 8px 12px;
+                margin-bottom: 15px;
+            }
+
+            #current-month-year {
+                font-size: 1rem;
+            }
+
+            .calendar-controls button {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(7, 100px);
+                gap: 5px;
+                padding: 10px;
+            }
+
             .calendar-day-header {
+                width: 100px;
+                font-size: 0.7rem;
+                padding: 8px 0;
+            }
+
+            .calendar-day {
+                width: 100px;
+                height: 100px;
+                padding: 6px;
+                border-radius: 8px;
+            }
+
+            .day-number {
+                font-size: 0.85rem;
+                margin-bottom: 3px;
+            }
+
+            .video-link {
                 font-size: 0.6rem;
+                padding: 3px 5px;
+                min-height: 20px;
+                line-height: 12px;
+            }
+
+            .back-links {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+                margin-top: 20px;
             }
         }
     </style>
