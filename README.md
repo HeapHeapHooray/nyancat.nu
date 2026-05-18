@@ -47,6 +47,11 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - Character and line count
   - Persistent across browser sessions
   - Keyboard shortcuts (Ctrl/Cmd+S to save, Ctrl/Cmd+N for new file)
+- **Minecraft Vault**: Historical archives of Minecraft adventures.
+  - **Video Recordings**: A dynamic, responsive calendar built with Vanilla CSS/JS to browse historical recordings.
+  - **Chat Logs**: Direct access to historical chat logs archived on Google Drive.
+  - Interactive "Jump to Month" navigation for quick access to years of content.
+  - Responsive perfectly-square calendar grid with scrollable daily entries.
 - **Video Downloaders**: Download videos from X (Twitter) and YouTube.
   - Server-side extraction using yt-dlp
   - Clean UI with thumbnail previews
@@ -178,7 +183,19 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - Supports multiple text file formats (.txt, .md, .json, .js, .css, .html, .xml, .csv, .log)
 - Content persists across browser sessions
 
-### 7. Video Downloaders (`/x-downloader/` & `/youtube-downloader/`)
+### 7. Minecraft Vault (`/minecraft-vault/`)
+- Historical archives of Minecraft gameplay and social interactions
+- **Minecraft Video Recordings**: 
+  - Dynamic calendar interface for browsing years of video content (2019-2022)
+  - "Jump to Month" quick navigation links
+  - Perfectly square, responsive grid layout
+  - Internal scrolling for days with multiple recordings
+  - Visual scroll indicators for overflowing content
+  - Direct links to full Google Drive archives
+- **Minecraft Chat Logs**: 
+  - Direct access to archived chat logs on Google Drive
+
+### 8. Video Downloaders (`/x-downloader/` & `/youtube-downloader/`)
 - Extract video information and download links from X (Twitter) and YouTube
 - Requires server-side processing with yt-dlp
 - **Requires browser cookies (`/var/remote_cookies.txt`) to bypass YouTube's anti-bot protections**
