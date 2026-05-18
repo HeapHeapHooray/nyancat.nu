@@ -75,6 +75,29 @@
             font-weight: bold;
         }
 
+        .drive-button {
+            display: block;
+            width: 100%;
+            max-width: 800px;
+            background-color: #ffcc00;
+            color: #003366;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+            border: 2px solid #ffcc00;
+        }
+
+        .drive-button:hover {
+            background-color: #ffdd33;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.4);
+        }
+
         .calendar-controls {
             display: flex;
             justify-content: space-between;
@@ -281,6 +304,10 @@
 </head>
 <body>
     <h1>Minecraft Video Recordings</h1>
+
+    <a href="https://drive.google.com/drive/folders/11JtyME5Jv_P2o-9p-utaAKN03NO5hk8P?usp=sharing" target="_blank" class="drive-button">
+        Full Google Drive Folder
+    </a>
 
     <div class="jump-to-month">
         <h2>Jump to Month:</h2>
