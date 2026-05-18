@@ -61,6 +61,20 @@ def notepad(request):
     return render(request, "core/notepad.html")
 
 
+def minecraft_vault(request):
+    return render(request, "core/minecraft_vault.html")
+
+
+def minecraft_videos(request):
+    json_path = os.path.join(settings.BASE_DIR, "minecraft_vault", "all_videos.json")
+    videos = []
+    if os.path.exists(json_path):
+        with open(json_path, "r", encoding="utf-8") as f:
+            videos = json.load(f)
+    
+    return render(request, "core/minecraft_videos.html", {"videos_json": json.dumps(videos)})
+
+
 def video_slicer(request):
     return render(request, "core/video_slicer.html")
 

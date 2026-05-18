@@ -12,4 +12,6 @@ urlpatterns = [
     path("youtube-downloader/", views.youtube_downloader, name="youtube_downloader"),
     path("bg-remover/", views.bg_remover, name="bg_remover"),
     path("notepad/", views.notepad, name="notepad"),
+    path("minecraft-vault/", views.minecraft_vault, name="minecraft_vault"),
+    path("minecraft-vault/videos/", views.minecraft_videos, name="minecraft_videos"),
 ]
