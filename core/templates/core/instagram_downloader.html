@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Video Downloader - nyancat.nu</title>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'core/images/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/images/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/images/favicon-16x16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/images/apple-touch-icon-bg.png' %}">
+    <link rel="manifest" href="{% static 'core/site.webmanifest' %}">
+    <meta name="theme-color" content="#003366">
+    <meta name="theme-color" content="#003366" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#003366" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#003366">
+    <style>
+        body {
+            background-color: #003366;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            color: #ffcc00;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input[type="text"] {
+            padding: 12px;
+            border-radius: 5px;
+            border: 2px solid #E1306C;
+            background: #001a33;
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #E1306C;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.1rem;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        button:hover {
+            background-color: #C13584;
+            transform: scale(1.02);
+        }
+        .result {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #ffcc00;
+        }
+        .thumbnail {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #ffcc00;
+        }
+        .download-btn {
+            display: inline-block;
+            background-color: #00cc66;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0, 204, 102, 0.3);
+        }
+        .download-btn:hover {
+            background-color: #00b359;
+        }
+        .error {
+            color: #ff3333;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .nav-link {
+            margin-top: 30px;
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+        .history-section {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+        }
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #E1306C;
+            padding-bottom: 5px;
+        }
+        .history-title {
+            color: #ffcc00;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .history-item {
+            background: rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        .history-thumb {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid #ffcc00;
+        }
+        .history-info {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+        .history-item-title {
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #ffcc00;
+            margin-bottom: 4px;
+        }
+        .history-item-meta {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            color: #fff;
+        }
+        .clear-history {
+            font-size: 0.8rem;
+            color: #ff3333;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background: rgba(255, 51, 51, 0.1);
+            transition: background 0.2s;
+        }
+        .clear-history:hover {
+            background: rgba(255, 51, 51, 0.2);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>📸 Instagram Video Downloader</h1>
+    
+    <div class="container">
+        <form method="POST" id="downloader-form">
+            {% csrf_token %}
+            <input type="text" name="url" id="url-input" placeholder="Paste the Instagram video/reel link here..." required>
+            <button type="submit">Extract Video Info</button>
+        </form>
+
+        {% if error %}
+            <div class="error">
+                Error: {{ error }}
+            </div>
+        {% endif %}
+
+        {% if video_info %}
+            <div class="result">
+                <h2>{{ video_info.title }}</h2>
+                {% if video_info.thumbnail %}
+                    <img src="{% url 'thumbnail_proxy' %}?url={{ video_info.thumbnail|urlencode }}" alt="Thumbnail" class="thumbnail">
+                {% endif %}
+                <p><strong>Uploader:</strong> {{ video_info.uploader }}</p>
+                <p><strong>Duration:</strong> {{ video_info.duration }}</p>
+                
+                <a href="{{ video_info.url }}" class="download-btn" target="_blank" download>
+                    📥 Download Video
+                </a>
+                <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">
+                    Note: Right-click the button and "Save link as..." if the download doesn't start automatically.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="history-section" id="history-section" style="display: none;">
+        <div class="history-header">
+            <h2 class="history-title">Recent History</h2>
+            <span class="clear-history" onclick="clearHistory()">Clear All</span>
+        </div>
+        <div class="history-list" id="history-list"></div>
+    </div>
+
+    <a href="{% url 'index' %}" class="nav-link">← Back to Home</a>
+
+    <script>
+        const HISTORY_KEY = 'instagram_downloader_history';
+
+        function getHistory() {
+            try {
+                const history = localStorage.getItem(HISTORY_KEY);
+                return history ? JSON.parse(history) : [];
+            } catch (e) {
+                console.error('Error reading history', e);
+                return [];
+            }
+        }
+
+        function saveToHistory(item) {
+            let history = getHistory();
+            // Remove duplicate if exists by original_url
+            history = history.filter(h => h.original_url !== item.original_url);
+            // Add to beginning
+            history.unshift(item);
+            // Limit to 10 items
+            if (history.length > 10) history.pop();
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+        }
+
+        function renderHistory() {
+            const history = getHistory();
+            const section = document.getElementById('history-section');
+            const list = document.getElementById('history-list');
+            
+            if (history.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+            list.innerHTML = '';
+
+            history.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                div.title = "Click to re-extract: " + item.original_url;
+                div.onclick = () => {
+                    document.getElementById('url-input').value = item.original_url;
+                    document.getElementById('downloader-form').submit();
+                };
+
+                const thumbUrl = item.thumbnail ? `{% url 'thumbnail_proxy' %}?url=${encodeURIComponent(item.thumbnail)}` : 'https://www.instagram.com/static/images/ico/favicon-192.png/b4071249352e.png';
+                
+                div.innerHTML = `
+                    <img src="${thumbUrl}" class="history-thumb" onerror="this.src='https://www.instagram.com/static/images/ico/favicon-192.png/b4071249352e.png'">
+                    <div class="history-info">
+                        <div class="history-item-title">${item.title || 'Instagram Video'}</div>
+                        <div class="history-item-meta">${item.uploader || 'Unknown'} • ${item.duration || ''}</div>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear your download history?')) {
+                localStorage.removeItem(HISTORY_KEY);
+                renderHistory();
+            }
+        }
+
+        // On page load
+        document.addEventListener('DOMContentLoaded', () => {
+            {% if video_info %}
+                const currentItem = {
+                    title: "{{ video_info.title|escapejs }}",
+                    thumbnail: "{{ video_info.thumbnail|escapejs }}",
+                    uploader: "{{ video_info.uploader|escapejs }}",
+                    duration: "{{ video_info.duration|escapejs }}",
+                    original_url: "{{ video_info.original_url|escapejs }}"
+                };
+                if (currentItem.original_url) {
+                    saveToHistory(currentItem);
+                }
+            {% endif %}
+            renderHistory();
+        });
+    </script>
+</body>
+</html>

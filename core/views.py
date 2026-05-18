@@ -2,6 +2,8 @@ import json
 import os
 from django.conf import settings
 from django.shortcuts import render
+from django.http import HttpResponse, StreamingHttpResponse
+import requests
 import yt_dlp
 from yt_dlp.networking.impersonate import ImpersonateTarget
 
@@ -135,6 +137,87 @@ def x_downloader(request):
     return render(
         request, "core/x_downloader.html", {"video_info": video_info, "error": error}
     )
+
+
+def instagram_downloader(request):
+    video_info = None
+    error = None
+
+    if request.method == "POST":
+        url = request.POST.get("url", "").strip()
+        if url:
+            if not ("instagram.com" in url):
+                error = "Only videos from Instagram are supported."
+            else:
+                ydl_opts = {
+                    "format": "best",
+                    "noplaylist": True,
+                    "quiet": True,
+                    "js_runtimes": {"node": {}},
+                    "remote_components": ["ejs:github"],
+                    "impersonate": ImpersonateTarget(client="chrome"),
+                }
+                try:
+                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                        info = ydl.extract_info(url, download=False)
+
+                        # Format duration properly
+                        duration_seconds = info.get("duration")
+                        if duration_seconds:
+                            duration_seconds = int(duration_seconds)
+                            hours = duration_seconds // 3600
+                            minutes = (duration_seconds % 3600) // 60
+                            seconds = duration_seconds % 60
+                            if hours > 0:
+                                duration_formatted = (
+                                    f"{hours}:{minutes:02d}:{seconds:02d}"
+                                )
+                            else:
+                                duration_formatted = f"{minutes}:{seconds:02d}"
+                        else:
+                            duration_formatted = info.get("duration_string", "Unknown")
+
+                        # Get the best possible thumbnail
+                        thumbnail = info.get("thumbnail")
+                        if not thumbnail and info.get("thumbnails"):
+                            thumbnail = info.get("thumbnails")[-1].get("url")
+
+                        video_info = {
+                            "title": info.get("title") or info.get("description") or "Instagram Video",
+                            "thumbnail": thumbnail,
+                            "url": info.get("url"),
+                            "duration": duration_formatted,
+                            "uploader": info.get("uploader"),
+                            "original_url": url,
+                        }
+                except Exception as e:
+                    error = str(e) if str(e) else repr(e)
+
+    return render(
+        request,
+        "core/instagram_downloader.html",
+        {"video_info": video_info, "error": error},
+    )
+
+
+def thumbnail_proxy(request):
+    url = request.GET.get("url")
+    if not url:
+        return HttpResponse(status=400)
+
+    try:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+        }
+        response = requests.get(url, headers=headers, stream=True, timeout=10)
+        response.raise_for_status()
+
+        return StreamingHttpResponse(
+            response.iter_content(chunk_size=8192),
+            content_type=response.headers.get("Content-Type", "image/jpeg"),
+        )
+    except Exception as e:
+        return HttpResponse(status=500)
 
 
 def youtube_downloader(request):
