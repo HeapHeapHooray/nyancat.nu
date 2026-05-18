@@ -65,6 +65,17 @@
             background-color: #00dd77;
         }
 
+        .link-chat {
+            background-color: #0099ff;
+            border: 2px solid #0099ff;
+            margin-top: 15px;
+        }
+
+        .link-chat:hover {
+            background-color: #33aaff;
+            box-shadow: 0 5px 15px rgba(0, 153, 255, 0.4);
+        }
+
         .back-link {
             margin-top: 30px;
             color: #00ffcc;
@@ -82,6 +93,7 @@
         <h1>Minagreste's Minecraft Vault</h1>
         <p>Welcome to the historical archives of Minagreste's Minecraft adventures.</p>
         <a href="{% url 'minecraft_videos' %}" class="link-button">Minecraft Video Recordings</a>
+        <a href="https://drive.google.com/drive/folders/1fwD1iA9YxcKqipQ69RrCJPpKVZbQM4pf?usp=sharing" target="_blank" class="link-button link-chat">Minecraft Chat Logs</a>
     </div>
     <a href="{% url 'index' %}" class="back-link">← Back to Home</a>
 </body>
