@@ -49,6 +49,7 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - Keyboard shortcuts (Ctrl/Cmd+S to save, Ctrl/Cmd+N for new file)
 - **Minecraft Vault**: Historical archives of Minecraft adventures.
   - **Video Recordings**: A dynamic, responsive calendar built with Vanilla CSS/JS to browse historical recordings.
+  - **Replay Mod Recordings**: Direct access to high-fidelity Minecraft Replay Mod files archived on Google Drive.
   - **Chat Logs**: Direct access to historical chat logs archived on Google Drive.
   - Interactive "Jump to Month" navigation for quick access to years of content.
   - Responsive perfectly-square calendar grid with scrollable daily entries.
@@ -192,6 +193,8 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - Internal scrolling for days with multiple recordings
   - Visual scroll indicators for overflowing content
   - Direct links to full Google Drive archives
+- **Replay Mod Recordings**: 
+  - Direct access to archived Replay Mod recording files on Google Drive
 - **Minecraft Chat Logs**: 
   - Direct access to archived chat logs on Google Drive
 
