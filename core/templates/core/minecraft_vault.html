@@ -76,6 +76,17 @@
             box-shadow: 0 5px 15px rgba(0, 153, 255, 0.4);
         }
 
+        .link-replay {
+            background-color: #ff6600;
+            border: 2px solid #ff6600;
+            margin-top: 15px;
+        }
+
+        .link-replay:hover {
+            background-color: #ff7722;
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.4);
+        }
+
         .back-link {
             margin-top: 30px;
             color: #00ffcc;
@@ -93,6 +104,7 @@
         <h1>Minagreste's Minecraft Vault</h1>
         <p>Welcome to the historical archives of Minagreste's Minecraft adventures.</p>
         <a href="{% url 'minecraft_videos' %}" class="link-button">Minecraft Video Recordings</a>
+        <a href="https://drive.google.com/drive/folders/10Rh0U5xQaCo37nnUBQCI8tdaD-qe9DJL?usp=sharing" target="_blank" class="link-button link-replay">Replay Mod Recordings</a>
         <a href="https://drive.google.com/drive/folders/1fwD1iA9YxcKqipQ69RrCJPpKVZbQM4pf?usp=sharing" target="_blank" class="link-button link-chat">Minecraft Chat Logs</a>
     </div>
     <a href="{% url 'index' %}" class="back-link">← Back to Home</a>

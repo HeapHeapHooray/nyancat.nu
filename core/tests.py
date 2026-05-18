@@ -71,3 +71,17 @@ class InstagramDownloaderTests(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "Only videos from Instagram are supported.")
+
+
+class MinecraftVaultTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("minecraft_vault")
+
+    def test_minecraft_vault_get(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "core/minecraft_vault.html")
+        self.assertContains(response, "Replay Mod Recordings")
+        self.assertContains(response, "https://drive.google.com/drive/folders/10Rh0U5xQaCo37nnUBQCI8tdaD-qe9DJL?usp=sharing")
+
