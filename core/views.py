@@ -333,7 +333,7 @@ def nano_playroom_file(request, filepath):
     target_path = (playroom_dir / filepath).resolve()
     
     # Security: check for path traversal (ensure target is strictly inside playroom_dir)
-    if not str(target_path).startswith(str(playroom_dir)):
+    if not (target_path == playroom_dir or playroom_dir in target_path.parents):
         return HttpResponseForbidden("Access Denied: Path traversal detected.")
         
     if not target_path.exists() or not target_path.is_file():
@@ -344,8 +344,16 @@ def nano_playroom_file(request, filepath):
     if not content_type:
         content_type = "application/octet-stream"
         
+    # Check if download is requested via GET parameter
+    as_attachment = request.GET.get("download") in ["1", "true"]
+        
     # Read and return raw file response
-    response = FileResponse(open(target_path, "rb"), content_type=content_type)
+    response = FileResponse(
+        open(target_path, "rb"),
+        content_type=content_type,
+        as_attachment=as_attachment,
+        filename=target_path.name
+    )
     
     # Prevent caching of dynamic assets so they update instantly in real-time
     response["Cache-Control"] = "no-cache, no-store, must-revalidate"

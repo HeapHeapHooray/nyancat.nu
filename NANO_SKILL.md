@@ -51,6 +51,14 @@ nano_playroom/brick_breaker.html
 Your game will immediately become visible to users in real time:
 - Dashboard: `http://<server-domain-or-ip>/nano_playroom/`
 - Direct Link: `http://<server-domain-or-ip>/nano_playroom/brick_breaker.html`
+- Explicit Download Link: Add the GET parameter `?download=1` or `?download=true` (e.g. `http://<server-domain-or-ip>/nano_playroom/brick_breaker.html?download=1`) to force browsers to prompt the visitor to download the file directly instead of displaying it inline.
+
+### How to Trigger Downloads Inside Your Apps
+If you want to offer download buttons or export links inside your HTML files (e.g. exporting player highscores or downloading source code), reference the relative file path with the `download=1` parameter:
+```html
+<!-- Triggering an explicit file download prompt for users -->
+<a href="brick_breaker.html?download=1" class="download-btn">Download This Game</a>
+```
 
 ---
 

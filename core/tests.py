@@ -139,4 +139,13 @@ class NanoPlayroomTests(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
+    def test_download_playroom_file(self):
+        url = reverse("nano_playroom_file", args=["pong.html"])
+        # Query parameter download=1
+        response = self.client.get(url, {"download": "1"})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Content-Disposition", response.headers)
+        self.assertIn('attachment; filename="pong.html"', response.headers["Content-Disposition"])
+
+
 
