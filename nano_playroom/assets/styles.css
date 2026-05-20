@@ -1,0 +1,29 @@
+body {
+    background: #001122;
+    color: #00ffcc;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+h1 {
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+}
+
+#gameCanvas {
+    border: 4px solid #00ffcc;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+    background: #002244;
+}
+
+.score-board {
+    font-size: 24px;
+    margin-top: 15px;
+    text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
+}

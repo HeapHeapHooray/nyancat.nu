@@ -126,6 +126,18 @@
             background-color: #33ffdd;
         }
         
+        .link-nano-playroom {
+            background-color: #00ffcc;
+            border: 2px solid #00ffcc;
+            color: #003366;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+        }
+        
+        .link-nano-playroom:hover {
+            background-color: #33ffdd;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+        }
+        
         .link-video-compressor {
             background-color: #9933ff;
             border: 2px solid #9933ff;
@@ -227,6 +239,7 @@
     <img src="https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif" alt="Nyan Cat Banner" class="banner">
     <p>Enjoy the rainbows and space vibes.</p>
     <div class="links-container">
+        <a href="{% url 'nano_playroom' %}" class="link-button link-nano-playroom">Nano Playroom (Live)</a>
         <a href="{% url 'converter' %}" class="link-button link-converter">File Converter</a>
         <a href="{% url 'video_compressor' %}" class="link-button link-video-compressor">Video Compressor/Resizer</a>
         <a href="{% url 'video_slicer' %}" class="link-button link-video-slicer">Audio/Video Slicer</a>

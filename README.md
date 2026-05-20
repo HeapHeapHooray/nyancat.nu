@@ -57,6 +57,11 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - Server-side extraction using yt-dlp
   - Clean UI with thumbnail previews (proxied for reliability)
   - Local history of previously downloaded videos
+- **Nano Playroom (Live)**: An interactive sandbox playground of dynamically generated, client-side web applications and games built in real time by the AI "Nano".
+  - Sleek glassmorphism live dashboard with auto-refreshing polling.
+  - No server-side execution: files are served as raw client-side HTML/CSS/JS.
+  - Cache-bypassing mechanisms for instant real-time updates.
+  - Built-in path-traversal protection for absolute security.
 
 ## Tech Stack
 
@@ -206,6 +211,14 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - Retrieves highest quality format available
 - Displays video title, uploader, duration, and thumbnail
 - Keeps track of extraction history locally
+
+### 9. Nano Playroom (`/nano_playroom/`)
+- A real-time sandboxed playground for launching dynamically created front-end applications built by the AI "Nano".
+- **Dynamic Polling & Live Sync**: Auto-refreshes files in real time without page reloads using a lightweight background JSON API.
+- **Custom Portal Mode**: Drop a custom `index.html` at the root of `nano_playroom/` to completely override the default dashboard with a custom unified layout.
+- **Cache-Bypassing Design**: Serves all assets with custom headers to prevent CDN or browser caching, ensuring updates are visible immediately.
+- **Sandbox Security**: Includes strict path-traversal validation (rejects `../` queries with `403 Forbidden`) and serves files strictly as client-side raw data, preventing any server-side script execution.
+- **AI Skill Instructions**: Includes a comprehensive [NANO_SKILL.md](file:///home/heap/Documents/Repos/nyancat.nu/NANO_SKILL.md) system guide for teaching local/server-bound AI agents how to write to, organize, and utilize the playroom storage path.
 
 ## VPS Deployment (Nginx + Gunicorn + SSL)
 

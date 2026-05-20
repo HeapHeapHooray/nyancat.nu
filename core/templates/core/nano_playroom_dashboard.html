@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nano Playroom - nyancat.nu</title>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'core/images/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/images/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/images/favicon-16x16.png' %}">
+    <meta name="theme-color" content="#003366">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #002244;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            color: #e2e8f0;
+            font-family: 'Courier New', Courier, monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .brand-section h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .brand-section p {
+            font-size: 0.95rem;
+            color: #a0aec0;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 204, 0.1);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            color: #00ffcc;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 255, 204, 0.3);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00ffcc;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px #00ffcc;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 8px rgba(0, 255, 204, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(0, 255, 204, 0);
+            }
+        }
+
+        .nav-btn {
+            color: #fff;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 6px;
+            transition: all 0.2s ease-in-out;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Dashboard grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .file-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.05), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 204, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.1);
+        }
+
+        .file-card:hover::before {
+            opacity: 1;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            z-index: 1;
+        }
+
+        .file-icon {
+            background: rgba(0, 255, 204, 0.1);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            color: #00ffcc;
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .file-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .file-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow: hidden;
+        }
+
+        .file-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-ext {
+            font-size: 0.75rem;
+            color: #00ffcc;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .file-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.8rem;
+            color: #a0aec0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 12px;
+            z-index: 1;
+        }
+
+        .file-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .file-stat-item svg {
+            width: 14px;
+            height: 14px;
+            opacity: 0.7;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+            z-index: 1;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #ff0099;
+            border: 1px solid #ff0099;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ff33bb;
+            border-color: #ff33bb;
+            box-shadow: 0 0 12px rgba(255, 0, 153, 0.4);
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        /* Empty state */
+        .empty-state {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            text-align: center;
+            gap: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .empty-icon {
+            width: 72px;
+            height: 72px;
+            background: rgba(0, 255, 204, 0.05);
+            color: #00ffcc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(0, 255, 204, 0.1);
+            animation: bounce 3s infinite;
+        }
+
+        .empty-icon svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .empty-state h3 {
+            font-size: 1.3rem;
+            color: white;
+        }
+
+        .empty-state p {
+            color: #a0aec0;
+            max-width: 400px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00ffcc;
+            border-radius: 50%;
+            animation: dot-pulse 1.4s infinite ease-in-out both;
+        }
+
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes dot-pulse {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #00ffcc;
+            color: #002244;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(150px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="brand-section">
+                <h1>Nano Playroom</h1>
+                <p>AI-Generated dynamic client-side applications & games</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span>LIVE WATCH ACTIVE</span>
+                </div>
+                <a href="/" class="nav-btn">
+                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                    Home
+                </a>
+            </div>
+        </header>
+
+        <main class="grid-container" id="files-grid">
+            <!-- Empty state loader initially shown -->
+            <div class="empty-state" id="loading-state">
+                <div class="empty-icon">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                </div>
+                <h3>Reading Playroom files...</h3>
+                <div class="loader-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="toast" id="toast">
+        <svg style="width:20px;height:20px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+        <span id="toast-text">Link copied to clipboard!</span>
+    </div>
+
+    <script>
+        const grid = document.getElementById('files-grid');
+        const loadingState = document.getElementById('loading-state');
+        const toast = document.getElementById('toast');
+        const toastText = document.getElementById('toast-text');
+
+        let knownFiles = new Set();
+
+        function showToast(text) {
+            toastText.textContent = text;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function copyLink(path) {
+            const absoluteUrl = window.location.origin + '/nano_playroom/' + path;
+            navigator.clipboard.writeText(absoluteUrl).then(() => {
+                showToast('Link copied to clipboard!');
+            }).catch(err => {
+                showToast('Failed to copy link.');
+            });
+        }
+
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+
+        function getFileIcon(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            // Dynamic SVG icons based on type
+            if (['html', 'htm'].includes(ext)) {
+                // Gamepad icon for HTML pages (which are usually interactive apps/games)
+                return `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9M12 12H9m3 0h3"/></svg>`;
+            } else if (['js', 'mjs'].includes(ext)) {
+                // Code icon
+                return `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>`;
+            } else if (['css'].includes(ext)) {
+                // Swatches/design icon
+                return `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-1.305 1.305l-1.11 2.22a1 1 0 01-1.658.105l-.39-.49a1 1 0 00-.772-.382h-.002a1 1 0 01-.8-.4l-.64-.8a1 1 0 00-.76-.36h-.113a1 1 0 01-.84-.465l-.324-.487a1 1 0 00-.8-.485H2.5a2 2 0 01-2-2v-1.5A2.5 2.5 0 013 9.5h1.172a1 1 0 00.707-.293l1.11-1.11a1 1 0 011.414 0l1.25 1.25a1 1 0 001.414 0l4.38-4.38a1 1 0 00.293-.707V3.5a2.5 2.5 0 015 0v.5a2 2 0 002 2h.75a2 2 0 012 2v2.5a2 2 0 01-2 2h-.375a1 1 0 00-.8.4l-.64.8a1 1 0 01-.8.4h-.375a1 1 0 00-.8.4l-.64.8a1 1 0 01-.8.4h-.375a1 1 0 00-.8.4l-.64.8a1 1 0 01-.8.4h-.375a1 1 0 00-.8.4l-.64.8a1 1 0 01-.8.4h-.375a1 1 0 00-.8.4l-.64.8a1 1 0 01-.8.4H9.53z"/></svg>`;
+            } else if (['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'].includes(ext)) {
+                // Image icon
+                return `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>`;
+            }
+            // General file icon
+            return `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>`;
+        }
+
+        async function fetchPlayroomFiles() {
+            try {
+                const response = await fetch('?format=json');
+                if (!response.ok) throw new Error('Network error');
+                
+                const data = await response.json();
+                
+                // Hide loading/empty state if we have files
+                if (data.files && data.files.length > 0) {
+                    if (loadingState) {
+                        loadingState.style.display = 'none';
+                    }
+                    
+                    // Remove existing cards that are no longer present
+                    const currentFilepaths = new Set(data.files.map(f => f.filepath));
+                    const cards = grid.querySelectorAll('.file-card');
+                    cards.forEach(card => {
+                        const path = card.dataset.filepath;
+                        if (!currentFilepaths.has(path)) {
+                            card.remove();
+                        }
+                    });
+                    
+                    // Add new files or update existing ones
+                    data.files.forEach(file => {
+                        let card = grid.querySelector(`.file-card[data-filepath="${file.filepath}"]`);
+                        
+                        if (!card) {
+                            // Create card element
+                            card = document.createElement('div');
+                            card.className = 'file-card';
+                            card.dataset.filepath = file.filepath;
+                            
+                            // Visual fade-in if it's a new file (and not the first load)
+                            if (knownFiles.size > 0 && !knownFiles.has(file.filepath)) {
+                                card.style.opacity = '0';
+                                card.style.transform = 'translateY(15px)';
+                                showToast(`New application: "${file.name}" detected!`);
+                            }
+                            
+                            grid.appendChild(card);
+                            
+                            if (card.style.opacity === '0') {
+                                setTimeout(() => {
+                                    card.style.transition = 'all 0.4s ease';
+                                    card.style.opacity = '1';
+                                    card.style.transform = 'translateY(0)';
+                                }, 50);
+                            }
+                        }
+                        
+                        // Update card content (in case of dynamic updates)
+                        const ext = file.name.split('.').pop();
+                        card.innerHTML = `
+                            <div class="file-info">
+                                <div class="file-icon">
+                                    ${getFileIcon(file.name)}
+                                </div>
+                                <div class="file-meta">
+                                    <div class="file-name" title="${file.name}">${file.name}</div>
+                                    <div class="file-ext">${ext} file</div>
+                                </div>
+                            </div>
+                            <div class="file-stats">
+                                <div class="file-stat-item">
+                                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg>
+                                    <span>${formatBytes(file.size)}</span>
+                                </div>
+                                <div class="file-stat-item">
+                                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <span>${file.modified_ago}</span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <a href="/nano_playroom/${file.filepath}" target="_blank" class="action-btn btn-primary">
+                                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                                    Launch
+                                </a>
+                                <button onclick="copyLink('${file.filepath}')" class="action-btn btn-secondary">
+                                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5m-9-9h.375c.621 0 1.125.504 1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125h9.75"/></svg>
+                                    Copy Link
+                                </button>
+                            </div>
+                        `;
+                    });
+
+                    // Store current files in known list
+                    data.files.forEach(file => knownFiles.add(file.filepath));
+                } else {
+                    // Show empty state
+                    if (loadingState) {
+                        loadingState.style.display = 'flex';
+                        loadingState.innerHTML = `
+                            <div class="empty-icon">
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 21m0 0l-.813-5.096L9 21zm0 0h1m-9-6.078a11.963 11.963 0 012.265-5.905M18 10.5c0 2.504-1.12 4.75-2.905 6.265M18.75 10.5h.008v.008h-.008V10.5zm-3.75 3h.007v.008H15V13.5zm-3-3h.008v.008h-.008V10.5z"/></svg>
+                            </div>
+                            <h3>Waiting for Nano to build something awesome...</h3>
+                            <p>No active web projects are currently loaded. Once Nano generates files, they will appear here in real-time.</p>
+                            <div class="loader-dots">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                        `;
+                    }
+                    grid.querySelectorAll('.file-card').forEach(c => c.remove());
+                    knownFiles.clear();
+                }
+            } catch (error) {
+                console.error('Error fetching playroom files:', error);
+                if (loadingState) {
+                    loadingState.style.display = 'flex';
+                    loadingState.innerHTML = `
+                        <div class="empty-icon" style="color: #ff3366; background: rgba(255, 51, 102, 0.05); border-color: rgba(255, 51, 102, 0.1);">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                        </div>
+                        <h3>Connection Interrupted</h3>
+                        <p>Unable to sync with the playroom directories. Retrying connection...</p>
+                    `;
+                }
+            }
+        }
+
+        // Initial fetch
+        fetchPlayroomFiles();
+
+        // Poll every 3 seconds for real-time responsiveness
+        setInterval(fetchPlayroomFiles, 3000);
+    </script>
+</body>
+</html>

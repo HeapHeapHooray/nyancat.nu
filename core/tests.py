@@ -85,3 +85,58 @@ class MinecraftVaultTests(TestCase):
         self.assertContains(response, "Replay Mod Recordings")
         self.assertContains(response, "https://drive.google.com/drive/folders/10Rh0U5xQaCo37nnUBQCI8tdaD-qe9DJL?usp=sharing")
 
+
+class NanoPlayroomTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("nano_playroom")
+
+    def test_nano_playroom_dashboard_get(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "core/nano_playroom_dashboard.html")
+
+    def test_nano_playroom_json_api(self):
+        response = self.client.get(self.url, {"format": "json"})
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn("files", data)
+        # Check that our mock pong game is listed
+        filenames = [f["name"] for f in data["files"]]
+        self.assertIn("pong.html", filenames)
+        self.assertIn("styles.css", filenames)
+        self.assertIn("app.js", filenames)
+
+    def test_serve_playroom_html_file(self):
+        url = reverse("nano_playroom_file", args=["pong.html"])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["Content-Type"], "text/html")
+        self.assertContains(response, "Retro Pong Sandbox")
+        # Check no-cache headers are set
+        self.assertEqual(response.headers["Cache-Control"], "no-cache, no-store, must-revalidate")
+
+    def test_serve_playroom_css_file(self):
+        url = reverse("nano_playroom_file", args=["assets/styles.css"])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["Content-Type"], "text/css")
+
+    def test_serve_playroom_js_file(self):
+        url = reverse("nano_playroom_file", args=["assets/app.js"])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(response.headers["Content-Type"], ["application/javascript", "text/javascript"])
+
+    def test_path_traversal_blocked(self):
+        url = reverse("nano_playroom_file", args=["../manage.py"])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 403)
+        self.assertContains(response, "Access Denied", status_code=403)
+
+    def test_non_existent_file_404(self):
+        url = reverse("nano_playroom_file", args=["ghost_app.html"])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+

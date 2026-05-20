@@ -1,8 +1,11 @@
 import json
 import os
+import mimetypes
+import time
+from pathlib import Path
 from django.conf import settings
 from django.shortcuts import render
-from django.http import HttpResponse, StreamingHttpResponse
+from django.http import HttpResponse, StreamingHttpResponse, Http404, HttpResponseForbidden, JsonResponse, FileResponse
 import requests
 import yt_dlp
 from yt_dlp.networking.impersonate import ImpersonateTarget
@@ -274,3 +277,80 @@ def youtube_downloader(request):
         "core/youtube_downloader.html",
         {"video_info": video_info, "error": error},
     )
+
+
+def nano_playroom(request):
+    playroom_dir = Path(settings.BASE_DIR) / "nano_playroom"
+    
+    # Ensure folder exists
+    if not playroom_dir.exists():
+        playroom_dir.mkdir(parents=True, exist_ok=True)
+        
+    # Check if format=json is requested (for dynamic polling!)
+    if request.GET.get("format") == "json":
+        files_list = []
+        # Walk directories recursively to list files
+        for file_path in sorted(playroom_dir.glob("**/*")):
+            # Only list actual files, and skip readme/hidden files
+            if file_path.is_file() and file_path.name != "README.md" and not file_path.name.startswith("."):
+                relative_path = file_path.relative_to(playroom_dir)
+                try:
+                    stat = file_path.stat()
+                    elapsed = time.time() - stat.st_mtime
+                    if elapsed < 60:
+                        modified_ago = "Just now"
+                    elif elapsed < 3600:
+                        modified_ago = f"{int(elapsed // 60)}m ago"
+                    elif elapsed < 86400:
+                        modified_ago = f"{int(elapsed // 3600)}h ago"
+                    else:
+                        modified_ago = f"{int(elapsed // 86400)}d ago"
+                    
+                    files_list.append({
+                        "name": file_path.name,
+                        "filepath": str(relative_path),
+                        "size": stat.st_size,
+                        "modified_ago": modified_ago,
+                    })
+                except Exception:
+                    pass
+        return JsonResponse({"files": files_list})
+        
+    # Standard request: check if index.html exists in playroom_dir
+    index_file = playroom_dir / "index.html"
+    if index_file.exists() and index_file.is_file():
+        # Serve it!
+        return nano_playroom_file(request, "index.html")
+        
+    # Serve dashboard
+    return render(request, "core/nano_playroom_dashboard.html")
+
+
+def nano_playroom_file(request, filepath):
+    playroom_dir = (Path(settings.BASE_DIR) / "nano_playroom").resolve()
+    
+    # Resolve the target file path
+    target_path = (playroom_dir / filepath).resolve()
+    
+    # Security: check for path traversal (ensure target is strictly inside playroom_dir)
+    if not str(target_path).startswith(str(playroom_dir)):
+        return HttpResponseForbidden("Access Denied: Path traversal detected.")
+        
+    if not target_path.exists() or not target_path.is_file():
+        raise Http404("File not found in Playroom.")
+        
+    # Guess mime type
+    content_type, encoding = mimetypes.guess_type(str(target_path))
+    if not content_type:
+        content_type = "application/octet-stream"
+        
+    # Read and return raw file response
+    response = FileResponse(open(target_path, "rb"), content_type=content_type)
+    
+    # Prevent caching of dynamic assets so they update instantly in real-time
+    response["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response["Pragma"] = "no-cache"
+    response["Expires"] = "0"
+    
+    return response
+
