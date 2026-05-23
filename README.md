@@ -207,6 +207,7 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - Extract video information and download links from X (Twitter), YouTube, and Instagram
 - Requires server-side processing with yt-dlp
 - **Requires browser cookies (`/var/remote_cookies.txt`) to bypass YouTube's anti-bot protections**
+- Instagram support does not yet support authenticated content
 - Features a robust backend proxy for Instagram thumbnails to bypass CDN hotlinking restrictions
 - Retrieves highest quality format available
 - Displays video title, uploader, duration, and thumbnail
