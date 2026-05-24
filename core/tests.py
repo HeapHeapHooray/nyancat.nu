@@ -27,52 +27,6 @@ class XDownloaderTests(TestCase):
         self.assertNotContains(response, "Only videos from X (Twitter) are supported.")
 
 
-class YouTubeDownloaderTests(TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.url = reverse("youtube_downloader")
-
-    def test_youtube_downloader_get(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "core/youtube_downloader.html")
-
-    def test_youtube_downloader_youtube_url_rejected(self):
-        response = self.client.post(self.url, {"url": "https://x.com/somevideo"})
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Only videos from YouTube are supported.")
-
-    def test_youtube_downloader_youtube_url_accepted(self):
-        response = self.client.post(
-            self.url, {"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertNotContains(response, "Only videos from YouTube are supported.")
-
-
-class InstagramDownloaderTests(TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.url = reverse("instagram_downloader")
-
-    def test_instagram_downloader_get(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "core/instagram_downloader.html")
-
-    def test_instagram_downloader_url_rejected(self):
-        response = self.client.post(self.url, {"url": "https://x.com/somevideo"})
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Only videos from Instagram are supported.")
-
-    def test_instagram_downloader_url_accepted(self):
-        response = self.client.post(
-            self.url, {"url": "https://www.instagram.com/p/C_m_v_v_v_v_/"}
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertNotContains(response, "Only videos from Instagram are supported.")
-
-
 class MinecraftVaultTests(TestCase):
     def setUp(self):
         self.client = Client()

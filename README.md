@@ -53,9 +53,9 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - **Chat Logs**: Direct access to historical chat logs archived on Google Drive.
   - Interactive "Jump to Month" navigation for quick access to years of content.
   - Responsive perfectly-square calendar grid with scrollable daily entries.
-- **Video Downloaders**: Download videos from X (Twitter), YouTube, and Instagram.
+- **Video Downloaders**: Download videos from X (Twitter).
   - Server-side extraction using yt-dlp
-  - Clean UI with thumbnail previews (proxied for reliability)
+  - Clean UI with thumbnail previews
   - Local history of previously downloaded videos
 - **Nano Playroom (Live)**: An interactive sandbox playground of dynamically generated, client-side web applications and games built in real time by the AI "Nano".
   - Sleek glassmorphism live dashboard with auto-refreshing polling.
@@ -111,13 +111,7 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
    gunicorn nyancat_site.wsgi:application --bind 0.0.0.0:8000
    ```
 
-6. **Configure YouTube Downloader Cookies**:
-   To bypass YouTube's anti-bot protections, you must provide valid browser cookies. Usually, you generate these from a personal device/browser outside the server. First, run this on your local machine with an authenticated YouTube session:
-   ```bash
-   pip install pycookiecheat
-   python -m pycookiecheat -o remote_cookies.txt "https://youtube.com"
-   ```
-   Then upload `remote_cookies.txt` to your server and place it at `/var/remote_cookies.txt`. Make sure the web server has permission to read it.
+
 
 7. **Access the site**:
    Open [http://localhost:8000](http://localhost:8000) (or your server's IP) in your browser.
@@ -203,12 +197,9 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - **Minecraft Chat Logs**: 
   - Direct access to archived chat logs on Google Drive
 
-### 8. Video Downloaders (`/x-downloader/`, `/youtube-downloader/` & `/instagram-downloader/`)
-- Extract video information and download links from X (Twitter), YouTube, and Instagram
+### 8. Video Downloader (`/x-downloader/`)
+- Extract video information and download links from X (Twitter)
 - Requires server-side processing with yt-dlp
-- **Requires browser cookies (`/var/remote_cookies.txt`) to bypass YouTube's anti-bot protections**
-- Instagram support does not yet support authenticated content
-- Features a robust backend proxy for Instagram thumbnails to bypass CDN hotlinking restrictions
 - Retrieves highest quality format available
 - Displays video title, uploader, duration, and thumbnail
 - Keeps track of extraction history locally
