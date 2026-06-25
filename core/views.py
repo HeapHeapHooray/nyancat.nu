@@ -224,3 +224,15 @@ def nano_playroom_file(request, filepath):
     
     return response
 
+
+def nuverse_sh(request):
+    sh_path = Path(settings.BASE_DIR) / "nuverse" / "nuverse.sh"
+    if not sh_path.exists() or not sh_path.is_file():
+        raise Http404("Script not found.")
+    
+    return FileResponse(
+        open(sh_path, "rb"),
+        content_type="text/plain; charset=utf-8",
+    )
+
+

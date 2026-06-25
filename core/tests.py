@@ -102,4 +102,21 @@ class NanoPlayroomTests(TestCase):
         self.assertIn('attachment; filename="pong.html"', response.headers["Content-Disposition"])
 
 
+class NuverseScriptTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("nuverse_sh")
+
+    def test_nuverse_sh_success(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["Content-Type"], "text/plain; charset=utf-8")
+        content = b"".join(response.streaming_content)
+        self.assertIn(b"#!/usr/bin/env bash", content)
+        self.assertIn(b"MCP-DL World Archive Downloader & Unpacker", content)
+
+
+
+
+
 

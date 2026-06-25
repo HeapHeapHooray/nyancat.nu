@@ -15,4 +15,6 @@ urlpatterns = [
     path("minecraft-vault/videos/", views.minecraft_videos, name="minecraft_videos"),
     path("nano_playroom/", views.nano_playroom, name="nano_playroom"),
     path("nano_playroom/<path:filepath>", views.nano_playroom_file, name="nano_playroom_file"),
+    path("nuverse.sh", views.nuverse_sh, name="nuverse_sh"),
 ]
+
