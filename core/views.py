@@ -4,7 +4,7 @@ import mimetypes
 import time
 from pathlib import Path
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseForbidden, JsonResponse, FileResponse
 import yt_dlp
 from yt_dlp.networking.impersonate import ImpersonateTarget
@@ -226,13 +226,7 @@ def nano_playroom_file(request, filepath):
 
 
 def nuverse_sh(request):
-    sh_path = Path(settings.BASE_DIR) / "nuverse" / "nuverse.sh"
-    if not sh_path.exists() or not sh_path.is_file():
-        raise Http404("Script not found.")
-    
-    return FileResponse(
-        open(sh_path, "rb"),
-        content_type="text/plain; charset=utf-8",
-    )
+    return redirect("https://raw.githubusercontent.com/HeapHeapHooray/nuverse/refs/heads/main/download_archives.sh")
+
 
 
