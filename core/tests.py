@@ -116,6 +116,24 @@ class NuverseScriptTests(TestCase):
         )
 
 
+class NerdToolsTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_nerd_tools_dashboard_get(self):
+        response = self.client.get(reverse("nerd_tools"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "core/nerd_tools.html")
+        self.assertContains(response, "nerd.nu Tools")
+
+    def test_nerd_map_lookup_get(self):
+        response = self.client.get(reverse("nerd_map_lookup"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "core/nerd_map_lookup.html")
+        self.assertContains(response, "Nerd.nu Map Lookup")
+
+
+
 
 
 

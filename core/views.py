@@ -229,4 +229,13 @@ def nuverse_sh(request):
     return redirect("https://raw.githubusercontent.com/HeapHeapHooray/nuverse/refs/heads/main/download_archives.sh")
 
 
+def nerd_tools(request):
+    return render(request, "core/nerd_tools.html")
+
+
+def nerd_map_lookup(request):
+    return render(request, "core/nerd_map_lookup.html")
+
+
+
 

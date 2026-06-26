@@ -16,5 +16,7 @@ urlpatterns = [
     path("nano_playroom/", views.nano_playroom, name="nano_playroom"),
     path("nano_playroom/<path:filepath>", views.nano_playroom_file, name="nano_playroom_file"),
     path("nuverse.sh", views.nuverse_sh, name="nuverse_sh"),
+    path("nerd/", views.nerd_tools, name="nerd_tools"),
+    path("nerd/map-lookup/", views.nerd_map_lookup, name="nerd_map_lookup"),
 ]
 

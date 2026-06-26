@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nerd.nu Tools - nyancat.nu</title>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'core/images/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/images/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/images/favicon-16x16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/images/apple-touch-icon-bg.png' %}">
+    <link rel="manifest" href="{% static 'core/site.webmanifest' %}">
+    <meta name="theme-color" content="#003366">
+    <meta name="theme-color" content="#003366" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#003366" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#003366">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #002244;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 2px dashed rgba(255, 255, 255, 0.2);
+            padding-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin: 0;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .home-link {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s, transform 0.2s;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .home-link:hover {
+            color: #ffdd33;
+            transform: translateX(-3px);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .tool-card {
+            background: rgba(0, 34, 68, 0.6);
+            border: 2px solid #0099ff;
+            border-radius: 8px;
+            padding: 25px;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #0099ff, #00ffcc);
+            opacity: 0.8;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffcc;
+            box-shadow: 0 8px 25px rgba(0, 255, 204, 0.25);
+        }
+        
+        .tool-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #00ffcc;
+            text-shadow: 0 0 5px rgba(0, 255, 204, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tool-desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .tool-action {
+            align-self: flex-start;
+            font-weight: bold;
+            color: #ffcc00;
+            font-size: 0.9rem;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        
+        .tool-card:hover .tool-action {
+            border-color: #ffcc00;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>nerd.nu Tools</h1>
+            <a href="{% url 'index' %}" class="home-link">&lt; Back to Home</a>
+        </div>
+        
+        <div style="background: rgba(0, 153, 255, 0.1); border-left: 4px solid #0099ff; padding: 20px; border-radius: 4px; margin-bottom: 30px;">
+            <p style="font-size: 1.1rem; line-height: 1.6; margin: 0; color: rgba(255, 255, 255, 0.95);">
+                Welcome to the nerd.nu web utilities panel. Here you can find tools related to the nerd.nu server.
+            </p>
+            <p style="font-size: 1.05rem; line-height: 1.6; margin: 15px 0 0 0; color: #ffcc00; font-weight: bold;">
+                📢 Note: We are also hosting a Minecraft server loaded with some of the classic, historical map revisions on <span style="color: #00ffcc; text-shadow: 0 0 5px rgba(0,255,204,0.3);">nyancat.nu</span>!
+            </p>
+        </div>
+
+        <div class="tools-grid">
+            <a href="{% url 'nerd_map_lookup' %}" class="tool-card">
+                <div>
+                    <div class="tool-title">
+                        <span>🗺️</span> Map Revision Lookup
+                    </div>
+                    <div class="tool-desc">
+                        Input any date to find out which nerd.nu Creative (C) or PvE (P) map revision was active at that time.
+                    </div>
+                </div>
+                <div class="tool-action">Launch Tool &gt;</div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        nyancat.nu &bull; nerd.nu Community Tools
+    </div>
+</body>
+</html>

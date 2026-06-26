@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Revision Lookup - nerd.nu - nyancat.nu</title>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'core/images/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/images/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/images/favicon-16x16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/images/apple-touch-icon-bg.png' %}">
+    <link rel="manifest" href="{% static 'core/site.webmanifest' %}">
+    <meta name="theme-color" content="#003366">
+    <meta name="theme-color" content="#003366" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#003366" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#003366">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #001f3f;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 1.5px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 25px),
+                radial-gradient(white, rgba(255,255,255,.1) 1.5px, transparent 35px);
+            background-size: 400px 400px, 300px 300px, 200px 200px;
+            background-position: 0 0, 30px 40px, 90px 180px;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 2px dashed rgba(255, 255, 255, 0.2);
+            padding-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            margin: 0;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .back-link {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s, transform 0.2s;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .back-link:hover {
+            color: #ffdd33;
+            transform: translateX(-3px);
+        }
+        
+        /* Glassmorphic Control Panel */
+        .control-panel {
+            background: rgba(0, 44, 88, 0.55);
+            border: 2px solid #00ffcc;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 255, 204, 0.15);
+            backdrop-filter: blur(5px);
+        }
+        
+        .control-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1 1 250px;
+        }
+        
+        label {
+            font-weight: bold;
+            color: #00ffcc;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        input[type="date"] {
+            background: #001122;
+            border: 2px solid #0099ff;
+            border-radius: 4px;
+            color: white;
+            padding: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        input[type="date"]:focus {
+            border-color: #00ffcc;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+        }
+        
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .btn-preset {
+            background: rgba(0, 153, 255, 0.2);
+            border: 1px solid #0099ff;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        
+        .btn-preset:hover {
+            background: rgba(0, 255, 204, 0.3);
+            border-color: #00ffcc;
+        }
+        
+        .server-selector {
+            display: flex;
+            background: #001122;
+            border: 2px solid #0099ff;
+            border-radius: 4px;
+            padding: 2px;
+            flex: 1 1 300px;
+        }
+        
+        .server-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background 0.2s, color 0.2s;
+            border-radius: 2px;
+        }
+        
+        .server-tab.active {
+            background: #00ffcc;
+            color: #001f3f;
+        }
+        
+        /* Result Layout */
+        .results-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .results-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .result-card {
+            background: rgba(0, 34, 68, 0.65);
+            border: 2px solid #0099ff;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .result-card.creative-card {
+            border-color: #ff9900;
+        }
+        
+        .result-card.pve-card {
+            border-color: #00cc66;
+        }
+        
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        .creative-card .badge {
+            background: #ff9900;
+            color: black;
+        }
+        
+        .pve-card .badge {
+            background: #00cc66;
+            color: black;
+        }
+        
+        .result-header {
+            border-bottom: 1px dashed rgba(255,255,255,0.2);
+            padding-bottom: 12px;
+        }
+        
+        .rev-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: white;
+            margin: 0;
+        }
+        
+        .creative-card .rev-title {
+            color: #ffb84d;
+        }
+        
+        .pve-card .rev-title {
+            color: #4dff9e;
+        }
+        
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .meta-item {
+            font-size: 0.95rem;
+        }
+        
+        .meta-label {
+            color: #00ffcc;
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        .meta-value {
+            color: white;
+        }
+        
+        .description-box {
+            font-size: 1rem;
+            line-height: 1.6;
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid #0099ff;
+        }
+        
+        .creative-card .description-box {
+            border-left-color: #ff9900;
+        }
+        
+        .pve-card .description-box {
+            border-left-color: #00cc66;
+        }
+        
+        /* Timeline Bar */
+        .timeline-container {
+            margin-top: 15px;
+        }
+        
+        .timeline-bar {
+            height: 14px;
+            background: #001122;
+            border-radius: 7px;
+            position: relative;
+            margin: 10px 0;
+            overflow: visible;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .timeline-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0099ff, #00ffcc);
+            border-radius: 7px;
+        }
+        
+        .creative-card .timeline-fill {
+            background: linear-gradient(90deg, #ff9900, #ffcc00);
+        }
+        
+        .pve-card .timeline-fill {
+            background: linear-gradient(90deg, #00cc66, #00ffcc);
+        }
+        
+        .timeline-indicator {
+            width: 16px;
+            height: 16px;
+            background: #ff3b30;
+            border: 2px solid white;
+            border-radius: 50%;
+            position: absolute;
+            top: -2px;
+            transform: translateX(-50%);
+            box-shadow: 0 0 8px #ff3b30;
+            animation: pulse 1.5s infinite alternate;
+        }
+        
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .btn-wiki {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            border: 2px solid #0099ff;
+            color: #0099ff;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            align-self: flex-start;
+            margin-top: 5px;
+        }
+        
+        .creative-card .btn-wiki {
+            border-color: #ff9900;
+            color: #ff9900;
+        }
+        
+        .creative-card .btn-wiki:hover {
+            background: #ff9900;
+            color: black;
+            box-shadow: 0 0 15px rgba(255, 153, 0, 0.4);
+        }
+        
+        .pve-card .btn-wiki {
+            border-color: #00cc66;
+            color: #00cc66;
+        }
+        
+        .pve-card .btn-wiki:hover {
+            background: #00cc66;
+            color: black;
+            box-shadow: 0 0 15px rgba(0, 204, 102, 0.4);
+        }
+        
+        .btn-wiki:hover {
+            background: #0099ff;
+            color: white;
+            box-shadow: 0 0 15px rgba(0, 153, 255, 0.4);
+        }
+        
+        /* Grid for compare view */
+        .compare-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 25px;
+        }
+        
+        @media (max-width: 800px) {
+            .compare-view {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .no-data-card {
+            background: rgba(255, 59, 48, 0.15);
+            border: 2px solid #ff3b30;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            width: 100%;
+        }
+        
+        @keyframes pulse {
+            from {
+                box-shadow: 0 0 4px #ff3b30, 0 0 2px #ff3b30;
+            }
+            to {
+                box-shadow: 0 0 12px #ff3b30, 0 0 6px #ff3b30;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Nerd.nu Map Lookup</h1>
+            <div class="nav-links">
+                <a href="{% url 'nerd_tools' %}" class="back-link">&lt; Back to Tools</a>
+            </div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="control-panel">
+            <div class="control-row">
+                <!-- Date Input -->
+                <div class="input-group">
+                    <label for="date-input">Select Date</label>
+                    <input type="date" id="date-input" value="2026-06-25">
+                </div>
+                
+                <!-- Server Filter Toggles -->
+                <div class="input-group">
+                    <label>Server Mode</label>
+                    <div class="server-selector">
+                        <div class="server-tab active" data-mode="compare">Compare</div>
+                        <div class="server-tab" data-mode="creative">Creative (C)</div>
+                        <div class="server-tab" data-mode="pve">PvE (P)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Presets -->
+            <div class="preset-buttons">
+                <button class="btn-preset" data-date="today">Today</button>
+                <button class="btn-preset" data-date="2024-06-22">C Rev 38 Start (2024-06-22)</button>
+                <button class="btn-preset" data-date="2025-09-19">P Rev 31 Start (2025-09-19)</button>
+                <button class="btn-preset" data-date="2020-03-15">Spring 2020 (C35 & P25)</button>
+                <button class="btn-preset" data-date="2015-08-25">Late Summer 2015</button>
+                <button class="btn-preset" data-date="2011-11-20">Minecraft 1.0 Release (2011-11-20)</button>
+                <button class="btn-preset" data-date="2010-05-18">Creative Early Days (2010-05-18)</button>
+            </div>
+        </div>
+        
+        <!-- Results Section -->
+        <div id="results-container" class="results-container">
+            <!-- Dynamically populated -->
+        </div>
+    </div>
+    
+    <div class="footer">
+        nyancat.nu &bull; nerd.nu Community Tools
+    </div>
+
+    <!-- Data & Script -->
+    <script>
+        const pveRevisions = [
+            {
+                        "rev": 1,
+                        "start": "2011-01-17",
+                        "end": "2011-03-12",
+                        "mc": "First revision",
+                        "desc": "First revision"
+            },
+            {
+                        "rev": 2,
+                        "start": "2011-03-13",
+                        "end": "2011-05-19",
+                        "mc": "Unknown",
+                        "desc": "Map corruption"
+            },
+            {
+                        "rev": 3,
+                        "start": "2011-05-20",
+                        "end": "2011-07-09",
+                        "mc": "Unknown",
+                        "desc": "Map became full, as well as laggy"
+            },
+            {
+                        "rev": 4,
+                        "start": "2011-07-10",
+                        "end": "2011-09-15",
+                        "mc": "Minecraft Beta 1.7.3",
+                        "desc": "Minecraft Beta 1.7.3, and switching hosts"
+            },
+            {
+                        "rev": 5,
+                        "start": "2011-09-15",
+                        "end": "2011-11-18",
+                        "mc": "Minecraft Beta 1.8",
+                        "desc": "Minecraft Beta 1.8"
+            },
+            {
+                        "rev": 6,
+                        "start": "2011-11-20",
+                        "end": "2012-02-18",
+                        "mc": "Minecraft 1.0",
+                        "desc": "Minecraft 1.0"
+            },
+            {
+                        "rev": 7,
+                        "start": "2012-02-19",
+                        "end": "2012-05-18",
+                        "mc": "Unknown",
+                        "desc": "Return of Biome/Phoenix Terrain Mod"
+            },
+            {
+                        "rev": 8,
+                        "start": "2012-05-18",
+                        "end": "2012-08-01",
+                        "mc": "Unknown",
+                        "desc": "WorldPainted"
+            },
+            {
+                        "rev": 9,
+                        "start": "2012-08-10",
+                        "end": "2012-10-30",
+                        "mc": "Minecraft 1.3",
+                        "desc": "Minecraft 1.3, vanilla"
+            },
+            {
+                        "rev": 10,
+                        "start": "2012-11-05",
+                        "end": "2013-03-13",
+                        "mc": "Minecraft 1.4.2",
+                        "desc": "Minecraft 1.4.2, modified terrain starting 1000+ blocks from spawn"
+            },
+            {
+                        "rev": 11,
+                        "start": "2013-04-06",
+                        "end": "2013-09-27",
+                        "mc": "Minecraft 1.5",
+                        "desc": "Minecraft 1.5, vanilla+WP terrain with Terrain Control in the corners"
+            },
+            {
+                        "rev": 12,
+                        "start": "2013-09-27",
+                        "end": "2014-02-28",
+                        "mc": "Minecraft 1.6",
+                        "desc": "Minecraft 1.6, vanilla with plumps"
+            },
+            {
+                        "rev": 13,
+                        "start": "2014-02-28",
+                        "end": "2014-08-29",
+                        "mc": "Minecraft 1.7",
+                        "desc": "Minecraft 1.7, vanilla with plumps"
+            },
+            {
+                        "rev": 14,
+                        "start": "2014-08-29",
+                        "end": "2015-02-20",
+                        "mc": "Minecraft 1.7",
+                        "desc": "Minecraft 1.7, vanilla with plumps"
+            },
+            {
+                        "rev": 15,
+                        "start": "2015-02-20",
+                        "end": "2015-08-28",
+                        "mc": "Minecraft 1.8",
+                        "desc": "Minecraft 1.8, vanilla with plumps"
+            },
+            {
+                        "rev": 16,
+                        "start": "2015-08-28",
+                        "end": "2016-01-08",
+                        "mc": "Minecraft 1.8",
+                        "desc": "Minecraft 1.8, vanilla with plumps"
+            },
+            {
+                        "rev": 17,
+                        "start": "2016-01-08",
+                        "end": "2016-05-27",
+                        "mc": "Minecraft 1.8",
+                        "desc": "Minecraft 1.8-1.9, WorldPainted trees and mountains"
+            },
+            {
+                        "rev": 18,
+                        "start": "2016-05-27",
+                        "end": "2016-11-11",
+                        "mc": "Minecraft 1.9",
+                        "desc": "Minecraft 1.9-1.10, WorldPainted trees and mountains"
+            },
+            {
+                        "rev": 19,
+                        "start": "2016-11-11",
+                        "end": "2017-04-14",
+                        "mc": "Minecraft 1.10",
+                        "desc": "Minecraft 1.10-1.11, WorldPainted trees and mountains"
+            },
+            {
+                        "rev": 20,
+                        "start": "2017-04-14",
+                        "end": "2017-09-22",
+                        "mc": "Minecraft 1.11",
+                        "desc": "Minecraft 1.11, WorldPainted trees, mountains, structures"
+            },
+            {
+                        "rev": 21,
+                        "start": "2017-09-22",
+                        "end": "2018-03-16",
+                        "mc": "Minecraft 1.12",
+                        "desc": "Minecraft 1.12, WorldPainted trees, mountains, structures"
+            },
+            {
+                        "rev": 22,
+                        "start": "2018-03-16",
+                        "end": "2019-01-04",
+                        "mc": "Minecraft 1.12",
+                        "desc": "Minecraft 1.12, WorldPainted trees, mountains, structures"
+            },
+            {
+                        "rev": 23,
+                        "start": "2019-01-04",
+                        "end": "2019-07-26",
+                        "mc": "Minecraft 1.13",
+                        "desc": "Minecraft 1.13, Custom Nether/End generation"
+            },
+            {
+                        "rev": 24,
+                        "start": "2019-07-26",
+                        "end": "2020-03-13",
+                        "mc": "Minecraft 1.14",
+                        "desc": "Minecraft 1.14, Vanilla overworld, Custom Nether/End generation"
+            },
+            {
+                        "rev": 25,
+                        "start": "2020-03-13",
+                        "end": "2020-10-30",
+                        "mc": "Minecraft 1.15.2",
+                        "desc": "Minecraft 1.15.2, WorldPainted trees, mountains"
+            },
+            {
+                        "rev": 26,
+                        "start": "2020-10-30",
+                        "end": "2021-06-25",
+                        "mc": "Minecraft 1.16.3",
+                        "desc": "Minecraft 1.16.3-1.16.4, WorldPainted trees, mountains"
+            },
+            {
+                        "rev": 27,
+                        "start": "2021-06-25",
+                        "end": "2022-01-22",
+                        "mc": "Minecraft 1.16.4",
+                        "desc": "Minecraft 1.16.4, Vanilla overworld/nether, Custom End"
+            },
+            {
+                        "rev": 28,
+                        "start": "2022-01-22",
+                        "end": "2022-10-07",
+                        "mc": "Minecraft 1.18.1",
+                        "desc": "Minecraft 1.18.1, Vanilla overworld/nether, Custom End"
+            },
+            {
+                        "rev": 29,
+                        "start": "2022-10-07",
+                        "end": "2024-06-01",
+                        "mc": "Minecraft 1.19.2",
+                        "desc": "Minecraft 1.19.2, Vanilla overworld/nether, Custom End"
+            },
+            {
+                        "rev": 30,
+                        "start": "2024-06-01",
+                        "end": "2025-09-19",
+                        "mc": "Minecraft 1.20.4",
+                        "desc": "Minecraft 1.20.4, Vanilla overworld/nether, Custom End"
+            },
+            {
+                        "rev": 31,
+                        "start": "2025-09-19",
+                        "end": null,
+                        "mc": "Minecraft 1.21.8",
+                        "desc": "Minecraft 1.21.8, Vanilla/Terralith overworld/nether, Custom End"
+            }
+        ];
+
+        const creativeRevisions = [
+            {
+                        "rev": 1,
+                        "start": "2010-03-14",
+                        "end": "2010-04-11",
+                        "mc": "Classic map",
+                        "desc": "First recorded revision. The server started operation June 10, 2009"
+            },
+            {
+                        "rev": 2,
+                        "start": "2010-04-11",
+                        "end": "2010-05-15",
+                        "mc": "Classic map",
+                        "desc": ""
+            },
+            {
+                        "rev": 3,
+                        "start": "2010-05-15",
+                        "end": "2010-05-21",
+                        "mc": "Classic map",
+                        "desc": ""
+            },
+            {
+                        "rev": 4,
+                        "start": "2010-05-21",
+                        "end": "2010-06-04",
+                        "mc": "Classic map",
+                        "desc": ""
+            },
+            {
+                        "rev": 5,
+                        "start": "2010-06-04",
+                        "end": "2010-06-30",
+                        "mc": "Classic map",
+                        "desc": "Last Well Documented Classic map."
+            },
+            {
+                        "rev": 6,
+                        "start": "2010-07-01",
+                        "end": "2010-08-31",
+                        "mc": "Classic map",
+                        "desc": "The Lost Revision"
+            },
+            {
+                        "rev": 7,
+                        "start": "2010-09-01",
+                        "end": "2010-09-28",
+                        "mc": "Classic map",
+                        "desc": "Ended due to map corruption ."
+            },
+            {
+                        "rev": 8,
+                        "start": "2010-09-28",
+                        "end": "2010-10-31",
+                        "mc": "Classic map",
+                        "desc": "Ended due to the map lag issues."
+            },
+            {
+                        "rev": 9,
+                        "start": "2010-10-31",
+                        "end": "2010-12-20",
+                        "mc": "Minecraft Beta 1.0.",
+                        "desc": "Ending coincided with the launch of Minecraft Beta 1.0. A map."
+            },
+            {
+                        "rev": 10,
+                        "start": "2010-12-25",
+                        "end": "2011-01-13",
+                        "mc": "Classic map",
+                        "desc": "Ended due to map lag issues following Minecraft's update to Beta 1.2."
+            },
+            {
+                        "rev": 11,
+                        "start": "2011-01-16",
+                        "end": "2011-02-20",
+                        "mc": "Bukkit implementation",
+                        "desc": "Using Bukkit server mod for the first time."
+            },
+            {
+                        "rev": 12,
+                        "start": "2011-02-20",
+                        "end": "2011-04-01",
+                        "mc": "Unknown",
+                        "desc": "Cause we like to start fresh."
+            },
+            {
+                        "rev": 13,
+                        "start": "2011-04-01",
+                        "end": "2011-05-20",
+                        "mc": "Minecraft Beta 1.4",
+                        "desc": "Minecraft Beta 1.4 (7 weeks)"
+            },
+            {
+                        "rev": 14,
+                        "start": "2011-05-20",
+                        "end": "2011-07-08",
+                        "mc": "Minecraft Beta 1.6",
+                        "desc": "Minecraft Beta 1.6"
+            },
+            {
+                        "rev": 15,
+                        "start": "2011-07-08",
+                        "end": "2011-09-14",
+                        "mc": "Minecraft Beta 1.7.3",
+                        "desc": "Minecraft Beta 1.7.3 - Creation coincides with BlackLotus server migration"
+            },
+            {
+                        "rev": 16,
+                        "start": "2011-09-14",
+                        "end": "2011-10-17",
+                        "mc": "Minecraft Beta 1.8",
+                        "desc": "Minecraft Beta 1.8"
+            },
+            {
+                        "rev": 17,
+                        "start": "2011-10-17",
+                        "end": "2011-11-18",
+                        "mc": "Unknown",
+                        "desc": "Last Map Before 1.0.0"
+            },
+            {
+                        "rev": 18,
+                        "start": "2011-11-19",
+                        "end": "2012-01-17",
+                        "mc": "Minecraft 1.0.0",
+                        "desc": "Creation coincides with Minecraft 1.0.0"
+            },
+            {
+                        "rev": 19,
+                        "start": "2012-01-17",
+                        "end": "2012-03-08",
+                        "mc": "Minecraft 1.1.0",
+                        "desc": "Created shortly after Minecraft 1.1.0"
+            },
+            {
+                        "rev": 20,
+                        "start": "2012-03-08",
+                        "end": "2012-05-06",
+                        "mc": "Unknown",
+                        "desc": "First spawn city"
+            },
+            {
+                        "rev": 21,
+                        "start": "2012-05-06",
+                        "end": "2012-07-31",
+                        "mc": "Unknown",
+                        "desc": "Swanky map generated using WorldPainter"
+            },
+            {
+                        "rev": 22,
+                        "start": "2012-08-24",
+                        "end": "2012-10-28",
+                        "mc": "Unknown",
+                        "desc": "Worldpainted map made by Veronicron"
+            },
+            {
+                        "rev": 23,
+                        "start": "2012-11-05",
+                        "end": "2013-02-24",
+                        "mc": "Unknown",
+                        "desc": "Vanilla map; notable builds include Dome6 and Mini Empire"
+            },
+            {
+                        "rev": 24,
+                        "start": "2013-02-24",
+                        "end": "2013-09-23",
+                        "mc": "Unknown",
+                        "desc": "Worldpainted map featuring a Nether region"
+            },
+            {
+                        "rev": 25,
+                        "start": "2013-09-24",
+                        "end": "2014-03-26",
+                        "mc": "Unknown",
+                        "desc": "Worldpainted map with large lakes, islands, valleys, hilly plains, and mountains."
+            },
+            {
+                        "rev": 26,
+                        "start": "2014-03-28",
+                        "end": "2014-09-11",
+                        "mc": "Unknown",
+                        "desc": "Predominantly vanilla terrain with a touch of amplified and WorldPainted terrain mixed in. Revision 26 boasts an intricately designed spawn and plots system, as well as being the first map to possess an entirely separate nether dimension."
+            },
+            {
+                        "rev": 27,
+                        "start": "2014-09-12",
+                        "end": "2015-02-25",
+                        "mc": "Unknown",
+                        "desc": "Mostly vanilla terrain with some parts amplified and WorldPainted. Smaller spawn city than Revision 26."
+            },
+            {
+                        "rev": 28,
+                        "start": "2015-02-27",
+                        "end": "2015-08-20",
+                        "mc": "Minecraft 1.8.",
+                        "desc": "First revision on Minecraft 1.8. Mostly vanilla terrain with WorldPainted areas."
+            },
+            {
+                        "rev": 29,
+                        "start": "2015-08-22",
+                        "end": "2016-2-13",
+                        "mc": "Unknown",
+                        "desc": "Entirely WorldPainted map. Classic Creative Multiverse World. Return of Spawn City."
+            },
+            {
+                        "rev": 30,
+                        "start": "2016-2-13",
+                        "end": "2016-08-06",
+                        "mc": "Unknown",
+                        "desc": "50/50 Mix of World Painted and Naturally Generated Terrain."
+            },
+            {
+                        "rev": 31,
+                        "start": "2016-08-06",
+                        "end": "2017-01-28",
+                        "mc": "Unknown",
+                        "desc": "50/50 Mix of World Painted and Naturally Generated Terrain."
+            },
+            {
+                        "rev": 32,
+                        "start": "2017-01-28",
+                        "end": "2017-10-14",
+                        "mc": "Unknown",
+                        "desc": "First map to have features generated by World Machine and World Paint."
+            },
+            {
+                        "rev": 33,
+                        "start": "2017-10-14",
+                        "end": "2018-11-30",
+                        "mc": "Unknown",
+                        "desc": "Features generated by World Machine and World Paint."
+            },
+            {
+                        "rev": 34,
+                        "start": "2018-11-30",
+                        "end": "2020-01-31",
+                        "mc": "Unknown",
+                        "desc": "Features generated by World Machine and World Paint."
+            },
+            {
+                        "rev": 35,
+                        "start": "2020-02-01",
+                        "end": "2021-04-30",
+                        "mc": "Unknown",
+                        "desc": "Features generated by World Machine and World Paint."
+            },
+            {
+                        "rev": 36,
+                        "start": "2021-05-01",
+                        "end": "2022-11-25",
+                        "mc": "Minecraft 1.16.5",
+                        "desc": "Features generated by World Machine and World Paint. Minecraft 1.16.5"
+            },
+            {
+                        "rev": 37,
+                        "start": "2022-11-26",
+                        "end": "2024-06-22",
+                        "mc": "Minecraft 1.19.2",
+                        "desc": "Features generated by World Machine and World Paint. Minecraft 1.19.2"
+            },
+            {
+                        "rev": 38,
+                        "start": "2024-06-22",
+                        "end": null,
+                        "mc": "Minecraft 1.20.4",
+                        "desc": "Features generated by World Machine and World Paint. Minecraft 1.20.4"
+            }
+        ];
+
+        // Set default date to today in YYYY-MM-DD format
+        const todayStr = new Date().toISOString().split('T')[0];
+        document.getElementById('date-input').value = todayStr;
+
+        // Mode and date state
+        let currentMode = "compare"; // "compare", "creative", "pve"
+        let currentDateVal = todayStr;
+
+        // Initialize UI listeners
+        const dateInput = document.getElementById('date-input');
+        const resultsContainer = document.getElementById('results-container');
+        
+        dateInput.addEventListener('change', (e) => {
+            currentDateVal = e.target.value;
+            renderResults();
+        });
+
+        // Server selection tabs
+        const tabs = document.querySelectorAll('.server-tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentMode = tab.getAttribute('data-mode');
+                renderResults();
+            });
+        });
+
+        // Preset buttons
+        const presetButtons = document.querySelectorAll('.btn-preset');
+        presetButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                let dateVal = btn.getAttribute('data-date');
+                if (dateVal === "today") {
+                    dateVal = todayStr;
+                }
+                dateInput.value = dateVal;
+                currentDateVal = dateVal;
+                renderResults();
+            });
+        });
+
+        // Function to search for revisions
+        function lookupRevisions(dateStr, revisions) {
+            let matched = [];
+            for (let rev of revisions) {
+                let start = rev.start;
+                let end = rev.end || todayStr; // If current, end check extends to today
+                if (dateStr >= start && dateStr <= end) {
+                    matched.push(rev);
+                }
+            }
+            return matched;
+        }
+
+        // Find transition info if gap occurs
+        function getTransitionInfo(dateStr, revisions) {
+            let lastEnded = null;
+            let firstStarted = null;
+            
+            for (let rev of revisions) {
+                if (rev.end && dateStr > rev.end) {
+                    if (!lastEnded || rev.end > lastEnded.end) {
+                        lastEnded = rev;
+                    }
+                }
+                if (dateStr < rev.start) {
+                    if (!firstStarted || rev.start < firstStarted.start) {
+                        firstStarted = rev;
+                    }
+                }
+            }
+            
+            return { lastEnded, firstStarted };
+        }
+
+        // Calculate timeline position percentage
+        function calculateTimelinePercentage(dateStr, startStr, endStr) {
+            const start = new Date(startStr).getTime();
+            const end = new Date(endStr || todayStr).getTime();
+            const current = new Date(dateStr).getTime();
+            
+            if (end === start) return 50;
+            
+            const pct = ((current - start) / (end - start)) * 100;
+            return Math.min(100, Math.max(0, pct));
+        }
+
+        // Render functions
+        function createRevisionCard(rev, serverType, dateStr) {
+            const isCreative = serverType === "creative";
+            const serverName = isCreative ? "Creative (C)" : "PvE (P)";
+            const cardClass = isCreative ? "creative-card" : "pve-card";
+            const badgeLabel = isCreative ? "Creative Server" : "PvE Server";
+            
+            const startStr = rev.start;
+            const endStr = rev.end || "(current)";
+            const timelineEndVal = rev.end || todayStr;
+            const pct = calculateTimelinePercentage(dateStr, startStr, timelineEndVal);
+            
+            // Build wiki link
+            const wikiLink = isCreative 
+                ? `https://wiki.nerd.nu/wiki/Category:Creative_creations_(map_revision_${rev.rev})`
+                : `https://wiki.nerd.nu/wiki/PvE_r${rev.rev}`;
+                
+            const generalWikiLink = isCreative
+                ? "https://wiki.nerd.nu/wiki/Creative"
+                : "https://wiki.nerd.nu/wiki/PvE";
+
+            // Format date presentation
+            const parsedStart = new Date(rev.start).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+            const parsedEnd = rev.end 
+                ? new Date(rev.end).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }) 
+                : "Ongoing (Current Active Revision)";
+
+            return `
+                <div class="result-card ${cardClass}">
+                    <span class="badge">${badgeLabel}</span>
+                    <div class="result-header">
+                        <h3 class="rev-title">Revision ${rev.rev}</h3>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 4px;">
+                            Active server version during this period
+                        </div>
+                    </div>
+                    
+                    <div class="meta-grid">
+                        <div class="meta-item">
+                            <span class="meta-label">Start Date</span>
+                            <span class="meta-value">${parsedStart}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">End Date</span>
+                            <span class="meta-value">${parsedEnd}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Minecraft Version</span>
+                            <span class="meta-value">${rev.mc}</span>
+                        </div>
+                    </div>
+
+                    <div class="description-box">
+                        <strong>Overview & Details:</strong><br>
+                        ${rev.desc}
+                    </div>
+
+                    <div class="timeline-container">
+                        <span class="meta-label">Revision Timeline Progress</span>
+                        <div class="timeline-bar">
+                            <div class="timeline-fill" style="width: ${pct}%;"></div>
+                            <div class="timeline-indicator" style="left: ${pct}%;" title="Selected Date: ${dateStr}"></div>
+                        </div>
+                        <div class="timeline-labels">
+                            <span>${rev.start}</span>
+                            <span>${rev.end || "Present"}</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <a href="${wikiLink}" target="_blank" rel="noopener noreferrer" class="btn-wiki">
+                            📖 View Revision Category
+                        </a>
+                        <a href="${generalWikiLink}" target="_blank" rel="noopener noreferrer" class="btn-wiki" style="border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.7);">
+                            🌐 Main Server Wiki
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createDowntimeCard(serverType, dateStr, revisions, firstStart) {
+            const isCreative = serverType === "creative";
+            const serverLabel = isCreative ? "Creative" : "PvE";
+            const info = getTransitionInfo(dateStr, revisions);
+            
+            let messageHtml = "";
+            
+            if (dateStr < firstStart) {
+                const launchDate = isCreative ? "June 10, 2009" : "January 17, 2011";
+                messageHtml = `
+                    <div class="no-data-card" style="border-color: #ffcc00; background: rgba(255, 204, 0, 0.1);">
+                        <strong style="color: #ffcc00; font-size: 1.2rem; display: block; margin-bottom: 8px;">🌌 Pre-Revision Era</strong>
+                        The nerd.nu ${serverLabel} server did not have recorded map revisions on <strong>${dateStr}</strong>.<br>
+                        (The ${serverLabel} server officially launched on ${launchDate}).
+                    </div>
+                `;
+            } else if (info.lastEnded && info.firstStarted) {
+                messageHtml = `
+                    <div class="no-data-card">
+                        <strong style="color: #ff3b30; font-size: 1.2rem; display: block; margin-bottom: 8px;">⚙️ Server Downtime / Transition</strong>
+                        The nerd.nu ${serverLabel} server was in a reset or transition period on <strong>${dateStr}</strong>.<br>
+                        This occurred between <strong>Revision ${info.lastEnded.rev}</strong> (ended ${info.lastEnded.end}) and <strong>Revision ${info.firstStarted.rev}</strong> (started ${info.firstStarted.start}).
+                    </div>
+                `;
+            } else {
+                messageHtml = `
+                    <div class="no-data-card">
+                        No recorded revision active for ${serverLabel} on <strong>${dateStr}</strong>.
+                    </div>
+                `;
+            }
+            
+            return messageHtml;
+        }
+
+        function renderResults() {
+            // Remove show class, wait brief moment, render, then add show class for nice animation
+            resultsContainer.classList.remove('show');
+            
+            // Format selected date
+            const dateStr = currentDateVal;
+            if (!dateStr) {
+                resultsContainer.innerHTML = '<div class="no-data-card">Please enter or select a valid date.</div>';
+                resultsContainer.classList.add('show');
+                return;
+            }
+
+            setTimeout(() => {
+                // Get matched revisions
+                const matchedCreative = lookupRevisions(dateStr, creativeRevisions);
+                const matchedPvE = lookupRevisions(dateStr, pveRevisions);
+                
+                let outputHtml = "";
+
+                if (currentMode === "compare") {
+                    outputHtml = `<div class="compare-view">`;
+                    
+                    // Creative Column
+                    if (matchedCreative.length > 0) {
+                        matchedCreative.forEach(rev => {
+                            outputHtml += createRevisionCard(rev, "creative", dateStr);
+                        });
+                    } else {
+                        outputHtml += createDowntimeCard("creative", dateStr, creativeRevisions, "2010-03-14");
+                    }
+                    
+                    // PvE Column
+                    if (matchedPvE.length > 0) {
+                        matchedPvE.forEach(rev => {
+                            outputHtml += createRevisionCard(rev, "pve", dateStr);
+                        });
+                    } else {
+                        outputHtml += createDowntimeCard("pve", dateStr, pveRevisions, "2011-01-17");
+                    }
+                    
+                    outputHtml += `</div>`;
+                } else if (currentMode === "creative") {
+                    if (matchedCreative.length > 0) {
+                        matchedCreative.forEach(rev => {
+                            outputHtml += createRevisionCard(rev, "creative", dateStr);
+                        });
+                    } else {
+                        outputHtml += createDowntimeCard("creative", dateStr, creativeRevisions, "2010-03-14");
+                    }
+                } else if (currentMode === "pve") {
+                    if (matchedPvE.length > 0) {
+                        matchedPvE.forEach(rev => {
+                            outputHtml += createRevisionCard(rev, "pve", dateStr);
+                        });
+                    } else {
+                        outputHtml += createDowntimeCard("pve", dateStr, pveRevisions, "2011-01-17");
+                    }
+                }
+
+                resultsContainer.innerHTML = outputHtml;
+                resultsContainer.classList.add('show');
+            }, 150);
+        }
+
+        // Initial render
+        renderResults();
+    </script>
+</body>
+</html>
