@@ -116,6 +116,15 @@
         .link-video-compressor:hover {
             background-color: #aa55ff;
         }
+
+        .link-image-resizer {
+            background-color: #6c5ce7;
+            border: 2px solid #6c5ce7;
+        }
+        
+        .link-image-resizer:hover {
+            background-color: #8073e8;
+        }
         
         .link-notepad {
             background-color: #00cc66;
@@ -220,6 +229,7 @@
     <div class="links-container">
         <a href="{% url 'converter' %}" class="link-button link-converter">File Converter</a>
         <a href="{% url 'video_compressor' %}" class="link-button link-video-compressor">Video Compressor/Resizer</a>
+        <a href="{% url 'image_resizer' %}" class="link-button link-image-resizer">Image Compressor/Resizer</a>
         <a href="{% url 'video_slicer' %}" class="link-button link-video-slicer">Audio/Video Slicer</a>
         <a href="{% url 'audio_to_video' %}" class="link-button link-audio-to-video">Audio to Video</a>
         <a href="{% url 'databases_collection' %}" class="link-button link-databases">Databases Collection</a>

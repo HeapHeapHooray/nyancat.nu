@@ -57,6 +57,10 @@ def video_compressor(request):
     return render(request, "core/video_compressor.html")
 
 
+def image_resizer(request):
+    return render(request, "core/image_resizer.html")
+
+
 def bg_remover(request):
     return render(request, "core/bg_remover.html")
 

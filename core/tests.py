@@ -133,6 +133,19 @@ class NerdToolsTests(TestCase):
         self.assertContains(response, "Nerd.nu Map Lookup")
 
 
+class ImageResizerTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("image_resizer")
+
+    def test_image_resizer_get(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "core/image_resizer.html")
+        self.assertContains(response, "Image Compressor & Resizer")
+
+
+
 
 
 
