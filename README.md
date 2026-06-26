@@ -62,6 +62,15 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
   - No server-side execution: files are served as raw client-side HTML/CSS/JS.
   - Cache-bypassing mechanisms for instant real-time updates.
   - Built-in path-traversal protection for absolute security.
+- **Image Compressor/Resizer**: Compress, resize, and convert images locally using `ffmpeg.wasm` in your browser.
+  - Supports JPEG, PNG, WebP, and custom output format extensions.
+  - Scale dimensions dynamically via range slider percentage, presets, or custom pixels with lock aspect ratio.
+  - Perform transformations such as rotation (90°, 180°, 270°) and flipping (horizontal/vertical).
+  - Shows original/compressed file sizes, dimensions, and saved space calculations.
+  - History of processed images cached in browser using IndexedDB.
+- **nerd.nu Tools**: Web utilities panel for the nerd.nu Minecraft server community.
+  - **Map Revision Lookup**: Input any date to find out which nerd.nu Creative (C) or PvE (P) map revision was active at that time.
+  - Integrated links to historical map information.
 
 ## Tech Stack
 
@@ -211,6 +220,18 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 - **Cache-Bypassing Design**: Serves all assets with custom headers to prevent CDN or browser caching, ensuring updates are visible immediately.
 - **Sandbox Security**: Includes strict path-traversal validation (rejects `../` queries with `403 Forbidden`) and serves files strictly as client-side raw data, preventing any server-side script execution.
 - **AI Skill Instructions**: Includes a comprehensive [NANO_SKILL.md](file:///home/heap/Documents/Repos/nyancat.nu/NANO_SKILL.md) system guide for teaching local/server-bound AI agents how to write to, organize, and utilize the playroom storage path.
+
+### 10. Image Compressor & Resizer (`/image-resizer/`)
+- Compress, resize, and convert images directly in the browser using WebAssembly
+- Selectable formats: Original, JPEG, PNG, WebP, or **Custom Format...** extension input (e.g., `bmp`, `gif`, `tiff`)
+- Multiple resize modes: Percentage Scale (using a slider), Resolution Presets, or Custom Dimensions (with lock aspect ratio)
+- Rotate (90°, 180°, 270°) and flip (horizontal, vertical, or both) transformations
+- Processing history with previews stored locally via IndexedDB (`idb-keyval`)
+
+### 11. nerd.nu Tools (`/nerd/`)
+- Panel of utility tools for the nerd.nu Minecraft server community
+- **Map Revision Lookup** (`/nerd/map-lookup/`): Easily look up active Creative (C) and PvE (P) map revisions for any historical date using data sourced from the community wiki
+- Note: Also hosts links/details about Minecraft servers loaded with classic historical map revisions on `nyancat.nu`
 
 ## VPS Deployment (Nginx + Gunicorn + SSL)
 
