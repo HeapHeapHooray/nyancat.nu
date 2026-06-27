@@ -179,6 +179,16 @@
         .link-nerd:hover {
             background-color: #ff5e52;
         }
+
+        .link-qr-barcode {
+            background-color: #ff4757;
+            border: 2px solid #ff4757;
+            color: white;
+        }
+
+        .link-qr-barcode:hover {
+            background-color: #ff6b81;
+        }
         
         .github-link {
             position: absolute;
@@ -238,6 +248,7 @@
         <a href="{% url 'x_downloader' %}" class="link-button link-x-downloader">X Video Downloader</a>
         <a href="{% url 'bg_remover' %}" class="link-button link-bg-remover">Background Remover</a>
         <a href="{% url 'notepad' %}" class="link-button link-notepad">Notepad</a>
+        <a href="{% url 'qr_barcode' %}" class="link-button link-qr-barcode">QR & Barcode Generator</a>
     </div>
 </body>
 </html>

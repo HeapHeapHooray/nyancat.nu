@@ -145,6 +145,19 @@ class ImageResizerTests(TestCase):
         self.assertContains(response, "Image Compressor & Resizer")
 
 
+class QRBarcodeTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("qr_barcode")
+
+    def test_qr_barcode_get(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "core/qr_barcode.html")
+        self.assertContains(response, "QR & Barcode Generator")
+
+
+
 
 
 

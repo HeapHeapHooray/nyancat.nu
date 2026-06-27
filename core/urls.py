@@ -19,5 +19,6 @@ urlpatterns = [
     path("nuverse.sh", views.nuverse_sh, name="nuverse_sh"),
     path("nerd/", views.nerd_tools, name="nerd_tools"),
     path("nerd/map-lookup/", views.nerd_map_lookup, name="nerd_map_lookup"),
+    path("qr-barcode/", views.qr_barcode, name="qr_barcode"),
 ]
 

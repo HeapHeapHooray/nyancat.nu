@@ -241,5 +241,10 @@ def nerd_map_lookup(request):
     return render(request, "core/nerd_map_lookup.html")
 
 
+def qr_barcode(request):
+    return render(request, "core/qr_barcode.html")
+
+
+
 
 

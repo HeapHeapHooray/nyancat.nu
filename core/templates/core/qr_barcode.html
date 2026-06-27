@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code & Barcode Generator - nyancat.nu</title>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'core/images/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/images/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/images/favicon-16x16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/images/apple-touch-icon-bg.png' %}">
+    <link rel="manifest" href="{% static 'core/site.webmanifest' %}">
+    <meta name="theme-color" content="#003366">
+    <meta name="theme-color" content="#003366" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#003366" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#003366">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #003366;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+
+        .header-title-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header h1 {
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            color: #00ffcc;
+        }
+
+        .home-link {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s, transform 0.2s;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .home-link:hover {
+            color: #ffdd33;
+            transform: translateX(-3px);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Glass Panel */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Tool Tabs */
+        .tool-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            color: #00ffcc;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -11px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #00ffcc;
+        }
+
+        /* Sub-tabs for QR Code formats */
+        .qr-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .qr-type-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ddd;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .qr-type-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        .qr-type-btn.active {
+            background: #ff0099;
+            color: white;
+            border-color: #ff0099;
+            font-weight: bold;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #ffcc00;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            padding: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #00ffcc;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Checkbox & File */
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: #ddd;
+            user-select: none;
+        }
+
+        .checkbox-label input {
+            accent-color: #00ffcc;
+            width: 18px;
+            height: 18px;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            display: block;
+        }
+
+        .file-upload-input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .file-upload-input:hover {
+            border-color: #ff0099;
+        }
+
+        /* Range Sliders */
+        .range-slider-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .range-slider {
+            flex: 1;
+            accent-color: #00ffcc;
+            height: 6px;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .range-val {
+            font-family: monospace;
+            min-width: 45px;
+            text-align: right;
+            color: #00ffcc;
+            font-weight: bold;
+        }
+
+        /* Color inputs styling */
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .color-picker {
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: none;
+            cursor: pointer;
+        }
+
+        /* Preview Panel */
+        .preview-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: sticky;
+            top: 20px;
+        }
+
+        .preview-card {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-title {
+            font-size: 1.1rem;
+            color: #00ffcc;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .canvas-container {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            max-width: 100%;
+            margin-bottom: 20px;
+            min-height: 220px;
+            min-width: 220px;
+            transition: all 0.2s;
+        }
+
+        .canvas-container canvas {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .error-message {
+            color: #ff3344;
+            background: rgba(255, 51, 68, 0.1);
+            border: 1px solid rgba(255, 51, 68, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            display: none;
+            width: 100%;
+            text-align: left;
+            word-break: break-all;
+        }
+
+        /* Action Buttons */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .btn {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background-color: #00ffcc;
+            color: #003366;
+        }
+
+        .btn-primary:hover {
+            background-color: #33ffdd;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: #ff0099;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #ff33bb;
+            box-shadow: 0 0 15px rgba(255, 0, 153, 0.4);
+        }
+
+        .btn-accent {
+            background-color: #9933ff;
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: #aa55ff;
+            box-shadow: 0 0 15px rgba(153, 51, 255, 0.4);
+        }
+
+        .btn-success {
+            background-color: #00cc66;
+            color: white;
+            grid-column: span 2;
+        }
+
+        .btn-success:hover {
+            background-color: #00dd77;
+            box-shadow: 0 0 15px rgba(0, 204, 102, 0.4);
+        }
+
+        /* History list styles */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .history-item {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.2s;
+        }
+
+        .history-item:hover {
+            border-color: #00ffcc;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .history-item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .history-thumb {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 6px;
+            padding: 3px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .history-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .history-type {
+            font-size: 0.8rem;
+            color: #ffcc00;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .history-text {
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #fff;
+            margin: 2px 0 4px;
+        }
+
+        .history-date {
+            font-size: 0.7rem;
+            color: #888;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .history-action-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #ccc;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .history-action-btn:hover {
+            color: white;
+            border-color: white;
+        }
+
+        .history-action-btn.btn-load:hover {
+            color: #00ffcc;
+            border-color: #00ffcc;
+            background: rgba(0, 255, 204, 0.05);
+        }
+
+        .history-action-btn.btn-delete:hover {
+            color: #ff3344;
+            border-color: #ff3344;
+            background: rgba(255, 51, 68, 0.05);
+        }
+
+        .history-empty {
+            text-align: center;
+            color: #888;
+            padding: 30px;
+            font-style: italic;
+        }
+
+        .history-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .clear-all-btn {
+            background: none;
+            border: 1px solid #ff3344;
+            color: #ff3344;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .clear-all-btn:hover {
+            background: #ff3344;
+            color: white;
+        }
+
+        /* Toast UI */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #00ffcc;
+            color: #003366;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Helper styles */
+        .hide {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-title-area">
+            <a href="{% url 'index' %}" class="home-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Home
+            </a>
+            <h1>QR & Barcode Generator</h1>
+        </div>
+        <div style="font-size: 0.85rem; color: #00ffcc; font-style: italic;">
+            100% Client-Side Processing
+        </div>
+    </div>
+
+    <div class="main-layout">
+        <!-- Settings Column -->
+        <div class="glass-panel">
+            <div class="tool-tabs">
+                <button class="tab-btn active" id="tab-qr-trigger" onclick="switchMainTab('qr')">QR Code</button>
+                <button class="tab-btn" id="tab-barcode-trigger" onclick="switchMainTab('barcode')">Barcode</button>
+                <button class="tab-btn" id="tab-history-trigger" onclick="switchMainTab('history')">History</button>
+            </div>
+
+            <!-- Tab 1: QR Code -->
+            <div id="tab-qr-content" class="tab-content">
+                <div class="qr-types">
+                    <button class="qr-type-btn active" data-type="text" onclick="switchQRType('text')">Text/URL</button>
+                    <button class="qr-type-btn" data-type="wifi" onclick="switchQRType('wifi')">WiFi Network</button>
+                    <button class="qr-type-btn" data-type="vcard" onclick="switchQRType('vcard')">Contact (vCard)</button>
+                    <button class="qr-type-btn" data-type="email" onclick="switchQRType('email')">Email</button>
+                    <button class="qr-type-btn" data-type="sms" onclick="switchQRType('sms')">SMS</button>
+                </div>
+
+                <!-- Input Sub-panels -->
+                <!-- Sub-panel: Text -->
+                <div id="qr-input-text" class="qr-input-panel">
+                    <div class="form-group">
+                        <label for="qr-text-input">Text or URL</label>
+                        <textarea id="qr-text-input" class="form-control" placeholder="Enter text or URL to encode..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Sub-panel: WiFi -->
+                <div id="qr-input-wifi" class="qr-input-panel hide">
+                    <div class="form-group">
+                        <label for="wifi-ssid">Network Name (SSID)</label>
+                        <input type="text" id="wifi-ssid" class="form-control" placeholder="e.g. MyWiFiNetwork">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="wifi-password">Password</label>
+                            <input type="text" id="wifi-password" class="form-control" placeholder="Network Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="wifi-encryption">Encryption</label>
+                            <select id="wifi-encryption" class="form-control">
+                                <option value="WPA">WPA/WPA2</option>
+                                <option value="WEP">WEP</option>
+                                <option value="nopass">None (Open)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="wifi-hidden">
+                            Hidden Network
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Sub-panel: vCard -->
+                <div id="qr-input-vcard" class="qr-input-panel hide">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vcard-fn">Full Name</label>
+                            <input type="text" id="vcard-fn" class="form-control" placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="vcard-org">Organization</label>
+                            <input type="text" id="vcard-org" class="form-control" placeholder="ACME Inc.">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vcard-tel">Phone Number</label>
+                            <input type="text" id="vcard-tel" class="form-control" placeholder="+1 555-0199">
+                        </div>
+                        <div class="form-group">
+                            <label for="vcard-email">Email Address</label>
+                            <input type="email" id="vcard-email" class="form-control" placeholder="john@example.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vcard-url">Website</label>
+                            <input type="url" id="vcard-url" class="form-control" placeholder="https://example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="vcard-note">Notes / Bio</label>
+                            <input type="text" id="vcard-note" class="form-control" placeholder="Software Developer">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub-panel: Email -->
+                <div id="qr-input-email" class="qr-input-panel hide">
+                    <div class="form-row">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label for="email-to">To Email Address</label>
+                            <input type="email" id="email-to" class="form-control" placeholder="recipient@example.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email-subject">Subject</label>
+                        <input type="text" id="email-subject" class="form-control" placeholder="Email subject line">
+                    </div>
+                    <div class="form-group">
+                        <label for="email-body">Message Body</label>
+                        <textarea id="email-body" class="form-control" placeholder="Type your email body message here..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Sub-panel: SMS -->
+                <div id="qr-input-sms" class="qr-input-panel hide">
+                    <div class="form-group">
+                        <label for="sms-phone">Phone Number</label>
+                        <input type="tel" id="sms-phone" class="form-control" placeholder="e.g. +15550199">
+                    </div>
+                    <div class="form-group">
+                        <label for="sms-message">Message</label>
+                        <textarea id="sms-message" class="form-control" placeholder="Type your SMS message here..."></textarea>
+                    </div>
+                </div>
+
+                <!-- QR Code Styling Customization -->
+                <div style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                    <h3 style="margin-bottom: 15px; color: #00ffcc; font-size: 1rem; text-transform: uppercase;">QR Customizations</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="qr-color-dark">Foreground Color</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="qr-color-dark" class="color-picker" value="#000000">
+                                <span id="qr-color-dark-hex" style="font-size:0.9rem; font-family:monospace;">#000000</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="qr-color-light">Background Color</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="qr-color-light" class="color-picker" value="#ffffff">
+                                <span id="qr-color-light-hex" style="font-size:0.9rem; font-family:monospace;">#ffffff</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="qr-error-level">Error Correction Level</label>
+                            <select id="qr-error-level" class="form-control">
+                                <option value="L">Low (~7% recovery)</option>
+                                <option value="M">Medium (~15% recovery)</option>
+                                <option value="Q">Quartile (~25% recovery)</option>
+                                <option value="H" selected>High (~30% recovery) - Recommended with Logos</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="qr-margin">Border Margin (Quiet Zone)</label>
+                            <div class="range-slider-wrapper">
+                                <input type="range" id="qr-margin" class="range-slider" min="0" max="6" value="2">
+                                <span class="range-val" id="qr-margin-val">2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="qr-size">Size (Resolution)</label>
+                            <div class="range-slider-wrapper">
+                                <input type="range" id="qr-size" class="range-slider" min="128" max="1024" step="64" value="384">
+                                <span class="range-val" id="qr-size-val">384px</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="logo-file">Center Logo Overlay (Optional)</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="logo-file" class="file-upload-input" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="logo-controls" class="form-group hide" style="margin-top: 10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
+                        <div class="checkbox-label" style="justify-content: space-between;">
+                            <span>Active Logo: <span id="logo-name" style="color: #ff0099; font-weight: bold;">logo.png</span></span>
+                            <button class="clear-all-btn" style="margin: 0; padding: 4px 8px; border-radius: 4px;" onclick="clearLogo()">Remove Logo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Barcode -->
+            <div id="tab-barcode-content" class="tab-content hide">
+                <div class="form-group">
+                    <label for="barcode-text">Barcode Value / Data</label>
+                    <input type="text" id="barcode-text" class="form-control" placeholder="Enter barcode data..." value="123456789012">
+                    <span id="barcode-help" style="font-size: 0.8rem; color: #888; margin-top: 5px; display: block;">Standard digits or characters depending on barcode type.</span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="barcode-format">Symbology / Standard</label>
+                        <select id="barcode-format" class="form-control" onchange="updateBarcodeHelpText()">
+                            <option value="CODE128">CODE128 (General alphanumeric)</option>
+                            <option value="CODE39">CODE39 (Alphanumeric, limited)</option>
+                            <option value="EAN13" selected>EAN-13 (12 or 13 digits retail)</option>
+                            <option value="EAN8">EAN-8 (7 or 8 digits retail)</option>
+                            <option value="UPC">UPC-A (11 or 12 digits retail)</option>
+                            <option value="ITF">ITF (Interleaved 2 of 5, digits only)</option>
+                            <option value="codabar">Codabar (Digits and -$:/.+)</option>
+                            <option value="MSI">MSI (Digits only)</option>
+                            <option value="pharmacode">Pharmacode (Integers 3 to 131070)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row" style="margin-top: 25px;">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="barcode-display-text" checked>
+                                Display Value Text
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                    <h3 style="margin-bottom: 15px; color: #00ffcc; font-size: 1rem; text-transform: uppercase;">Barcode Customizations</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="barcode-color-line">Bar Line Color</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="barcode-color-line" class="color-picker" value="#000000">
+                                <span id="barcode-color-line-hex" style="font-size:0.9rem; font-family:monospace;">#000000</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="barcode-color-bg">Background Color</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="barcode-color-bg" class="color-picker" value="#ffffff">
+                                <span id="barcode-color-bg-hex" style="font-size:0.9rem; font-family:monospace;">#ffffff</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="barcode-width">Bar Width (Thickness)</label>
+                            <div class="range-slider-wrapper">
+                                <input type="range" id="barcode-width" class="range-slider" min="1" max="4" step="1" value="2">
+                                <span class="range-val" id="barcode-width-val">2px</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="barcode-height">Bar Height</label>
+                            <div class="range-slider-wrapper">
+                                <input type="range" id="barcode-height" class="range-slider" min="40" max="180" step="5" value="100">
+                                <span class="range-val" id="barcode-height-val">100px</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="barcode-font-size">Text Font Size</label>
+                            <div class="range-slider-wrapper">
+                                <input type="range" id="barcode-font-size" class="range-slider" min="8" max="32" step="1" value="16">
+                                <span class="range-val" id="barcode-font-size-val">16px</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="barcode-text-margin">Text Margin</label>
+                            <div class="range-slider-wrapper">
+                                <input type="range" id="barcode-text-margin" class="range-slider" min="0" max="25" step="1" value="4">
+                                <span class="range-val" id="barcode-text-margin-val">4px</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: History -->
+            <div id="tab-history-content" class="tab-content hide">
+                <div class="history-title-row">
+                    <h3 style="color: #00ffcc; font-size: 1rem; text-transform: uppercase;">Saved Codes History</h3>
+                    <button class="clear-all-btn" onclick="clearHistory()">Clear All History</button>
+                </div>
+                <div class="history-list" id="history-items-container">
+                    <!-- Dynamic history content goes here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Column -->
+        <div class="preview-wrapper">
+            <div class="preview-card">
+                <div class="preview-title" id="preview-title-text">QR Code Preview</div>
+                
+                <div class="error-message" id="preview-error-box">
+                    Invalid input data.
+                </div>
+
+                <div class="canvas-container" id="canvas-container">
+                    <canvas id="qr-preview-canvas" style="display: block;"></canvas>
+                    <canvas id="barcode-preview-canvas" style="display: none;"></canvas>
+                </div>
+
+                <div class="actions-grid">
+                    <button class="btn btn-primary" onclick="downloadImage('png')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        PNG
+                    </button>
+                    <button class="btn btn-secondary" onclick="downloadImage('svg')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        SVG
+                    </button>
+                    <button class="btn btn-accent" style="grid-column: span 2;" onclick="copyPreviewToClipboard()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy Image to Clipboard
+                    </button>
+                    <button class="btn btn-success" onclick="saveCurrentToHistory()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+                        </svg>
+                        Save to History
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast UI -->
+    <div id="toast-notify" class="toast">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span id="toast-text">Success!</span>
+    </div>
+
+    <!-- Hidden Barcode SVG container for SVG Generation -->
+    <svg id="barcode-svg-hidden" style="display: none;"></svg>
+
+    <!-- Load browser library CDNs -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+
+    <script>
+        // State management
+        let currentTab = 'qr'; // 'qr', 'barcode', 'history'
+        let currentQRType = 'text'; // 'text', 'wifi', 'vcard', 'email', 'sms'
+        let loadedLogoImg = null;
+        let loadedLogoName = "";
+        let loadedLogoDataURL = "";
+        let isGenerating = false;
+        let isDomReady = false;
+
+        // Elements
+        const qrCanvas = document.getElementById('qr-preview-canvas');
+        const barcodeCanvas = document.getElementById('barcode-preview-canvas');
+        const hiddenBarcodeSvg = document.getElementById('barcode-svg-hidden');
+        const errorBox = document.getElementById('preview-error-box');
+
+        // Color picking sync text
+        const syncColorLabel = (colorInputId, labelId) => {
+            const el = document.getElementById(colorInputId);
+            const lbl = document.getElementById(labelId);
+            if (el && lbl) {
+                lbl.innerText = el.value.toUpperCase();
+                el.addEventListener('input', (e) => {
+                    lbl.innerText = e.target.value.toUpperCase();
+                    triggerGeneration();
+                });
+            }
+        };
+
+        // Range slider sync label
+        const syncSliderLabel = (sliderId, labelId, suffix = "") => {
+            const el = document.getElementById(sliderId);
+            const lbl = document.getElementById(labelId);
+            if (el && lbl) {
+                lbl.innerText = el.value + suffix;
+                el.addEventListener('input', (e) => {
+                    lbl.innerText = e.target.value + suffix;
+                    triggerGeneration();
+                });
+            }
+        };
+
+        // Initialize customizations and event listeners
+        function init() {
+            // Setup slider & color listeners
+            syncColorLabel('qr-color-dark', 'qr-color-dark-hex');
+            syncColorLabel('qr-color-light', 'qr-color-light-hex');
+            syncSliderLabel('qr-margin', 'qr-margin-val');
+            syncSliderLabel('qr-size', 'qr-size-val', 'px');
+
+            syncColorLabel('barcode-color-line', 'barcode-color-line-hex');
+            syncColorLabel('barcode-color-bg', 'barcode-color-bg-hex');
+            syncSliderLabel('barcode-width', 'barcode-width-val', 'px');
+            syncSliderLabel('barcode-height', 'barcode-height-val', 'px');
+            syncSliderLabel('barcode-font-size', 'barcode-font-size-val', 'px');
+            syncSliderLabel('barcode-text-margin', 'barcode-text-margin-val', 'px');
+
+            // Setup listeners for updates
+            const qrTriggers = [
+                'qr-text-input', 'wifi-ssid', 'wifi-password', 'wifi-encryption', 'wifi-hidden',
+                'vcard-fn', 'vcard-org', 'vcard-tel', 'vcard-email', 'vcard-url', 'vcard-note',
+                'email-to', 'email-subject', 'email-body', 'sms-phone', 'sms-message',
+                'qr-error-level'
+            ];
+            qrTriggers.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', triggerGeneration);
+                    el.addEventListener('change', triggerGeneration);
+                }
+            });
+
+            const barcodeTriggers = [
+                'barcode-text', 'barcode-format', 'barcode-display-text'
+            ];
+            barcodeTriggers.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', triggerGeneration);
+                    el.addEventListener('change', triggerGeneration);
+                }
+            });
+
+            // Set placeholder initial text
+            document.getElementById('qr-text-input').value = 'https://nyancat.nu';
+
+            // Logo file uploader
+            document.getElementById('logo-file').addEventListener('change', handleLogoUpload);
+
+            // Set DOM Ready and render initial preview
+            isDomReady = true;
+            triggerGeneration();
+            renderHistoryList();
+        }
+
+        // Run init immediately if DOM is already parsed
+        if (document.readyState === 'loading') {
+            window.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // Switch main tabs
+        function switchMainTab(tab) {
+            currentTab = tab;
+            
+            // Toggle active triggers
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${tab}-trigger`).classList.add('active');
+
+            // Toggle active contents
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hide'));
+            document.getElementById(`tab-${tab}-content`).classList.remove('hide');
+
+            const titleText = document.getElementById('preview-title-text');
+            if (tab === 'qr') {
+                qrCanvas.style.display = 'block';
+                barcodeCanvas.style.display = 'none';
+                titleText.innerText = 'QR Code Preview';
+                triggerGeneration();
+            } else if (tab === 'barcode') {
+                qrCanvas.style.display = 'none';
+                barcodeCanvas.style.display = 'block';
+                titleText.innerText = 'Barcode Preview';
+                triggerGeneration();
+            } else if (tab === 'history') {
+                renderHistoryList();
+            }
+        }
+
+        // Switch QR type
+        function switchQRType(type) {
+            currentQRType = type;
+            
+            // Toggle buttons
+            document.querySelectorAll('.qr-type-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.qr-type-btn[data-type="${type}"]`).classList.add('active');
+
+            // Toggle input panels
+            document.querySelectorAll('.qr-input-panel').forEach(panel => panel.classList.add('hide'));
+            document.getElementById(`qr-input-${type}`).classList.remove('hide');
+
+            triggerGeneration();
+        }
+
+        // Handle Logo Upload
+        function handleLogoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            loadedLogoName = file.name;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                loadedLogoDataURL = evt.target.result;
+                const img = new Image();
+                img.onload = function() {
+                    loadedLogoImg = img;
+                    // Show controls
+                    const controls = document.getElementById('logo-controls');
+                    controls.classList.remove('hide');
+                    document.getElementById('logo-name').innerText = file.name;
+                    triggerGeneration();
+                    showToast("Logo loaded successfully!");
+                };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Clear Logo
+        function clearLogo() {
+            loadedLogoImg = null;
+            loadedLogoName = "";
+            loadedLogoDataURL = "";
+            document.getElementById('logo-file').value = "";
+            document.getElementById('logo-controls').classList.add('hide');
+            triggerGeneration();
+            showToast("Logo removed");
+        }
+
+        // Help text based on Barcode standard selection
+        function updateBarcodeHelpText() {
+            const format = document.getElementById('barcode-format').value;
+            const help = document.getElementById('barcode-help');
+            const input = document.getElementById('barcode-text');
+            
+            if (format === 'EAN13') {
+                help.innerText = "EAN-13: Requires exactly 12 or 13 numeric digits.";
+                if (!/^\d+$/.test(input.value) || (input.value.length !== 12 && input.value.length !== 13)) {
+                    input.value = "1234567890128";
+                }
+            } else if (format === 'EAN8') {
+                help.innerText = "EAN-8: Requires exactly 7 or 8 numeric digits.";
+                if (!/^\d+$/.test(input.value) || (input.value.length !== 7 && input.value.length !== 8)) {
+                    input.value = "12345670";
+                }
+            } else if (format === 'UPC') {
+                help.innerText = "UPC-A: Requires exactly 11 or 12 numeric digits.";
+                if (!/^\d+$/.test(input.value) || (input.value.length !== 11 && input.value.length !== 12)) {
+                    input.value = "123456789012";
+                }
+            } else if (format === 'CODE128') {
+                help.innerText = "CODE128: Supports all 128 ASCII characters (numbers, letters, symbols).";
+            } else if (format === 'CODE39') {
+                help.innerText = "CODE39: Uppercase letters (A-Z), numbers (0-9), and spaces, minus, plus, period, dollar, slash, percent.";
+                input.value = input.value.toUpperCase().replace(/[^A-Z0-9\-\.\ \+\$\/\%]/g, '');
+            } else if (format === 'ITF') {
+                help.innerText = "ITF: Interleaved 2 of 5. Digits only, usually an even number of digits.";
+                input.value = input.value.replace(/\D/g, '');
+                if (input.value.length % 2 !== 0) input.value += "0";
+            } else if (format === 'codabar') {
+                help.innerText = "Codabar: Digits, special characters (A-D, a-d, -$:/.+). Begins/ends with A, B, C, or D.";
+            } else if (format === 'MSI') {
+                help.innerText = "MSI: Modified Plessey. Numeric digits only.";
+                input.value = input.value.replace(/\D/g, '');
+            } else if (format === 'pharmacode') {
+                help.innerText = "Pharmacode: Numeric integer value from 3 to 131070.";
+                input.value = input.value.replace(/\D/g, '');
+                let v = parseInt(input.value) || 3;
+                if (v < 3) v = 3;
+                if (v > 131070) v = 131070;
+                input.value = v.toString();
+            }
+            triggerGeneration();
+        }
+
+        // Trigger Generator (throttled to avoid layout flashes)
+        function triggerGeneration() {
+            if (!isDomReady) return;
+
+            // Wait if external libraries are not loaded yet
+            if (typeof QRCode === 'undefined' || typeof JsBarcode === 'undefined') {
+                setTimeout(triggerGeneration, 100);
+                return;
+            }
+
+            if (isGenerating) return;
+            isGenerating = true;
+            
+            setTimeout(() => {
+                try {
+                    if (currentTab === 'qr' || currentTab === 'history') {
+                        generateQRCode();
+                    }
+                    if (currentTab === 'barcode') {
+                        generateBarcode();
+                    }
+                } catch(e) {
+                    console.error("Generator error: ", e);
+                } finally {
+                    isGenerating = false;
+                }
+            }, 50);
+        }
+
+
+        // Get value to encode in QR
+        function getQRContentText() {
+            if (currentQRType === 'text') {
+                return document.getElementById('qr-text-input').value || "https://nyancat.nu";
+            }
+            if (currentQRType === 'wifi') {
+                const ssid = document.getElementById('wifi-ssid').value || "SSID";
+                const pass = document.getElementById('wifi-password').value || "";
+                const enc = document.getElementById('wifi-encryption').value;
+                const hidden = document.getElementById('wifi-hidden').checked;
+                // Format: WIFI:S:SSID;T:WPA;P:password;H:true;;
+                return `WIFI:S:${escapeQRField(ssid)};T:${enc};P:${escapeQRField(pass)};H:${hidden ? 'true' : ''};;`;
+            }
+            if (currentQRType === 'vcard') {
+                const fn = document.getElementById('vcard-fn').value || "Name";
+                const org = document.getElementById('vcard-org').value || "";
+                const tel = document.getElementById('vcard-tel').value || "";
+                const email = document.getElementById('vcard-email').value || "";
+                const url = document.getElementById('vcard-url').value || "";
+                const note = document.getElementById('vcard-note').value || "";
+
+                return `BEGIN:VCARD\nVERSION:3.0\nFN:${fn}\nN:${fn}\nORG:${org}\nTEL:${tel}\nEMAIL:${email}\nURL:${url}\nNOTE:${note}\nEND:VCARD`;
+            }
+            if (currentQRType === 'email') {
+                const to = document.getElementById('email-to').value || "test@example.com";
+                const subject = document.getElementById('email-subject').value || "";
+                const body = document.getElementById('email-body').value || "";
+                return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            }
+            if (currentQRType === 'sms') {
+                const phone = document.getElementById('sms-phone').value || "0000";
+                const msg = document.getElementById('sms-message').value || "";
+                return `SMSTO:${phone}:${msg}`;
+            }
+            return "";
+        }
+
+        function escapeQRField(val) {
+            return val.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/:/g, '\\:').replace(/,/g, '\\,');
+        }
+
+        // Generate QR code
+        function generateQRCode() {
+            const data = getQRContentText();
+            const size = parseInt(document.getElementById('qr-size').value) || 384;
+            const margin = parseInt(document.getElementById('qr-margin').value);
+            const errLevel = document.getElementById('qr-error-level').value;
+            const colorDark = document.getElementById('qr-color-dark').value;
+            const colorLight = document.getElementById('qr-color-light').value;
+
+            errorBox.style.display = 'none';
+
+            // Create temporary canvas
+            const tempCanvas = document.createElement('canvas');
+            
+            QRCode.toCanvas(tempCanvas, data, {
+                width: size,
+                margin: margin,
+                errorCorrectionLevel: errLevel,
+                color: {
+                    dark: colorDark,
+                    light: colorLight
+                }
+            }, function(err) {
+                if (err) {
+                    errorBox.innerText = "QR Code Error: " + err.message;
+                    errorBox.style.display = 'block';
+                    return;
+                }
+
+                // Render onto the visible canvas
+                qrCanvas.width = size;
+                qrCanvas.height = size;
+                const ctx = qrCanvas.getContext('2d');
+                ctx.fillStyle = colorLight;
+                ctx.fillRect(0, 0, size, size);
+                ctx.drawImage(tempCanvas, 0, 0);
+
+                // Handle Logo Overlay if present
+                if (loadedLogoImg) {
+                    const logoScale = 0.22; // 22% of QR size
+                    const logoSize = size * logoScale;
+                    const x = (size - logoSize) / 2;
+                    const y = (size - logoSize) / 2;
+
+                    // Clean the space behind the logo with a light colored border padding
+                    ctx.fillStyle = colorLight;
+                    const padding = logoSize * 0.12;
+                    ctx.fillRect(x - padding, y - padding, logoSize + padding * 2, logoSize + padding * 2);
+
+                    // Draw Logo Image
+                    ctx.drawImage(loadedLogoImg, x, y, logoSize, logoSize);
+                }
+            });
+        }
+
+        // Generate Barcode
+        function generateBarcode() {
+            const data = document.getElementById('barcode-text').value;
+            const format = document.getElementById('barcode-format').value;
+            const displayText = document.getElementById('barcode-display-text').checked;
+            const colorLine = document.getElementById('barcode-color-line').value;
+            const colorBg = document.getElementById('barcode-color-bg').value;
+            const width = parseFloat(document.getElementById('barcode-width').value) || 2;
+            const height = parseFloat(document.getElementById('barcode-height').value) || 100;
+            const fontSize = parseInt(document.getElementById('barcode-font-size').value) || 16;
+            const textMargin = parseInt(document.getElementById('barcode-text-margin').value) || 4;
+
+            errorBox.style.display = 'none';
+
+            if (!data) {
+                errorBox.innerText = "Barcode Error: Input value cannot be empty.";
+                errorBox.style.display = 'block';
+                return;
+            }
+
+            try {
+                let isValid = true;
+                JsBarcode(barcodeCanvas, data, {
+                    format: format,
+                    width: width,
+                    height: height,
+                    displayValue: displayText,
+                    lineColor: colorLine,
+                    background: colorBg,
+                    fontSize: fontSize,
+                    font: 'monospace',
+                    textMargin: textMargin,
+                    valid: function(valid) {
+                        isValid = valid;
+                    }
+                });
+
+                if (!isValid) {
+                    errorBox.innerText = "Barcode Error: Invalid characters or length for symbology " + format;
+                    errorBox.style.display = 'block';
+                }
+            } catch (err) {
+                errorBox.innerText = "Barcode Error: " + err.message;
+                errorBox.style.display = 'block';
+            }
+        }
+
+        // Download Image
+        function downloadImage(type) {
+            const a = document.createElement('a');
+            const timeStamp = Date.now();
+
+            if (currentTab === 'qr') {
+                if (type === 'png') {
+                    a.href = qrCanvas.toDataURL('image/png');
+                    a.download = `qrcode_${timeStamp}.png`;
+                    a.click();
+                } else if (type === 'svg') {
+                    // Generate clean SVG for QR Code
+                    const data = getQRContentText();
+                    const size = parseInt(document.getElementById('qr-size').value) || 384;
+                    const margin = parseInt(document.getElementById('qr-margin').value);
+                    const errLevel = document.getElementById('qr-error-level').value;
+                    const colorDark = document.getElementById('qr-color-dark').value;
+                    const colorLight = document.getElementById('qr-color-light').value;
+
+                    QRCode.toString(data, {
+                        type: 'svg',
+                        width: size,
+                        margin: margin,
+                        errorCorrectionLevel: errLevel,
+                        color: {
+                            dark: colorDark,
+                            light: colorLight
+                        }
+                    }, function(err, svgString) {
+                        if (err) {
+                            showToast("Error generating SVG file");
+                            return;
+                        }
+
+                        // Embed logo in SVG if available
+                        if (loadedLogoImg && loadedLogoDataURL) {
+                            // Find the closing </svg> tag
+                            const logoScale = 0.22;
+                            const logoSize = size * logoScale;
+                            const x = (size - logoSize) / 2;
+                            const y = (size - logoSize) / 2;
+                            const padding = logoSize * 0.12;
+
+                            // Insert clean white backing rect and image tag inside svg
+                            const overlayXml = `\n  <rect x="${x - padding}" y="${y - padding}" width="${logoSize + padding * 2}" height="${logoSize + padding * 2}" fill="${colorLight}" />\n  <image x="${x}" y="${y}" width="${logoSize}" height="${logoSize}" href="${loadedLogoDataURL}" />\n</svg>`;
+                            const updatedSvgString = svgString.replace('</svg>', overlayXml);
+
+                            const blob = new Blob([updatedSvgString], { type: 'image/svg+xml' });
+                            a.href = URL.createObjectURL(blob);
+                        } else {
+                            const blob = new Blob([svgString], { type: 'image/svg+xml' });
+                            a.href = URL.createObjectURL(blob);
+                        }
+
+                        a.download = `qrcode_${timeStamp}.svg`;
+                        a.click();
+                        showToast("SVG Downloaded!");
+                    });
+                }
+            } else if (currentTab === 'barcode') {
+                const data = document.getElementById('barcode-text').value;
+                const format = document.getElementById('barcode-format').value;
+
+                if (type === 'png') {
+                    a.href = barcodeCanvas.toDataURL('image/png');
+                    a.download = `barcode_${format}_${timeStamp}.png`;
+                    a.click();
+                } else if (type === 'svg') {
+                    // Render to our hidden SVG element
+                    const displayText = document.getElementById('barcode-display-text').checked;
+                    const colorLine = document.getElementById('barcode-color-line').value;
+                    const colorBg = document.getElementById('barcode-color-bg').value;
+                    const width = parseFloat(document.getElementById('barcode-width').value) || 2;
+                    const height = parseFloat(document.getElementById('barcode-height').value) || 100;
+                    const fontSize = parseInt(document.getElementById('barcode-font-size').value) || 16;
+                    const textMargin = parseInt(document.getElementById('barcode-text-margin').value) || 4;
+
+                    try {
+                        JsBarcode(hiddenBarcodeSvg, data, {
+                            format: format,
+                            width: width,
+                            height: height,
+                            displayValue: displayText,
+                            lineColor: colorLine,
+                            background: colorBg,
+                            fontSize: fontSize,
+                            font: 'monospace',
+                            textMargin: textMargin
+                        });
+
+                        const svgContent = hiddenBarcodeSvg.outerHTML;
+                        const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+                        a.href = URL.createObjectURL(blob);
+                        a.download = `barcode_${format}_${timeStamp}.svg`;
+                        a.click();
+                        showToast("Barcode SVG Downloaded!");
+                    } catch(err) {
+                        showToast("Error generating SVG: " + err.message);
+                    }
+                }
+            }
+        }
+
+        // Copy Canvas Image to Clipboard
+        async function copyPreviewToClipboard() {
+            const activeCanvas = currentTab === 'qr' ? qrCanvas : barcodeCanvas;
+            
+            try {
+                activeCanvas.toBlob(async (blob) => {
+                    if (!blob) {
+                        showToast("Failed to convert image for clipboard.");
+                        return;
+                    }
+                    const item = new ClipboardItem({ "image/png": blob });
+                    await navigator.clipboard.write([item]);
+                    showToast("Image copied to clipboard!");
+                }, 'image/png');
+            } catch (err) {
+                console.error(err);
+                showToast("Clipboard copy failed. Try copying manually.");
+            }
+        }
+
+        // Toast notifications
+        function showToast(message) {
+            const toast = document.getElementById('toast-notify');
+            const txt = document.getElementById('toast-text');
+            txt.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // History local storage functions
+        function getHistory() {
+            return JSON.parse(localStorage.getItem('qr_barcode_history')) || [];
+        }
+
+        function saveHistory(history) {
+            localStorage.setItem('qr_barcode_history', JSON.stringify(history));
+        }
+
+        function saveCurrentToHistory() {
+            const history = getHistory();
+            const timeStamp = Date.now();
+            let newItem = {
+                id: timeStamp,
+                date: new Date().toLocaleString(),
+                tab: currentTab
+            };
+
+            if (currentTab === 'qr') {
+                newItem.type = `QR - ${currentQRType.toUpperCase()}`;
+                newItem.content = getQRContentText();
+                newItem.thumbnail = qrCanvas.toDataURL('image/png');
+                
+                // Save QR config details
+                newItem.config = {
+                    qrType: currentQRType,
+                    textInput: document.getElementById('qr-text-input').value,
+                    wifiSSID: document.getElementById('wifi-ssid').value,
+                    wifiPass: document.getElementById('wifi-password').value,
+                    wifiEnc: document.getElementById('wifi-encryption').value,
+                    wifiHidden: document.getElementById('wifi-hidden').checked,
+                    vcardFN: document.getElementById('vcard-fn').value,
+                    vcardOrg: document.getElementById('vcard-org').value,
+                    vcardTel: document.getElementById('vcard-tel').value,
+                    vcardEmail: document.getElementById('vcard-email').value,
+                    vcardUrl: document.getElementById('vcard-url').value,
+                    vcardNote: document.getElementById('vcard-note').value,
+                    emailTo: document.getElementById('email-to').value,
+                    emailSub: document.getElementById('email-subject').value,
+                    emailBody: document.getElementById('email-body').value,
+                    smsPhone: document.getElementById('sms-phone').value,
+                    smsMsg: document.getElementById('sms-message').value,
+                    colorDark: document.getElementById('qr-color-dark').value,
+                    colorLight: document.getElementById('qr-color-light').value,
+                    errLevel: document.getElementById('qr-error-level').value,
+                    margin: document.getElementById('qr-margin').value,
+                    size: document.getElementById('qr-size').value,
+                    logoDataURL: loadedLogoDataURL,
+                    logoName: loadedLogoName
+                };
+            } else if (currentTab === 'barcode') {
+                const format = document.getElementById('barcode-format').value;
+                newItem.type = `Barcode - ${format}`;
+                newItem.content = document.getElementById('barcode-text').value;
+                newItem.thumbnail = barcodeCanvas.toDataURL('image/png');
+
+                newItem.config = {
+                    text: document.getElementById('barcode-text').value,
+                    format: format,
+                    displayText: document.getElementById('barcode-display-text').checked,
+                    colorLine: document.getElementById('barcode-color-line').value,
+                    colorBg: document.getElementById('barcode-color-bg').value,
+                    width: document.getElementById('barcode-width').value,
+                    height: document.getElementById('barcode-height').value,
+                    fontSize: document.getElementById('barcode-font-size').value,
+                    textMargin: document.getElementById('barcode-text-margin').value
+                };
+            }
+
+            // Put new item at top
+            history.unshift(newItem);
+            
+            // Limit to last 50 items
+            if (history.length > 50) {
+                history.pop();
+            }
+
+            saveHistory(history);
+            showToast("Saved to history!");
+            renderHistoryList();
+        }
+
+        function deleteHistoryItem(id, event) {
+            if (event) event.stopPropagation();
+            let history = getHistory();
+            history = history.filter(item => item.id !== id);
+            saveHistory(history);
+            renderHistoryList();
+            showToast("Item deleted");
+        }
+
+        function clearHistory() {
+            if (confirm("Are you sure you want to clear all history?")) {
+                saveHistory([]);
+                renderHistoryList();
+                showToast("History cleared!");
+            }
+        }
+
+        function loadHistoryItem(id) {
+            const history = getHistory();
+            const item = history.find(i => i.id === id);
+            if (!item) return;
+
+            if (item.tab === 'qr') {
+                switchMainTab('qr');
+                switchQRType(item.config.qrType);
+
+                // Set values back
+                document.getElementById('qr-text-input').value = item.config.textInput || "";
+                document.getElementById('wifi-ssid').value = item.config.wifiSSID || "";
+                document.getElementById('wifi-password').value = item.config.wifiPass || "";
+                document.getElementById('wifi-encryption').value = item.config.wifiEnc || "WPA";
+                document.getElementById('wifi-hidden').checked = item.config.wifiHidden || false;
+                
+                document.getElementById('vcard-fn').value = item.config.vcardFN || "";
+                document.getElementById('vcard-org').value = item.config.vcardOrg || "";
+                document.getElementById('vcard-tel').value = item.config.vcardTel || "";
+                document.getElementById('vcard-email').value = item.config.vcardEmail || "";
+                document.getElementById('vcard-url').value = item.config.vcardUrl || "";
+                document.getElementById('vcard-note').value = item.config.vcardNote || "";
+
+                document.getElementById('email-to').value = item.config.emailTo || "";
+                document.getElementById('email-subject').value = item.config.emailSub || "";
+                document.getElementById('email-body').value = item.config.emailBody || "";
+
+                document.getElementById('sms-phone').value = item.config.smsPhone || "";
+                document.getElementById('sms-message').value = item.config.smsMsg || "";
+
+                document.getElementById('qr-color-dark').value = item.config.colorDark || "#000000";
+                document.getElementById('qr-color-light').value = item.config.colorLight || "#ffffff";
+                document.getElementById('qr-error-level').value = item.config.errLevel || "H";
+                document.getElementById('qr-margin').value = item.config.margin || 2;
+                document.getElementById('qr-size').value = item.config.size || 384;
+
+                // Sync sliders / color hex tags
+                document.getElementById('qr-color-dark-hex').innerText = (item.config.colorDark || "#000000").toUpperCase();
+                document.getElementById('qr-color-light-hex').innerText = (item.config.colorLight || "#ffffff").toUpperCase();
+                document.getElementById('qr-margin-val').innerText = item.config.margin || 2;
+                document.getElementById('qr-size-val').innerText = (item.config.size || 384) + "px";
+
+                // Restore logo if it existed
+                if (item.config.logoDataURL) {
+                    loadedLogoDataURL = item.config.logoDataURL;
+                    loadedLogoName = item.config.logoName || "loaded_logo.png";
+                    const img = new Image();
+                    img.onload = function() {
+                        loadedLogoImg = img;
+                        document.getElementById('logo-controls').classList.remove('hide');
+                        document.getElementById('logo-name').innerText = loadedLogoName;
+                        triggerGeneration();
+                    };
+                    img.src = loadedLogoDataURL;
+                } else {
+                    clearLogo();
+                }
+
+                triggerGeneration();
+                showToast("QR configuration loaded!");
+            } else if (item.tab === 'barcode') {
+                switchMainTab('barcode');
+
+                document.getElementById('barcode-text').value = item.config.text;
+                document.getElementById('barcode-format').value = item.config.format;
+                document.getElementById('barcode-display-text').checked = item.config.displayText;
+                document.getElementById('barcode-color-line').value = item.config.colorLine || "#000000";
+                document.getElementById('barcode-color-bg').value = item.config.colorBg || "#ffffff";
+                document.getElementById('barcode-width').value = item.config.width || 2;
+                document.getElementById('barcode-height').value = item.config.height || 100;
+                document.getElementById('barcode-font-size').value = item.config.fontSize || 16;
+                document.getElementById('barcode-text-margin').value = item.config.textMargin || 4;
+
+                // Sync inputs
+                document.getElementById('barcode-color-line-hex').innerText = (item.config.colorLine || "#000000").toUpperCase();
+                document.getElementById('barcode-color-bg-hex').innerText = (item.config.colorBg || "#ffffff").toUpperCase();
+                document.getElementById('barcode-width-val').innerText = (item.config.width || 2) + "px";
+                document.getElementById('barcode-height-val').innerText = (item.config.height || 100) + "px";
+                document.getElementById('barcode-font-size-val').innerText = (item.config.fontSize || 16) + "px";
+                document.getElementById('barcode-text-margin-val').innerText = (item.config.textMargin || 4) + "px";
+
+                triggerGeneration();
+                showToast("Barcode configuration loaded!");
+            }
+        }
+
+        // Render History panel DOM
+        function renderHistoryList() {
+            const container = document.getElementById('history-items-container');
+            const history = getHistory();
+
+            if (history.length === 0) {
+                container.innerHTML = `<div class="history-empty">No items saved yet. Generate a code and click "Save to History"!</div>`;
+                return;
+            }
+
+            container.innerHTML = history.map(item => `
+                <div class="history-item" onclick="loadHistoryItem(${item.id})">
+                    <div class="history-item-left">
+                        <img src="${item.thumbnail}" class="history-thumb" alt="thumb">
+                        <div class="history-info">
+                            <div class="history-type">${item.type}</div>
+                            <div class="history-text" title="${escapeHtml(item.content)}">${escapeHtml(item.content)}</div>
+                            <div class="history-date">${item.date}</div>
+                        </div>
+                    </div>
+                    <div class="history-actions">
+                        <button class="history-action-btn btn-load" title="Load configuration" onclick="loadHistoryItem(${item.id})">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                            </svg>
+                        </button>
+                        <button class="history-action-btn btn-delete" title="Delete" onclick="deleteHistoryItem(${item.id}, event)">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // HTML escaping helper
+        function escapeHtml(text) {
+            if (!text) return "";
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
