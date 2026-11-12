@@ -4,4 +4,5 @@ whitenoise
 asgiref
 sqlparse
 yt-dlp[default,curl-cffi]
+yt-dlp-getpot-wpc
 requests
