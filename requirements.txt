@@ -1,8 +1,7 @@
 Django
 gunicorn
-whitenoise>=6.0.0
-asgiref>=3.8.0
-sqlparse>=0.5.0
-yt-dlp[default,curl-cffi]>=2025.0.0
-yt-dlp-getpot-wpc>=1.0.0
-requests>=2.31.0
+whitenoise
+asgiref
+sqlparse
+yt-dlp[default,curl-cffi]
+requests
