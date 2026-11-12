@@ -95,7 +95,7 @@ A Django-based web application featuring a classic Nyan Cat welcome page, a full
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/nyancat.nu.git
+   git clone https://github.com/HeapHeapHooray/nyancat.nu.git
    cd nyancat.nu
    ```
 
